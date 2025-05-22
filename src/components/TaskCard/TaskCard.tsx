@@ -218,7 +218,6 @@ const TaskCard = memo(
             });
           },
           onDragStart() {
-            console.log("drag start");
             setState({ type: "is-dragging" });
           },
           onDrop() {
@@ -233,7 +232,6 @@ const TaskCard = memo(
           getData: getDropTargetData,
           onDragEnter({ source, self }) {
             if (source.data.type !== "card") return;
-            console.log("drag enter ", source.data.itemId, task.id);
             if (source.data.itemId === task.id) return;
 
             const closestEdge = extractClosestEdge(self.data);
