@@ -1,0 +1,54 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "useDefineForClassFields": true,
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "skipLibCheck": true,
+
+    /* Bundler mode */
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+
+    // Strict mode
+    "strict": false,
+    "alwaysStrict": false,
+    "noImplicitAny": false,
+    "noImplicitThis": false,
+    "strictNullChecks": false,
+    "strictFunctionTypes": false,
+    "useUnknownInCatchVariables": false,
+
+     // No unused code 
+     "noUnusedLocals": false,
+     "noUnusedParameters": false,
+     "allowUnusedLabels": true,
+     "allowUnreachableCode": true,
+ 
+     // No implicit code 
+     "noImplicitOverride": false,
+     "noImplicitReturns": false,
+ 
+     // Others
+     "noUncheckedIndexedAccess": false,
+     "noPropertyAccessFromIndexSignature": false,
+     "noFallthroughCasesInSwitch": false,
+     "exactOptionalPropertyTypes": false,
+     "forceConsistentCasingInFileNames": true,
+     "declaration": false,
+
+    "baseUrl": ".",
+    "paths": {
+      "@src/*": ["./src/*"]
+    }
+  },
+  "ts-node": {
+    "esm": true
+  },
+  "include": ["src", "./src/index.ts", "docs/app", "src/**/*.d.ts"],
+  "references": [{ "path": "./tsconfig.node.json" }]
+}

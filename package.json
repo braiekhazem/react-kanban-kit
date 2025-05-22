@@ -1,0 +1,86 @@
+{
+  "homepage": "https://github.com/braiekhazem/react-kanban-kit",
+  "name": "react-kanban-kit",
+  "author": "hazem braiek",
+  "private": false,
+  "version": "0.0.1-alpha.1",
+  "type": "module",
+  "main": "dist/index.umd.js",
+  "module": "dist/index.es.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.es.js",
+      "require": "./dist/index.umd.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "keywords": [
+    "react-kanban-kit",
+    "board",
+    "kanban"
+  ],
+  "sideEffects": true,
+  "files": [
+    "/dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/braiekhazem/react-kanban-kit"
+  },
+  "license": "MIT",
+  "bin": {
+    "mycli": "./cli.cjs"
+  },
+  "scripts": {
+    "test": "jest --watchAll --coverage",
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "demo": "cd demo && npm run dev",
+    "modern-demo": "vite serve demo/modern --config demo/vite.config.ts",
+    "build-demo": "cd demo && npm run build",
+    "prepare": "npm run build",
+    "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview --port 8080",
+    "format": "prettier --ignore-path .gitignore --write \"**/*.{ts,tsx,css,scss}\"",
+    "husky": "husky install",
+    "create-component": "bash ./scripts/create-component.sh",
+    "docker:build": "./scripts/build-docker.sh",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
+  },
+  "dependencies": {
+    "@atlaskit/pragmatic-drag-and-drop": "^1.5.0",
+    "@atlaskit/pragmatic-drag-and-drop-auto-scroll": "^2.1.0",
+    "@atlaskit/pragmatic-drag-and-drop-hitbox": "^1.0.3",
+    "@atlaskit/pragmatic-drag-and-drop-react-beautiful-dnd-autoscroll": "^2.0.0",
+    "@atlaskit/pragmatic-drag-and-drop-react-drop-indicator": "^2.1.0",
+    "@types/react-dom": "^19.1.2",
+    "antd": "^5.24.7",
+    "classes": "^0.3.0",
+    "classnames": "^2.5.1",
+    "husky": "^8.0.3",
+    "lodash": "^4.17.21",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "virtua": "^0.40.3",
+    "vite-plugin-css-injected-by-js": "^3.4.0",
+    "vite-plugin-dts": "^3.7.3"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.17.16",
+    "@types/react": "^18.3.1",
+    "@vitejs/plugin-react": "^4.0.0",
+    "eslint": "^8.38.0",
+    "eslint-plugin-storybook": "^0.8.0",
+    "gh-pages": "^6.1.1",
+    "prettier": "3.0.0",
+    "sass": "^1.71.1",
+    "typescript": "^5.4.2",
+    "vite": "^4.3.9",
+    "vite-plugin-svgr": "^3.2.0"
+  }
+}

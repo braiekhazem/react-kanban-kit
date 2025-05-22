@@ -1,0 +1,137 @@
+:root {
+  --vf-font-familly: "Raleway", sans-serif;
+  --vf-prefix-class: "vf";
+
+  //COLORS
+
+  --vf-color-white: #fff;
+  --vf-color-black: #000;
+
+  --vf-color-primary: #5f55ee;
+  --vf-color-primary-50: #fcf9ff;
+  --vf-color-primary-100: #f5eefa;
+  --vf-color-primary-200: #e0ccef;
+  --vf-color-primary-300: #c198e0;
+  --vf-color-primary-400: #ad76d5;
+  --vf-color-primary-500: #9854cb;
+  --vf-color-primary-600: #7a43a2;
+  --vf-color-primary-700: #5b327a;
+  --vf-color-primary-800: #3d2251;
+  --vf-color-primary-900: #301942;
+  --vf-color-primary-950: #1e1129;
+
+  --vf-color-secondary: #fdb022;
+  --vf-color-secondary-50: #fffcf5;
+  --vf-color-secondary-100: #fffaeb;
+  --vf-color-secondary-200: #fef0c7;
+  --vf-color-secondary-300: #fedf89;
+  --vf-color-secondary-400: #fec84b;
+  --vf-color-secondary-500: #fdb022;
+  --vf-color-secondary-600: #f79009;
+  --vf-color-secondary-700: #dc6803;
+  --vf-color-secondary-800: #b54708;
+  --vf-color-secondary-900: #92330a;
+  --vf-color-secondary-950: #6c2304;
+
+  --vf-color-red: #ff4141;
+  --vf-color-red-50: #fff4f4;
+  --vf-color-red-100: #ffe8e8;
+  --vf-color-red-200: #ffd4d4;
+  --vf-color-red-300: #ffb4b4;
+  --vf-color-red-400: #ff8383;
+  --vf-color-red-500: #ff4141;
+  --vf-color-red-600: #ff1616;
+  --vf-color-red-700: #d80000;
+  --vf-color-red-800: #b50000;
+  --vf-color-red-900: #7e040e;
+  --vf-color-red-950: #64020a;
+
+  --vf-color-gray: #9d9d9d;
+  --vf-color-gray-50: #ffffff;
+  --vf-color-gray-100: #f0f0f0;
+  --vf-color-gray-200: #dadada;
+  --vf-color-gray-300: #cecece;
+  --vf-color-gray-400: #b6b6b6;
+  --vf-color-gray-500: #9d9d9d;
+  --vf-color-gray-600: #6a6a6a;
+  --vf-color-gray-700: #545454;
+  --vf-color-gray-800: #373737;
+  --vf-color-gray-900: #1c1c1c;
+  --vf-color-gray-950: #000000;
+
+  --vf-color-green: #29b58b;
+  --vf-color-green-50: #f1fffb;
+  --vf-color-green-100: #e2fff6;
+  --vf-color-green-200: #ccfff0;
+  --vf-color-green-300: #a3edd7;
+  --vf-color-green-400: #52c8a4;
+  --vf-color-green-500: #29b58b;
+  --vf-color-green-600: #00a372;
+  --vf-color-green-700: #00825b;
+  --vf-color-green-800: #006346;
+  --vf-color-green-900: #00412e;
+  --vf-color-green-950: #002117;
+
+  --vf-color-orange: #29b58b;
+  --vf-color-orange-50: #fffdf6;
+  --vf-color-orange-100: #fffaea;
+  --vf-color-orange-200: #fff5d4;
+  --vf-color-orange-300: #ffecaa;
+  --vf-color-orange-400: #ffe27f;
+  --vf-color-orange-500: #ffcf2b;
+  --vf-color-orange-600: #e6ba27;
+  --vf-color-orange-700: #bf9b20;
+  --vf-color-orange-800: #806716;
+  --vf-color-orange-900: #4d3f0d;
+  --vf-color-orange-950: #342a08;
+  --vf-color-orange-1000: #fa8900;
+
+  --vf-color-ashgrey: #b3afa1;
+  --vf-color-ashgrey-50: #fdfdfc;
+  --vf-color-ashgrey-100: #fbfbf9;
+  --vf-color-ashgrey-200: #f7f6f2;
+  --vf-color-ashgrey-300: #f0efea;
+  --vf-color-ashgrey-400: #dddad0;
+  --vf-color-ashgrey-500: #b3afa1;
+  --vf-color-ashgrey-600: #858071;
+  --vf-color-ashgrey-700: #5e5267;
+  --vf-color-ashgrey-800: #676252;
+  --vf-color-ashgrey-900: #39321d;
+  --vf-color-ashgrey-950: #282210;
+
+  --vf-color-snow: #b3afa1;
+  --vf-color-snow-50: #fdfcfd;
+  --vf-color-snow-100: #faf9fb;
+  --vf-color-snow-200: #f5f2f7;
+  --vf-color-snow-300: #edeaf0;
+  --vf-color-snow-400: #d7d0dd;
+  --vf-color-snow-500: #aba1b3;
+  --vf-color-snow-600: #7c7185;
+  --vf-color-snow-700: #5e5267;
+  --vf-color-snow-800: #463454;
+  --vf-color-snow-900: #2d1d39;
+  --vf-color-snow-950: #1e1028;
+
+  --vf-color-gray-0: #fff;
+  --vf-color-yellow-50: #ffb300;
+  --vf-color-cyan-50: #00bcd4;
+  --vf-color-blue-50: #2196f3;
+  --vf-color-violet-50: #673ab7;
+
+  --vf-color-info: #1677ff;
+  --vf-color-success: #52c41a;
+  --vf-color-warning: #faad14;
+  --vf-color-error: #ff4d4f;
+
+  --vf-control-bar-height: 48px;
+
+  --vf-border-radius: 12px;
+
+  --vf-progress-bar-bg: #fff3;
+  --vf-progress-bar-load-bg: #fff6;
+  --vf-progress-bar-play-bg: var(--vf-color-primary);
+
+  --vf-dropdown-menu-item-hover: #ffffff1a;
+  --vf-sound-icon-size: 18px;
+  --vf-sound-icon-color: #fff;
+}

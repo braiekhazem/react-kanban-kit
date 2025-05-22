@@ -1,0 +1,30 @@
+@use "../abstracts" as *;
+
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700,wght@0,100..900;1,100..900&display=swap");
+
+* {
+  font-family: "Raleway", sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  outline: none;
+  border: none;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+  text-size-adjust: none;
+}
+
+a,
+button {
+  cursor: pointer;
+}
+
+a {
+  @include transition(opacity, 0.2s, ease-in-out);
+  &:active {
+    opacity: 0.8;
+  }
+}
