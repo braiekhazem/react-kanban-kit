@@ -3,9 +3,9 @@
   "name": "react-kanban-kit",
   "author": "hazem braiek",
   "private": false,
-  "version": "0.0.1-alpha.1",
+  "version": "0.0.1-alpha.6",
   "type": "module",
-  "main": "dist/index.umd.js",
+  "main": "dist/index.cjs.js",
   "module": "dist/index.es.js",
   "types": "dist/index.d.ts",
   "exports": {
@@ -68,7 +68,9 @@
     "vite-plugin-dts": "^3.7.3"
   },
   "devDependencies": {
+    "@babel/plugin-transform-react-jsx": "^7.23.4",
     "@types/lodash": "^4.17.16",
+    "@types/node": "^22.15.21",
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.0",
     "@vitejs/plugin-react": "^4.0.0",
@@ -76,15 +78,24 @@
     "eslint-plugin-storybook": "^0.8.0",
     "gh-pages": "^6.1.1",
     "prettier": "3.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "sass": "^1.71.1",
+    "terser": "^5.29.2",
     "typescript": "^5.4.2",
     "vite": "^4.3.9",
-    "vite-plugin-svgr": "^3.2.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "vite-plugin-svgr": "^3.2.0"
   },
   "peerDependencies": {
-    "react": ">=18.0.0 <20.0.0",
-    "react-dom": ">=18.0.0 <20.0.0"
+    "react": ">=18.0.0",
+    "react-dom": ">=18.0.0"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": false
+    },
+    "react-dom": {
+      "optional": false
+    }
   }
 }

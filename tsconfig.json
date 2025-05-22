@@ -39,11 +39,14 @@
      "noFallthroughCasesInSwitch": false,
      "exactOptionalPropertyTypes": false,
      "forceConsistentCasingInFileNames": true,
-     "declaration": false,
+     "declaration": true,
 
     "baseUrl": ".",
     "paths": {
-      "@src/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@src/*": ["./src/*"],
+      "@components/*": ["./src/components/*"],
+      "@utils/*": ["./src/utils/*"]
     }
   },
   "ts-node": {
