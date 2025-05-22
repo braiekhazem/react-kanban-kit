@@ -1,0 +1,71 @@
+// Small devices
+@mixin sm {
+  @media (min-width: #{map-get($breakpoints, 'small')}) {
+    @content;
+  }
+}
+
+// Medium devices
+@mixin md {
+  @media (min-width: #{map-get($breakpoints, 'medium')}) {
+    @content;
+  }
+}
+
+// Large devices
+@mixin lg {
+  @media (min-width: #{map-get($breakpoints, 'large')}) {
+    @content;
+  }
+}
+
+// Extra large devices
+@mixin xl {
+  @media (min-width: #{map-get($breakpoints, 'xlarge')}) {
+    @content;
+  }
+}
+
+// ++++++++++ MAX WIDTH ++++++++++
+
+// Small devices
+@mixin max-sm {
+  @media (max-width: #{map-get($breakpoints, 'small')}) {
+    @content;
+  }
+}
+
+// Medium devices
+@mixin max-md {
+  @media (max-width: #{map-get($breakpoints, 'medium')}) {
+    @content;
+  }
+}
+
+// Large devices
+@mixin max-lg {
+  @media (max-width: #{map-get($breakpoints, 'large')}) {
+    @content;
+  }
+}
+
+// Extra large devices
+@mixin max-xl {
+  @media (max-width: #{map-get($breakpoints, 'xlarge')}) {
+    @content;
+  }
+}
+
+// Custom devices (min-width)
+@mixin rwd($screen) {
+  @media (min-width: #{$screen}px) {
+    @content;
+  }
+}
+
+// Custom devices (max-width)
+@mixin max-rwd($screen) {
+  @media (max-width: #{$screen}px) {
+    @content;
+  }
+}
