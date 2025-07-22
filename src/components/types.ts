@@ -11,48 +11,39 @@ export interface Column {
   content: any;
 }
 
+export type ConfigMap = {
+  [type: string]: {
+    render: (props: any) => React.ReactNode;
+    isDraggable?: boolean;
+  };
+};
+
 export interface BoardItem {
   id: string;
   title: string;
+  parentId: string | null;
   children: string[];
-  content: any;
-  parentId?: string;
-  isSubtask?: boolean;
-  collapsed?: boolean;
-  isExpanded?: boolean;
-  isSelected?: boolean;
-  groupType?: string;
-  tasksIds?: string[];
-  updatedFieldKey?: string;
-  subtasks?: string[]; // IDs of subtasks
-  loadingItems?: number;
-  isLoading?: boolean;
-  totalItems?: number;
+  content?: any;
+  type?: keyof ConfigMap;
+  totalChildrenCount: number;
 }
 
 export interface BoardData {
+  root: BoardItem;
   [key: string]: BoardItem;
 }
 
 export interface BoardProps {
   dataSource: BoardData;
+  configMap: ConfigMap;
   loadMore?: (groupsId: string) => void;
-  renderCard?: (
-    item: BoardItem,
-    options: { isSubtask: boolean; hasSubtasks: boolean; depth: number }
-  ) => ReactNode;
-  renderTaskAdder?: (
-    column: Column,
-    parentItem: BoardItem | null,
-    adder: BoardItem
-  ) => ReactNode;
-  renderColumnHeader?: (column: Column) => ReactNode;
-  renderColumnContainer?: (column: Column) => ReactNode;
-  allowAddColumn?: boolean;
-  renderColumnAdder?: () => ReactNode;
-  onColumnAdd?: () => void;
+  renderColumnHeader?: (column: BoardItem) => ReactNode;
+  renderColumnWrapper?: (column: BoardItem, children: ReactNode) => ReactNode;
+  columnWrapperStyle?: (column: BoardItem) => CSSProperties;
+  columnHeaderStyle?: (column: BoardItem) => CSSProperties;
+  columnWrapperClassName?: string;
+  columnHeaderClassName?: string;
   containerStyle?: CSSProperties;
-  columnContainerStyle?: (column: Column) => CSSProperties;
   onColumnMove?: ({
     columnId,
     fromIndex,
@@ -77,16 +68,7 @@ export interface BoardProps {
     taskBelow: string | null;
     position: number;
   }) => void;
-  onToggleSubtasks?: (taskId: string) => void;
-  maxNestedLevel?: number;
-  renderFooterTasksList?: (column: Column) => ReactNode;
-  renderFooterColumn?: (column: Column) => ReactNode;
-  onColumnClick?: (column: Column) => void;
-}
-
-export interface ColumnProps {
-  column: Column;
-  items: BoardItem[];
-  renderCard: (item: BoardItem) => ReactNode;
-  renderColumnHeader?: (column: Column) => ReactNode;
+  renderFooterColumn?: (column: BoardItem) => ReactNode;
+  onColumnClick?: (column: BoardItem) => void;
+  onCardClick?: (card: BoardItem) => void;
 }

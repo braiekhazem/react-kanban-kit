@@ -8,7 +8,6 @@ import { preserveOffsetOnSource } from "@atlaskit/pragmatic-drag-and-drop/elemen
 import { combine } from "@atlaskit/pragmatic-drag-and-drop/combine";
 import { autoScrollForElements } from "@atlaskit/pragmatic-drag-and-drop-auto-scroll/element";
 import { BoardItem } from "..";
-import { Column } from "../types";
 import ItemRow from "../ItemRow";
 import { VList } from "virtua";
 import { createInfiniteScrollHandler } from "@src/utils/infinite-scroll";
@@ -30,23 +29,23 @@ type TColumnState =
     };
 
 interface BoardColumnProps {
-  column: Column;
+  column: BoardItem;
   index: number;
   tasks: BoardItem[];
   virtualizedItemCount: number;
   renderCard: (item: BoardItem, options: any) => React.ReactNode;
-  renderColumnHeader?: (column: Column) => React.ReactNode;
+  renderColumnHeader?: (column: BoardItem) => React.ReactNode;
   loadMore?: (columnId: string) => void;
   containerStyle?: React.CSSProperties;
   renderTaskAdder?: (
-    column: Column,
+    column: BoardItem,
     parentItem: BoardItem,
     adder: BoardItem | any
   ) => React.ReactNode;
-  renderFooterTasksList?: (column: Column) => React.ReactNode;
-  renderFooterColumn?: (column: Column) => React.ReactNode;
+  renderFooterTasksList?: (column: BoardItem) => React.ReactNode;
+  renderFooterColumn?: (column: BoardItem) => React.ReactNode;
   isCollapsed?: boolean;
-  onColumnClick?: (column: Column) => void;
+  onColumnClick?: (column: BoardItem) => void;
   isExpanded?: boolean;
 }
 
@@ -103,7 +102,7 @@ const BoardColumn = memo(
     }
 
     const getPercentageOfLoadingData = () => {
-      const percentage = (tasks.length / column?.totalItems) * 100;
+      const percentage = (tasks.length / column?.totalChildrenCount) * 100;
       return Math.min(percentage, 100);
     };
 
@@ -278,7 +277,7 @@ const BoardColumn = memo(
                 renderColumnHeader(column)
               ) : (
                 <div className="board-column-title">
-                  {column.name} <span>{column.totalItems}</span>
+                  {column?.title} <span>{column?.totalChildrenCount}</span>
                 </div>
               )}
             </div>

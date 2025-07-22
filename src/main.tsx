@@ -7,11 +7,6 @@ import { mockData } from "./utils/mocks/data";
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <div style={{ width: "100%", height: "100vh" }}>
     <Board
-      renderCard={(item) => (
-        <div style={{ height: 200, backgroundColor: "white" }}>
-          {item.title}
-        </div>
-      )}
       onColumnClick={(args) => {
         console.log(args);
       }}
@@ -23,8 +18,17 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
           {column.name} {column?.totalItems}
         </div>
       )}
-      renderFooterTasksList={() => <div>Footer</div>}
       dataSource={mockData}
+      configMap={{
+        card: {
+          render: (props) => <div>Card</div>,
+          isDraggable: true,
+        },
+        cardLoading: {
+          render: (props) => <div>Card Loading</div>,
+          isDraggable: true,
+        },
+      }}
     />
   </div>
 );
