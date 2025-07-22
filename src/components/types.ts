@@ -38,12 +38,20 @@ export interface BoardProps {
   configMap: ConfigMap;
   loadMore?: (groupsId: string) => void;
   renderColumnHeader?: (column: BoardItem) => ReactNode;
-  renderColumnWrapper?: (column: BoardItem, children: ReactNode) => ReactNode;
+  renderColumnWrapper?: (
+    column: BoardItem,
+    {
+      children,
+      className,
+      style,
+    }: { children: ReactNode; className?: string; style?: CSSProperties }
+  ) => ReactNode;
   columnWrapperStyle?: (column: BoardItem) => CSSProperties;
   columnHeaderStyle?: (column: BoardItem) => CSSProperties;
   columnWrapperClassName?: string;
   columnHeaderClassName?: string;
-  containerStyle?: CSSProperties;
+  rootStyle?: CSSProperties;
+  rootClassName?: string;
   onColumnMove?: ({
     columnId,
     fromIndex,
@@ -68,7 +76,7 @@ export interface BoardProps {
     taskBelow: string | null;
     position: number;
   }) => void;
-  renderFooterColumn?: (column: BoardItem) => ReactNode;
+  renderColumnFooter?: (column: BoardItem) => ReactNode;
   onColumnClick?: (column: BoardItem) => void;
   onCardClick?: (card: BoardItem) => void;
 }

@@ -1,14 +1,8 @@
-import { useEffect, useRef, useState } from "react";
-import { BoardData, BoardItem, BoardProps, Column } from "./types";
-import { autoScroller } from "@atlaskit/pragmatic-drag-and-drop-react-beautiful-dnd-autoscroll";
-import { monitorForElements } from "@atlaskit/pragmatic-drag-and-drop/element/adapter";
-import { combine } from "@atlaskit/pragmatic-drag-and-drop/combine";
-import { autoScrollForElements } from "@atlaskit/pragmatic-drag-and-drop-auto-scroll/element";
-import { extractClosestEdge } from "@atlaskit/pragmatic-drag-and-drop-hitbox/closest-edge";
-import { reorderWithEdge } from "@atlaskit/pragmatic-drag-and-drop-hitbox/util/reorder-with-edge";
-import BoardColumn from "./BoardColumn";
-import { DragLocationHistory } from "@atlaskit/pragmatic-drag-and-drop/types";
+import { BoardData, BoardItem, BoardProps } from "./types";
 import { getColumnsFromDataSource } from "@/utils/columnsUtils";
+import { withPrefix } from "@/utils/getPrefix";
+import classNames from "classnames";
+import { Column } from "./Column";
 
 //TODO: fix nested level expand and collapse system for nested subtasks
 
@@ -101,10 +95,7 @@ export const dropHandler = (
   return newDataSource;
 };
 
-const isCardData = (data: any) => data?.type === "card";
-const isColumnData = (data: any) => data?.type === "column";
-
-const Board = (props: BoardProps) => {
+const Kanban = (props: BoardProps) => {
   const {
     dataSource,
     configMap,
@@ -114,41 +105,42 @@ const Board = (props: BoardProps) => {
     columnHeaderStyle,
     columnWrapperClassName,
     columnHeaderClassName,
-    containerStyle,
+    rootStyle = {},
+    rootClassName,
     onColumnMove,
     onCardMove,
     onColumnClick,
     onCardClick,
-    renderFooterColumn,
+    renderColumnFooter,
     loadMore,
   } = props;
 
   const columns = getColumnsFromDataSource(dataSource);
   console.log({ dataSource, configMap, columns });
 
+  const containerClassName = classNames(withPrefix("board"), rootClassName);
+
   return (
-    <div className="board">
-      {columns?.map((column, index) => {
-        return (
-          <BoardColumn
-            key={column.id}
-            column={column}
-            index={index}
-            tasks={getTasksByColumnId(column.id)}
-            virtualizedItemCount={column?.totalChildrenCount || 0}
-            renderColumnHeader={renderColumnHeader}
-            loadMore={loadMore}
-            containerStyle={columnContainerStyle?.(column)}
-            renderTaskAdder={renderTaskAdder}
-            renderFooterTasksList={renderFooterTasksList}
-            renderFooterColumn={renderFooterColumn}
-            isExpanded={column.isExpanded}
-            onColumnClick={onColumnClick}
-          />
-        );
-      })}
+    <div className={containerClassName} style={rootStyle}>
+      {columns?.map((column, index) => (
+        <Column
+          key={column.id || index}
+          index={index}
+          data={column}
+          configMap={configMap}
+          loadMore={loadMore}
+          onColumnClick={onColumnClick}
+          onCardClick={onCardClick}
+          renderColumnHeader={renderColumnHeader}
+          renderColumnWrapper={renderColumnWrapper}
+          columnWrapperStyle={columnWrapperStyle}
+          columnHeaderStyle={columnHeaderStyle}
+          columnWrapperClassName={columnWrapperClassName}
+          columnHeaderClassName={columnHeaderClassName}
+        />
+      ))}
     </div>
   );
 };
 
-export default Board;
+export default Kanban;

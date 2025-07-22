@@ -1,0 +1,8 @@
+@use "./../global/assets/styles/abstracts/variables" as *;
+
+.#{$prefix}-board {
+  display: flex;
+  overflow: auto;
+  height: 100%;
+  gap: 8px;
+}
