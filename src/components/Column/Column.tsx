@@ -1,15 +1,19 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { BoardItem, ConfigMap } from "../types";
 import { withPrefix } from "@/utils/getPrefix";
 import classNames from "classnames";
+import ColumnHeader from "../ColumnHeader";
 
 interface Props {
   index: number;
   data: BoardItem;
   configMap: ConfigMap;
   loadMore?: (columnId: string) => void;
-  onColumnClick?: (column: BoardItem) => void;
-  onCardClick?: (card: BoardItem) => void;
+  onColumnClick?: (
+    e: React.MouseEvent<HTMLDivElement>,
+    column: BoardItem
+  ) => void;
+  onCardClick?: (e: React.MouseEvent<HTMLDivElement>, card: BoardItem) => void;
   renderColumnHeader?: (column: BoardItem) => React.ReactNode;
   renderColumnWrapper: (
     column: BoardItem,
@@ -45,7 +49,7 @@ const Column = (props: Props) => {
   } = props;
 
   const containerClassName = classNames(
-    withPrefix("column"),
+    withPrefix("column-outer"),
     columnWrapperClassName
   );
 
@@ -62,9 +66,21 @@ const Column = (props: Props) => {
       </div>
     );
 
-  return ColumnWrapper(
-    <div>
-      <div>Hello</div>
+  return (
+    <div onClick={(e) => onColumnClick?.(e, data)}>
+      {ColumnWrapper(
+        <div className={withPrefix("column")}>
+          <div className={withPrefix("column-wrapper ")}>
+            <ColumnHeader
+              renderColumnHeader={renderColumnHeader}
+              columnHeaderStyle={columnHeaderStyle}
+              columnHeaderClassName={columnHeaderClassName}
+              data={data}
+            />
+            <div className={withPrefix("column-content")}>content</div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

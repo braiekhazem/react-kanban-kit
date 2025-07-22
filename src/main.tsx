@@ -7,20 +7,28 @@ import { mockData } from "./utils/mocks/data";
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <div style={{ width: "100%", height: "100vh" }}>
     <Kanban
-      onColumnClick={(args) => {
-        console.log(args);
+      onColumnClick={(e, column) => {
+        console.log(e, column);
       }}
-      onCardMove={(args) => {
-        console.log(args);
+      onCardClick={(e, card) => {
+        console.log();
       }}
       // renderColumnWrapper={(column, { children, className, style }) => (
-      //   <div>{children}</div>
+      //   <div style={{ ...style, backgroundColor: "red" }}>{children}</div>
       // )}
-      renderColumnHeader={(column) => (
-        <div>
-          {column.name} {column?.totalItems}
-        </div>
-      )}
+      // renderColumnHeader={(column) => (
+      //   <div>
+      //     {column.title} have total as {column?.totalChildrenCount}
+      //   </div>
+      // )}
+      // columnHeaderStyle={(column) => ({
+      //   backgroundColor: "red",
+      //   padding: "10px",
+      // })}
+      // columnWrapperStyle={(column) => ({
+      //   backgroundColor: "green",
+      //   padding: "10px",
+      // })}
       rootClassName="check"
       dataSource={mockData}
       configMap={{

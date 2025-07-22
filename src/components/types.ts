@@ -77,6 +77,9 @@ export interface BoardProps {
     position: number;
   }) => void;
   renderColumnFooter?: (column: BoardItem) => ReactNode;
-  onColumnClick?: (column: BoardItem) => void;
-  onCardClick?: (card: BoardItem) => void;
+  onColumnClick?: (
+    e: React.MouseEvent<HTMLDivElement>,
+    column: BoardItem
+  ) => void;
+  onCardClick?: (e: React.MouseEvent<HTMLDivElement>, card: BoardItem) => void;
 }

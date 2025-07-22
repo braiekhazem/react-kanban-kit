@@ -10,7 +10,7 @@ export const mockData: BoardData = {
   },
   1: {
     id: "1",
-    title: "1",
+    title: "To Do",
     parentId: "root",
     children: ["11", "12", "13"],
     content: {},
@@ -18,7 +18,7 @@ export const mockData: BoardData = {
   },
   2: {
     id: "2",
-    title: "2",
+    title: "In Progress",
     parentId: "root",
     children: ["14", "15", "16"],
     content: {},
@@ -26,7 +26,7 @@ export const mockData: BoardData = {
   },
   3: {
     id: "3",
-    title: "3",
+    title: "Done",
     parentId: "root",
     children: [
       "17",
