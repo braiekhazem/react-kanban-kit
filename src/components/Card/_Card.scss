@@ -1,0 +1,13 @@
+@use "../../global/assets/styles/abstracts/variables" as *;
+
+.#{$prefix}-card-shadow {
+  border-radius: 8px;
+  background-color: #ffffffb7;
+  border: 1px solid var(--Schemes-Outline-Variant, #e8ecf5);
+  margin-bottom: 6px;
+  //   position: absolute;
+  //   left: 0;
+  //   right: 0;
+  //   height: 2px !important;
+  //   background: red;
+}

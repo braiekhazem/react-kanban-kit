@@ -84,7 +84,7 @@ const App = () => {
         // loadMore={(columnId) => {
         //   console.log("loadMore", columnId);
         // }}
-        // virtualization={false} // Set to false to disable virtualization and use normal map instead
+        virtualization={false} // Set to false to disable virtualization and use normal map instead
         configMap={{
           card: {
             render: (props) => (

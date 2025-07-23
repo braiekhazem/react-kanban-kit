@@ -6,6 +6,14 @@ import {
 import { withPrefix } from "@/utils/getPrefix";
 import classNames from "classnames";
 import { Column } from "./Column";
+import { useEffect, useRef } from "react";
+
+import { autoScroller } from "@atlaskit/pragmatic-drag-and-drop-react-beautiful-dnd-autoscroll";
+import { monitorForElements } from "@atlaskit/pragmatic-drag-and-drop/element/adapter";
+import { combine } from "@atlaskit/pragmatic-drag-and-drop/combine";
+import { autoScrollForElements } from "@atlaskit/pragmatic-drag-and-drop-auto-scroll/element";
+import { extractClosestEdge } from "@atlaskit/pragmatic-drag-and-drop-hitbox/closest-edge";
+import { reorderWithEdge } from "@atlaskit/pragmatic-drag-and-drop-hitbox/util/reorder-with-edge";
 
 //TODO: fix nested level expand and collapse system for nested subtasks
 
@@ -98,6 +106,42 @@ export const dropHandler = (
   return newDataSource;
 };
 
+interface DropParams {
+  source: {
+    id: string;
+    data: any;
+  };
+  location: {
+    current: {
+      dropTargets: Array<{
+        data: any;
+      }>;
+    };
+  };
+  columns: BoardItem[];
+  dataSource: BoardData;
+  onCardMove?: BoardProps["onCardMove"];
+  onColumnMove?: BoardProps["onColumnMove"];
+}
+
+const handleCardDrop = ({
+  source,
+  location,
+  columns,
+  dataSource,
+  onCardMove,
+  onColumnMove,
+}: DropParams) => {
+  console.log({
+    source,
+    location,
+    columns,
+    dataSource,
+    onCardMove,
+    onColumnMove,
+  });
+};
+
 const Kanban = (props: BoardProps) => {
   const {
     dataSource,
@@ -127,12 +171,54 @@ const Kanban = (props: BoardProps) => {
   } = props;
 
   const columns = getColumnsFromDataSource(dataSource);
+  const internalRef = useRef<HTMLDivElement>(null);
   console.log({ dataSource, configMap, columns });
+
+  useEffect(() => {
+    if (!internalRef.current) return;
+
+    return combine(
+      monitorForElements({
+        onDragStart({ location }) {
+          autoScroller.start({ input: location.current.input });
+        },
+        onDrag({ location }) {
+          autoScroller.updateInput({ input: location.current.input });
+        },
+        onDrop(args) {
+          autoScroller.stop();
+
+          handleCardDrop({
+            source: {
+              id: (args.source as any).id || "",
+              data: args.source.data,
+            },
+            location: {
+              current: {
+                dropTargets: args.location.current.dropTargets,
+              },
+            },
+            columns,
+            dataSource,
+            onCardMove,
+            onColumnMove,
+          });
+        },
+      }),
+      autoScrollForElements({
+        element: internalRef.current,
+        canScroll: () => true,
+        getConfiguration: () => ({
+          maxScrollSpeed: "standard",
+        }),
+      })
+    );
+  }, [columns, dataSource, onCardMove, onColumnMove]);
 
   const containerClassName = classNames(withPrefix("board"), rootClassName);
 
   return (
-    <div className={containerClassName} style={rootStyle}>
+    <div ref={internalRef} className={containerClassName} style={rootStyle}>
       {columns?.map((column, index) => (
         <Column
           key={column.id || index}

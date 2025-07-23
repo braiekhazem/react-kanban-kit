@@ -41,7 +41,7 @@ const GenericItem = (props: Props) => {
     isSkeleton,
     cardWrapperStyle,
     cardWrapperClassName,
-    cardsGap,
+    cardsGap = 8,
     renderSkeletonCard,
     onCardClick,
   } = options;
@@ -59,7 +59,6 @@ const GenericItem = (props: Props) => {
       className={wrapperClassName}
       style={{
         ...(cardWrapperStyle?.(data, column) || {}),
-        ...(cardsGap !== undefined ? { marginBottom: `${cardsGap}px` } : {}),
       }}
     >
       {isSkeleton ? (
@@ -80,6 +79,7 @@ const GenericItem = (props: Props) => {
           column={column}
           index={index}
           onClick={onCardClick}
+          cardsGap={cardsGap}
         />
       )}
     </div>

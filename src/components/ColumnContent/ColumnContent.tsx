@@ -1,5 +1,5 @@
 import { withPrefix } from "@/utils/getPrefix";
-import React, { useEffect } from "react";
+import React, { forwardRef, useEffect } from "react";
 import { BoardItem, BoardProps, ConfigMap, ScrollEvent } from "../types";
 import classNames from "classnames";
 import { VList } from "virtua";
@@ -100,7 +100,7 @@ interface Props {
   loadMore?: (columnId: string) => void;
 }
 
-const ColumnContent = (props: Props) => {
+const ColumnContent = forwardRef<HTMLDivElement, Props>((props, ref) => {
   const {
     items,
     column,
@@ -133,6 +133,7 @@ const ColumnContent = (props: Props) => {
 
   return (
     <div
+      ref={ref}
       className={containerClassName}
       style={columnListContentStyle?.(column)}
     >
@@ -149,6 +150,6 @@ const ColumnContent = (props: Props) => {
       />
     </div>
   );
-};
+});
 
 export default ColumnContent;
