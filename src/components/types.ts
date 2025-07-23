@@ -44,6 +44,7 @@ export interface BoardItem {
   totalChildrenCount: number;
   // totalItemsCount is the total number of items (real content) in the column
   totalItemsCount?: number;
+  totalItems?: number; // Added back for compatibility with Kanban.tsx
   isDraggable?: boolean;
 }
 

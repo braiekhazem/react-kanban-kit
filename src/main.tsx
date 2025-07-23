@@ -59,7 +59,7 @@ const App = () => {
         // )}
         // Custom skeleton examples:
         renderSkeletonCard={({ index, column }) => (
-          <CardSkeleton variant="detailed" animationType="shimmer" />
+          <CardSkeleton animationType="shimmer" />
         )}
         // renderSkeletonCard={({ index, column }) => (
         //   <CardSkeleton
