@@ -135,6 +135,7 @@ export const mockData: BoardData = {
     content: {},
     type: "card",
     totalChildrenCount: 0,
+    isDraggable: false,
   },
   20: {
     id: "20",

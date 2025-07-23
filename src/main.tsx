@@ -92,7 +92,7 @@ const App = () => {
                   cursor: "pointer",
                 }}
               >
-                Card {props.index}
+                Card {props.data.title}
               </div>
             ),
             isDraggable: true,

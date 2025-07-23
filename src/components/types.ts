@@ -26,8 +26,7 @@ export interface BoardItem {
   content?: any;
   type?: keyof ConfigMap;
   totalChildrenCount: number;
-  totalItems?: number; // Added back for compatibility
-  subtasks?: BoardItem[]; // Added back for compatibility
+  isDraggable?: boolean;
 }
 
 export interface BoardData {

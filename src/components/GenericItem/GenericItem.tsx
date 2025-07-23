@@ -3,6 +3,11 @@ import { BoardItem, BoardProps, ConfigMap } from "../types";
 import classNames from "classnames";
 import { withPrefix } from "@/utils/getPrefix";
 import CardSkeleton from "../CardSkeleton";
+import Card from "../Card";
+
+const isCardDraggable = (data: BoardItem, isTypeDraggable: boolean) => {
+  return data?.isDraggable !== undefined ? data?.isDraggable : isTypeDraggable;
+};
 
 interface Props {
   index: number;
@@ -55,14 +60,13 @@ const GenericItem = (props: Props) => {
           <CardSkeleton animationType="wave" />
         )
       ) : (
-        <div>
-          {render({
-            data,
-            column,
-            isDraggable,
-            index,
-          })}
-        </div>
+        <Card
+          render={render}
+          isDraggable={isCardDraggable(data, isDraggable)}
+          data={data}
+          column={column}
+          index={index}
+        />
       )}
     </div>
   );
