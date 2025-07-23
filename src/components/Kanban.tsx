@@ -112,6 +112,7 @@ const Kanban = (props: BoardProps) => {
     columnListContentClassName,
     rootStyle = {},
     rootClassName,
+    onScroll,
     onColumnMove,
     onCardMove,
     onColumnClick,
@@ -156,6 +157,7 @@ const Kanban = (props: BoardProps) => {
           cardWrapperStyle={cardWrapperStyle}
           cardWrapperClassName={cardWrapperClassName}
           cardsGap={cardsGap}
+          onScroll={onScroll}
         />
       ))}
     </div>

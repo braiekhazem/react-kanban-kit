@@ -12,7 +12,7 @@
     overflow-x: hidden;
     contain: none !important;
     scrollbar-width: thin; /* For Firefox */
-    scrollbar-color: transparent transparent; /* For Firefox - thumb and track color */
+    scrollbar-color: rgba(0, 0, 0, 0.3) transparent; /* For Firefox - thumb and track color */
     transition: scrollbar-color 0.3s ease;
 
     // Show scrollbar on hover for better UX

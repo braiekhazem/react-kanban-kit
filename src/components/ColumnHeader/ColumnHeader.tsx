@@ -34,7 +34,7 @@ const ColumnHeader = forwardRef<HTMLDivElement, Props>((props, ref) => {
     >
       <div className={withPrefix("column-header-left")}>{data?.title}</div>
       <div className={withPrefix("column-header-right")}>
-        {data?.totalChildrenCount || 0}
+        {data?.totalItemsCount || data?.totalChildrenCount || 0}
       </div>
     </header>
   );

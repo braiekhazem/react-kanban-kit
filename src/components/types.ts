@@ -11,6 +11,14 @@ export interface Column {
   content: any;
 }
 
+export interface ScrollEvent {
+  target: {
+    scrollTop: number;
+    scrollHeight: number;
+    clientHeight: number;
+  };
+}
+
 export type CardRenderProps = {
   data: BoardItem;
   column: BoardItem;
@@ -32,7 +40,10 @@ export interface BoardItem {
   children: string[];
   content?: any;
   type?: keyof ConfigMap;
+  // totalChildrenCount is the total number of children in the column
   totalChildrenCount: number;
+  // totalItemsCount is the total number of items (real content) in the column
+  totalItemsCount?: number;
   isDraggable?: boolean;
 }
 
@@ -72,7 +83,7 @@ export interface BoardProps {
   cardWrapperStyle?: (card: BoardItem, column: BoardItem) => CSSProperties;
   cardWrapperClassName?: string;
   cardsGap?: number;
-  onScroll?: (e: React.UIEvent<HTMLDivElement>) => void;
+  onScroll?: (e: ScrollEvent, column: BoardItem) => void;
   onColumnMove?: ({
     columnId,
     fromIndex,

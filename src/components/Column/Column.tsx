@@ -1,10 +1,9 @@
 import React, { Fragment, useEffect, useRef, useState } from "react";
-import { BoardItem, BoardProps, ConfigMap } from "../types";
+import { BoardItem, BoardProps, ConfigMap, ScrollEvent } from "../types";
 import { withPrefix } from "@/utils/getPrefix";
 import classNames from "classnames";
 import ColumnHeader from "../ColumnHeader";
 import ColumnContent from "../ColumnContent";
-import { getHeaderHeight } from "@/utils/columnsUtils";
 
 interface Props {
   index: number;
@@ -45,6 +44,7 @@ interface Props {
   ) => React.CSSProperties;
   cardWrapperClassName?: string;
   cardsGap?: number;
+  onScroll?: (e: ScrollEvent, column: BoardItem) => void;
 }
 
 const Column = (props: Props) => {
@@ -69,6 +69,7 @@ const Column = (props: Props) => {
     virtualization,
     cardWrapperStyle,
     cardWrapperClassName,
+    onScroll,
     cardsGap,
   } = props;
 
@@ -115,6 +116,9 @@ const Column = (props: Props) => {
               configMap={configMap}
               virtualization={virtualization ?? true}
               renderSkeletonCard={renderSkeletonCard}
+              onScroll={onScroll}
+              onCardClick={onCardClick}
+              loadMore={loadMore}
             />
             {renderColumnFooter?.(data)}
           </div>

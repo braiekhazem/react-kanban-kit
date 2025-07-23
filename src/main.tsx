@@ -67,6 +67,9 @@ const App = () => {
         //     animationType="pulse"
         //   />
         // )}
+        // onScroll={(e, column) => {
+        //   console.log(e, column);
+        // }}
         rootClassName="check"
         dataSource={mockData}
         // cardsGap={30}
@@ -78,6 +81,9 @@ const App = () => {
         //   };
         // }}
         cardWrapperClassName="card-hazem"
+        // loadMore={(columnId) => {
+        //   console.log("loadMore", columnId);
+        // }}
         // virtualization={false} // Set to false to disable virtualization and use normal map instead
         configMap={{
           card: {
@@ -90,6 +96,7 @@ const App = () => {
                   border: "1px solid #ccc",
                   boxShadow: "0 0 10px 0 rgba(0, 0, 0, 0.1)",
                   cursor: "pointer",
+                  height: "70px",
                 }}
               >
                 Card {props.data.title}
@@ -100,6 +107,13 @@ const App = () => {
           cardLoading: {
             render: (props) => <div>Card Loading</div>,
             isDraggable: true,
+          },
+          footer: {
+            render: (props) => {
+              console.log({ props });
+              return <div>Add Task</div>;
+            },
+            isDraggable: false,
           },
         }}
       />

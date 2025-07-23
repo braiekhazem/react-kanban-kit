@@ -1,21 +1,5 @@
 import { debounce } from "lodash";
-
-export const handleScroll = (
-  e: any,
-  listLength: number,
-  currentPage: number,
-  limit: number,
-  onBottom: (p) => void,
-  threshold?: number
-) => {
-  const { scrollTop, clientHeight, scrollHeight } = e.target;
-  const scrollBottom = scrollHeight - (scrollTop + clientHeight);
-
-  // const threshold = 40
-
-  if (scrollBottom < (threshold || 0.4) && listLength > currentPage * limit)
-    onBottom((prev) => prev + 1);
-};
+import { withPrefix } from "./getPrefix";
 
 interface ScrollThresholdOptions {
   threshold?: number;
@@ -49,4 +33,21 @@ export const createInfiniteScrollHandler = ({
   }, debounceMs);
 
   return handleInfiniteScroll;
+};
+
+export const checkIfSkeletonIsVisible = ({ columnId, limit = 20 }): boolean => {
+  const skeletons = document.querySelectorAll(
+    `.${withPrefix("generic-item-skeleton")}[data-rkk-column="${columnId}"]`
+  );
+
+  if (!skeletons.length) return false;
+
+  const skeletonsToCheck = Array.from(skeletons).slice(0, limit);
+
+  const isVisible = skeletonsToCheck.some((skeleton) => {
+    const { top, bottom } = skeleton.getBoundingClientRect();
+    return top <= window.innerHeight && bottom >= 0;
+  });
+
+  return isVisible;
 };

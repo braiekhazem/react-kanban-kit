@@ -25,6 +25,10 @@ interface Props {
     cardWrapperClassName?: string;
     cardsGap?: number;
     renderSkeletonCard?: BoardProps["renderSkeletonCard"];
+    onCardClick?: (
+      e: React.MouseEvent<HTMLDivElement>,
+      card: BoardItem
+    ) => void;
   };
 }
 
@@ -39,6 +43,7 @@ const GenericItem = (props: Props) => {
     cardWrapperClassName,
     cardsGap,
     renderSkeletonCard,
+    onCardClick,
   } = options;
 
   const { render = DefaultCard, isDraggable = true } =
@@ -58,9 +63,15 @@ const GenericItem = (props: Props) => {
       }}
     >
       {isSkeleton ? (
-        renderSkeletonCard?.({ index, column }) || (
-          <CardSkeleton animationType="wave" />
-        )
+        <div
+          className={withPrefix("generic-item-skeleton")}
+          data-index={index}
+          data-rkk-column={column?.id}
+        >
+          {renderSkeletonCard?.({ index, column }) || (
+            <CardSkeleton animationType="wave" />
+          )}
+        </div>
       ) : (
         <Card
           render={render}
@@ -68,6 +79,7 @@ const GenericItem = (props: Props) => {
           data={data}
           column={column}
           index={index}
+          onClick={onCardClick}
         />
       )}
     </div>

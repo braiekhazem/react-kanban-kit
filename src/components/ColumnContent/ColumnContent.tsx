@@ -1,9 +1,11 @@
 import { withPrefix } from "@/utils/getPrefix";
-import React from "react";
-import { BoardItem, BoardProps, ConfigMap } from "../types";
+import React, { useEffect } from "react";
+import { BoardItem, BoardProps, ConfigMap, ScrollEvent } from "../types";
 import classNames from "classnames";
 import { VList } from "virtua";
 import GenericItem from "../GenericItem";
+import { handleScroll } from "@/utils/scroll";
+import { checkIfSkeletonIsVisible } from "@/utils/infinite-scroll";
 
 interface ListProps {
   column: BoardItem;
@@ -16,13 +18,21 @@ interface ListProps {
   cardWrapperClassName?: string;
   cardsGap?: number;
   renderSkeletonCard?: BoardProps["renderSkeletonCard"];
+  onScroll?: (e: React.UIEvent<HTMLDivElement>) => void;
+  onCardClick?: (e: React.MouseEvent<HTMLDivElement>, card: BoardItem) => void;
 }
 
-const VirtualizedList = ({ column, items, configMap, ...props }: ListProps) => {
+const VirtualizedList = ({
+  column,
+  items,
+  configMap,
+  onScroll,
+  ...props
+}: ListProps) => {
   return (
     <VList
       count={column?.totalChildrenCount}
-      onScroll={() => {}}
+      onScroll={onScroll}
       className={withPrefix("column-content-list")}
     >
       {(index: number) => {
@@ -45,9 +55,15 @@ const VirtualizedList = ({ column, items, configMap, ...props }: ListProps) => {
   );
 };
 
-const NormalList = ({ column, items, configMap, ...props }: ListProps) => {
+const NormalList = ({
+  column,
+  items,
+  configMap,
+  onScroll,
+  ...props
+}: ListProps) => {
   return (
-    <div className={withPrefix("column-content-list")}>
+    <div className={withPrefix("column-content-list")} onScroll={onScroll}>
       {Array.from({ length: column?.totalChildrenCount }, (_, index) => (
         <GenericItem
           key={index}
@@ -79,6 +95,9 @@ interface Props {
   ) => React.CSSProperties;
   cardWrapperClassName?: string;
   cardsGap?: number;
+  onScroll?: (e: ScrollEvent, column: BoardItem) => void;
+  onCardClick?: (e: React.MouseEvent<HTMLDivElement>, card: BoardItem) => void;
+  loadMore?: (columnId: string) => void;
 }
 
 const ColumnContent = (props: Props) => {
@@ -93,12 +112,22 @@ const ColumnContent = (props: Props) => {
     renderSkeletonCard,
     cardWrapperClassName,
     cardsGap,
+    onCardClick,
+    loadMore,
   } = props;
 
   const containerClassName = classNames(
     withPrefix("column-content"),
     columnListContentClassName
   );
+
+  const onScroll = (e: ScrollEvent, column: BoardItem) => {
+    const isSkeletonVisible = checkIfSkeletonIsVisible({
+      columnId: column?.id,
+    });
+    if (isSkeletonVisible) loadMore?.(column?.id);
+    props?.onScroll?.(e, column);
+  };
 
   const List = virtualization ? VirtualizedList : NormalList;
 
@@ -115,6 +144,8 @@ const ColumnContent = (props: Props) => {
         cardWrapperClassName={cardWrapperClassName}
         cardsGap={cardsGap}
         renderSkeletonCard={renderSkeletonCard}
+        onScroll={(e) => handleScroll(e, virtualization, onScroll, column)}
+        onCardClick={onCardClick}
       />
     </div>
   );
