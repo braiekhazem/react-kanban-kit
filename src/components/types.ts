@@ -26,6 +26,8 @@ export interface BoardItem {
   content?: any;
   type?: keyof ConfigMap;
   totalChildrenCount: number;
+  totalItems?: number; // Added back for compatibility
+  subtasks?: BoardItem[]; // Added back for compatibility
 }
 
 export interface BoardData {
@@ -37,6 +39,13 @@ export interface BoardProps {
   dataSource: BoardData;
   configMap: ConfigMap;
   loadMore?: (groupsId: string) => void;
+  renderSkeletonCard?: ({
+    index,
+    column,
+  }: {
+    index: number;
+    column: BoardItem;
+  }) => ReactNode;
   renderColumnHeader?: (column: BoardItem) => ReactNode;
   renderColumnWrapper?: (
     column: BoardItem,
@@ -54,6 +63,9 @@ export interface BoardProps {
   columnHeaderClassName?: string;
   rootStyle?: CSSProperties;
   rootClassName?: string;
+  cardWrapperStyle?: (card: BoardItem, column: BoardItem) => CSSProperties;
+  cardWrapperClassName?: string;
+  cardsGap?: number;
   onColumnMove?: ({
     columnId,
     fromIndex,

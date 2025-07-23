@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useRef, useState } from "react";
-import { BoardItem, ConfigMap } from "../types";
+import { BoardItem, BoardProps, ConfigMap } from "../types";
 import { withPrefix } from "@/utils/getPrefix";
 import classNames from "classnames";
 import ColumnHeader from "../ColumnHeader";
@@ -18,6 +18,7 @@ interface Props {
   onCardClick?: (e: React.MouseEvent<HTMLDivElement>, card: BoardItem) => void;
   renderColumnHeader?: (column: BoardItem) => React.ReactNode;
   renderColumnFooter?: (column: BoardItem) => React.ReactNode;
+  renderSkeletonCard?: BoardProps["renderSkeletonCard"];
   renderColumnWrapper: (
     column: BoardItem,
     {
@@ -38,6 +39,12 @@ interface Props {
   columnListContentClassName?: string;
   virtualization?: boolean;
   items: BoardItem[];
+  cardWrapperStyle?: (
+    card: BoardItem,
+    column: BoardItem
+  ) => React.CSSProperties;
+  cardWrapperClassName?: string;
+  cardsGap?: number;
 }
 
 const Column = (props: Props) => {
@@ -52,6 +59,7 @@ const Column = (props: Props) => {
     renderColumnHeader,
     renderColumnWrapper,
     renderColumnFooter,
+    renderSkeletonCard,
     columnWrapperStyle,
     columnHeaderStyle,
     columnWrapperClassName,
@@ -59,6 +67,9 @@ const Column = (props: Props) => {
     columnListContentStyle,
     columnListContentClassName,
     virtualization,
+    cardWrapperStyle,
+    cardWrapperClassName,
+    cardsGap,
   } = props;
 
   const headerRef = useRef<HTMLDivElement>(null);
@@ -98,8 +109,12 @@ const Column = (props: Props) => {
               column={data}
               columnListContentStyle={columnListContentStyle}
               columnListContentClassName={columnListContentClassName}
+              cardWrapperStyle={cardWrapperStyle}
+              cardWrapperClassName={cardWrapperClassName}
+              cardsGap={cardsGap}
               configMap={configMap}
-              virtualization={virtualization ?? true} // Default to true for backward compatibility
+              virtualization={virtualization ?? true}
+              renderSkeletonCard={renderSkeletonCard}
             />
             {renderColumnFooter?.(data)}
           </div>

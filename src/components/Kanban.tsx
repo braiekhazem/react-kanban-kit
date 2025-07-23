@@ -117,8 +117,12 @@ const Kanban = (props: BoardProps) => {
     onColumnClick,
     onCardClick,
     renderColumnFooter,
+    renderSkeletonCard,
     loadMore,
-    virtualization, // Added virtualization prop
+    virtualization,
+    cardWrapperStyle,
+    cardWrapperClassName,
+    cardsGap,
   } = props;
 
   const columns = getColumnsFromDataSource(dataSource);
@@ -140,6 +144,7 @@ const Kanban = (props: BoardProps) => {
           onCardClick={onCardClick}
           renderColumnHeader={renderColumnHeader}
           renderColumnFooter={renderColumnFooter}
+          renderSkeletonCard={renderSkeletonCard}
           renderColumnWrapper={renderColumnWrapper}
           columnWrapperStyle={columnWrapperStyle}
           columnHeaderStyle={columnHeaderStyle}
@@ -148,6 +153,9 @@ const Kanban = (props: BoardProps) => {
           columnListContentStyle={columnListContentStyle}
           columnListContentClassName={columnListContentClassName}
           virtualization={virtualization}
+          cardWrapperStyle={cardWrapperStyle}
+          cardWrapperClassName={cardWrapperClassName}
+          cardsGap={cardsGap}
         />
       ))}
     </div>

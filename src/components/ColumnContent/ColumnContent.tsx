@@ -9,9 +9,16 @@ interface ListProps {
   column: BoardItem;
   items: BoardItem[];
   configMap: ConfigMap;
+  cardWrapperStyle?: (
+    card: BoardItem,
+    column: BoardItem
+  ) => React.CSSProperties;
+  cardWrapperClassName?: string;
+  cardsGap?: number;
+  renderSkeletonCard?: BoardProps["renderSkeletonCard"];
 }
 
-const VirtualizedList = ({ column, items, configMap }: ListProps) => {
+const VirtualizedList = ({ column, items, configMap, ...props }: ListProps) => {
   return (
     <VList
       count={column?.totalChildrenCount}
@@ -22,13 +29,14 @@ const VirtualizedList = ({ column, items, configMap }: ListProps) => {
         const item = items[index];
         return (
           <GenericItem
-            key={+(item?.id || 0) + index}
+            key={index}
             index={index}
             options={{
               data: item,
               column,
               configMap,
               isSkeleton: index >= items.length,
+              ...props,
             }}
           />
         );
@@ -37,7 +45,7 @@ const VirtualizedList = ({ column, items, configMap }: ListProps) => {
   );
 };
 
-const NormalList = ({ column, items, configMap }: ListProps) => {
+const NormalList = ({ column, items, configMap, ...props }: ListProps) => {
   return (
     <div className={withPrefix("column-content-list")}>
       {Array.from({ length: column?.totalChildrenCount }, (_, index) => (
@@ -49,6 +57,7 @@ const NormalList = ({ column, items, configMap }: ListProps) => {
             column,
             configMap,
             isSkeleton: index >= items.length,
+            ...props,
           }}
         />
       ))}
@@ -63,6 +72,13 @@ interface Props {
   columnListContentClassName?: string;
   configMap: ConfigMap;
   virtualization: boolean;
+  renderSkeletonCard?: BoardProps["renderSkeletonCard"];
+  cardWrapperStyle?: (
+    card: BoardItem,
+    column: BoardItem
+  ) => React.CSSProperties;
+  cardWrapperClassName?: string;
+  cardsGap?: number;
 }
 
 const ColumnContent = (props: Props) => {
@@ -73,6 +89,10 @@ const ColumnContent = (props: Props) => {
     columnListContentStyle,
     columnListContentClassName,
     virtualization = true,
+    cardWrapperStyle,
+    renderSkeletonCard,
+    cardWrapperClassName,
+    cardsGap,
   } = props;
 
   const containerClassName = classNames(
@@ -87,7 +107,15 @@ const ColumnContent = (props: Props) => {
       className={containerClassName}
       style={columnListContentStyle?.(column)}
     >
-      <List column={column} items={items} configMap={configMap} />
+      <List
+        column={column}
+        items={items}
+        configMap={configMap}
+        cardWrapperStyle={cardWrapperStyle}
+        cardWrapperClassName={cardWrapperClassName}
+        cardsGap={cardsGap}
+        renderSkeletonCard={renderSkeletonCard}
+      />
     </div>
   );
 };

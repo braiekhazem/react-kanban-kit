@@ -1,0 +1,5 @@
+@use "./../../global/assets/styles/abstracts/variables" as *;
+
+.#{$prefix}-generic-item-wrapper {
+  margin-bottom: 8px;
+}

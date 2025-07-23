@@ -1,5 +1,8 @@
 import React from "react";
-import { BoardItem, ConfigMap } from "../types";
+import { BoardItem, BoardProps, ConfigMap } from "../types";
+import classNames from "classnames";
+import { withPrefix } from "@/utils/getPrefix";
+import CardSkeleton from "../CardSkeleton";
 
 interface Props {
   index: number;
@@ -9,23 +12,58 @@ interface Props {
     configMap: ConfigMap;
     //isSkeleton is used to show a skeleton UI when the item is not loaded yet
     isSkeleton: boolean;
+    cardWrapperStyle?: (
+      card: BoardItem,
+      column: BoardItem
+    ) => React.CSSProperties;
+    cardWrapperClassName?: string;
+    cardsGap?: number;
+    renderSkeletonCard?: BoardProps["renderSkeletonCard"];
   };
 }
 
 const GenericItem = (props: Props) => {
   const { index, options } = props;
-  const { data, column, configMap, isSkeleton } = options;
+  const {
+    data,
+    column,
+    configMap,
+    isSkeleton,
+    cardWrapperStyle,
+    cardWrapperClassName,
+    cardsGap,
+    renderSkeletonCard,
+  } = options;
+
+  const { render, isDraggable } = configMap[data?.type] || {};
+
+  const wrapperClassName = classNames(
+    withPrefix("generic-item-wrapper"),
+    cardWrapperClassName
+  );
 
   return (
     <div
+      className={wrapperClassName}
       style={{
-        padding: "8px",
-        margin: "4px 0",
-        backgroundColor: "white",
-        borderRadius: "4px",
+        ...(cardWrapperStyle?.(data, column) || {}),
+        ...(cardsGap !== undefined ? { marginBottom: `${cardsGap}px` } : {}),
       }}
     >
-      {isSkeleton ? <div>Loading...</div> : <div>GenericItem</div>}
+      {isSkeleton ? (
+        renderSkeletonCard?.({ index, column }) || (
+          <CardSkeleton animationType="wave" />
+        )
+      ) : (
+        <div>
+          {render({
+            data,
+            column,
+            isDraggable,
+            index,
+          })}
+        </div>
+      )}
     </div>
   );
 };
