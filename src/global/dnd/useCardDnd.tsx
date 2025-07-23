@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { BoardItem } from "@/components/types";
+import { BoardItem, DndState } from "@/components/types";
 import {
   draggable,
   dropTargetForElements,
@@ -12,6 +12,7 @@ import {
 import { combine } from "@atlaskit/pragmatic-drag-and-drop/combine";
 import { setCustomNativeDragPreview } from "@atlaskit/pragmatic-drag-and-drop/element/set-custom-native-drag-preview";
 import { preserveOffsetOnSource } from "@atlaskit/pragmatic-drag-and-drop/element/preserve-offset-on-source";
+import { useKanbanContext } from "@/context/KanbanContext";
 
 export type TaskCardState =
   | {
@@ -41,8 +42,10 @@ export const useCardDnd = (
   data: BoardItem,
   column: BoardItem,
   index: number,
-  isDraggable: boolean
+  isDraggable: boolean,
+  onCardDndStateChange?: (info: DndState) => void
 ) => {
+  const { viewOnly } = useKanbanContext();
   const outerRef = useRef<HTMLDivElement>(null);
   const innerRef = useRef<HTMLDivElement>(null);
   const [state, setState] = useState<TaskCardState>(idle);
@@ -184,7 +187,7 @@ export const useCardDnd = (
         onGenerateDragPreview: handleGenerateDragPreview,
         onDragStart: handleDragStart,
         onDrop: handleDrop,
-        canDrag: () => isDraggable,
+        canDrag: () => isDraggable && !viewOnly,
       }),
       dropTargetForElements({
         element: outer,
@@ -209,6 +212,10 @@ export const useCardDnd = (
     handleDrag,
     handleDragLeave,
   ]);
+
+  useEffect(() => {
+    onCardDndStateChange?.({ state, card: data, column });
+  }, [state, onCardDndStateChange]);
 
   return {
     outerRef,

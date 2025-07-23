@@ -1,10 +1,17 @@
 import React, { Fragment, useEffect, useRef, useState } from "react";
-import { BoardItem, BoardProps, ConfigMap, ScrollEvent } from "../types";
+import {
+  BoardItem,
+  BoardProps,
+  ConfigMap,
+  DndState,
+  ScrollEvent,
+} from "../types";
 import { withPrefix } from "@/utils/getPrefix";
 import classNames from "classnames";
 import ColumnHeader from "../ColumnHeader";
 import ColumnContent from "../ColumnContent";
-import { useColumnDnd } from "@/global/dnd/useColumnDnd";
+import { TColumnState, useColumnDnd } from "@/global/dnd/useColumnDnd";
+import { TaskCardState } from "@/global/dnd/useCardDnd";
 
 interface Props {
   index: number;
@@ -35,10 +42,18 @@ interface Props {
   ) => React.ReactNode;
   columnWrapperStyle?: (column: BoardItem) => React.CSSProperties;
   columnHeaderStyle?: (column: BoardItem) => React.CSSProperties;
-  columnWrapperClassName?: string;
-  columnHeaderClassName?: string;
+  columnStyle?: (column: BoardItem) => React.CSSProperties;
+  columnClassName?: (column: BoardItem) => string;
+  onCardDndStateChange?: (info: DndState) => void;
+  onColumnDndStateChange?: (info: DndState) => void;
+  columnWrapperClassName?: (column: BoardItem) => string;
+  columnHeaderClassName?: (column: BoardItem) => string;
   columnListContentStyle?: (column: BoardItem) => React.CSSProperties;
-  columnListContentClassName?: string;
+  renderCardDragIndicator?: (card: BoardItem, info: any) => React.ReactNode;
+  renderColumnDragIndicator?: (column: BoardItem, info: any) => React.ReactNode;
+  renderCardDragPreview?: (card: BoardItem, info: any) => React.ReactNode;
+  renderColumnDragPreview?: (column: BoardItem, info: any) => React.ReactNode;
+  columnListContentClassName?: (column: BoardItem) => string;
   virtualization?: boolean;
   items: BoardItem[];
   cardWrapperStyle?: (
@@ -65,6 +80,12 @@ const Column = (props: Props) => {
     renderSkeletonCard,
     columnWrapperStyle,
     columnHeaderStyle,
+    onCardDndStateChange,
+    onColumnDndStateChange,
+    renderCardDragIndicator,
+    renderColumnDragIndicator,
+    renderCardDragPreview,
+    renderColumnDragPreview,
     columnWrapperClassName,
     columnHeaderClassName,
     columnListContentStyle,
@@ -74,6 +95,8 @@ const Column = (props: Props) => {
     cardWrapperClassName,
     onScroll,
     cardsGap,
+    columnClassName,
+    columnStyle,
   } = props;
 
   // Use the custom hook for all drag and drop logic
@@ -83,15 +106,12 @@ const Column = (props: Props) => {
     innerRef,
     state,
     cardOverShadowCount,
-    totalTasksCount,
-  } = useColumnDnd(data, index, items);
+  } = useColumnDnd(data, index, items, onColumnDndStateChange);
 
   const containerClassName = classNames(
     withPrefix("column-outer"),
     columnWrapperClassName
   );
-
-  console.log({ state });
 
   const ColumnWrapper = (children: React.ReactNode) =>
     renderColumnWrapper ? (
@@ -114,12 +134,16 @@ const Column = (props: Props) => {
   return (
     <div onClick={(e) => onColumnClick?.(e, data)}>
       {ColumnWrapper(
-        <div className={withPrefix("column")} ref={innerRef}>
+        <div
+          className={classNames(withPrefix("column"), columnClassName?.(data))}
+          ref={innerRef}
+          style={columnStyle?.(data)}
+        >
           <div className={withPrefix("column-wrapper")}>
             <ColumnHeader
               renderColumnHeader={renderColumnHeader}
               columnHeaderStyle={columnHeaderStyle}
-              columnHeaderClassName={columnHeaderClassName}
+              columnHeaderClassName={columnHeaderClassName?.(data)}
               data={data}
               ref={headerRef}
             />
@@ -127,16 +151,23 @@ const Column = (props: Props) => {
               items={items}
               column={data}
               columnListContentStyle={columnListContentStyle}
-              columnListContentClassName={columnListContentClassName}
+              columnListContentClassName={columnListContentClassName?.(data)}
               cardWrapperStyle={cardWrapperStyle}
               cardWrapperClassName={cardWrapperClassName}
               cardsGap={cardsGap}
               configMap={configMap}
               virtualization={virtualization ?? true}
               renderSkeletonCard={renderSkeletonCard}
+              cardOverHeight={
+                cardOverShadowCount ? (state as any).dragging.height : null
+              }
               onScroll={onScroll}
               onCardClick={onCardClick}
               loadMore={loadMore}
+              cardOverShadowCount={cardOverShadowCount}
+              onCardDndStateChange={onCardDndStateChange}
+              renderCardDragIndicator={renderCardDragIndicator}
+              renderCardDragPreview={renderCardDragPreview}
             />
             {renderColumnFooter?.(data)}
           </div>

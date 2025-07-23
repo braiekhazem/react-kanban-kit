@@ -1,3 +1,5 @@
+import { TaskCardState } from "@/global/dnd/useCardDnd";
+import { TColumnState } from "@/global/dnd/useColumnDnd";
 import { CSSProperties, ReactNode } from "react";
 
 export interface Column {
@@ -9,6 +11,12 @@ export interface Column {
   getUpdatedValue?: (value: any) => any;
   groupType?: string;
   content: any;
+}
+
+export interface DndState {
+  state: TaskCardState | TColumnState;
+  column?: BoardItem;
+  card?: BoardItem;
 }
 
 export interface ScrollEvent {
@@ -56,6 +64,7 @@ export interface BoardData {
 export interface BoardProps {
   dataSource: BoardData;
   configMap: ConfigMap;
+  viewOnly?: boolean;
   loadMore?: (groupsId: string) => void;
   renderSkeletonCard?: ({
     index,
@@ -65,6 +74,12 @@ export interface BoardProps {
     column: BoardItem;
   }) => ReactNode;
   renderColumnHeader?: (column: BoardItem) => ReactNode;
+
+  renderCardDragIndicator?: (card: BoardItem, info: any) => ReactNode;
+  renderCardDragPreview?: (card: BoardItem, info: any) => ReactNode;
+  // renderColumnDragIndicator?: (column: BoardItem, info: any) => ReactNode;
+  // renderColumnDragPreview?: (column: BoardItem, info: any) => ReactNode;
+
   renderColumnWrapper?: (
     column: BoardItem,
     {
@@ -76,13 +91,16 @@ export interface BoardProps {
   columnWrapperStyle?: (column: BoardItem) => CSSProperties;
   columnHeaderStyle?: (column: BoardItem) => CSSProperties;
   columnListContentStyle?: (column: BoardItem) => CSSProperties;
-  columnListContentClassName?: string;
-  columnWrapperClassName?: string;
-  columnHeaderClassName?: string;
+  columnListContentClassName?: (column: BoardItem) => string;
+  columnWrapperClassName?: (column: BoardItem) => string;
+  columnHeaderClassName?: (column: BoardItem) => string;
+  columnClassName?: (column: BoardItem) => string;
+  columnStyle?: (column: BoardItem) => CSSProperties;
   rootStyle?: CSSProperties;
   rootClassName?: string;
   cardWrapperStyle?: (card: BoardItem, column: BoardItem) => CSSProperties;
   cardWrapperClassName?: string;
+  virtualization?: boolean;
   cardsGap?: number;
   onScroll?: (e: ScrollEvent, column: BoardItem) => void;
   onColumnMove?: ({
@@ -115,5 +133,6 @@ export interface BoardProps {
     column: BoardItem
   ) => void;
   onCardClick?: (e: React.MouseEvent<HTMLDivElement>, card: BoardItem) => void;
-  virtualization?: boolean; // Add option to enable/disable virtualization
+  onCardDndStateChange?: (info: DndState) => void;
+  onColumnDndStateChange?: (info: DndState) => void;
 }

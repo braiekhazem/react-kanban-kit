@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { BoardItem } from "@/components/types";
+import { BoardItem, DndState } from "@/components/types";
 import { withPrefix } from "@/utils/getPrefix";
 import {
   draggable,
@@ -9,6 +9,7 @@ import { setCustomNativeDragPreview } from "@atlaskit/pragmatic-drag-and-drop/el
 import { preserveOffsetOnSource } from "@atlaskit/pragmatic-drag-and-drop/element/preserve-offset-on-source";
 import { combine } from "@atlaskit/pragmatic-drag-and-drop/combine";
 import { autoScrollForElements } from "@atlaskit/pragmatic-drag-and-drop-auto-scroll/element";
+import { useKanbanContext } from "@/context/KanbanContext";
 
 export type TColumnState =
   | {
@@ -39,8 +40,10 @@ const idle = { type: "idle" } as TColumnState;
 export const useColumnDnd = (
   data: BoardItem,
   index: number,
-  items: BoardItem[]
+  items: BoardItem[],
+  onColumnDndStateChange?: (info: DndState) => void
 ) => {
+  const { viewOnly } = useKanbanContext();
   const headerRef = useRef<HTMLDivElement>(null);
   const outerFullHeightRef = useRef<HTMLDivElement | null>(null);
   const innerRef = useRef<HTMLDivElement | null>(null);
@@ -151,7 +154,7 @@ export const useColumnDnd = (
       !innerRef.current ||
       !headerRef.current
     ) {
-      console.log("not ready");
+      console.warn("not ready");
       return;
     }
 
@@ -175,6 +178,8 @@ export const useColumnDnd = (
         onGenerateDragPreview: handleGenerateDragPreview,
         onDragStart: handleDragStart,
         onDrop: handleDrop,
+        //TODO: add dnd in columns
+        canDrag: () => false,
       }),
       dropTargetForElements({
         element: outerFullHeightRef.current,
@@ -212,6 +217,10 @@ export const useColumnDnd = (
     canScroll,
     getConfiguration,
   ]);
+
+  useEffect(() => {
+    onColumnDndStateChange?.({ state, column: data });
+  }, [state, onColumnDndStateChange]);
 
   return {
     headerRef,

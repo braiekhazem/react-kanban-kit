@@ -1,6 +1,12 @@
 import { withPrefix } from "@/utils/getPrefix";
 import React, { forwardRef, useEffect } from "react";
-import { BoardItem, BoardProps, ConfigMap, ScrollEvent } from "../types";
+import {
+  BoardItem,
+  BoardProps,
+  ConfigMap,
+  DndState,
+  ScrollEvent,
+} from "../types";
 import classNames from "classnames";
 import { VList } from "virtua";
 import GenericItem from "../GenericItem";
@@ -17,6 +23,11 @@ interface ListProps {
   ) => React.CSSProperties;
   cardWrapperClassName?: string;
   cardsGap?: number;
+  cardOverHeight?: number;
+  cardOverShadowCount?: number;
+  renderCardDragIndicator?: (card: BoardItem, info: any) => React.ReactNode;
+  renderCardDragPreview?: (card: BoardItem, info: any) => React.ReactNode;
+  onCardDndStateChange?: (info: DndState) => void;
   renderSkeletonCard?: BoardProps["renderSkeletonCard"];
   onScroll?: (e: React.UIEvent<HTMLDivElement>) => void;
   onCardClick?: (e: React.MouseEvent<HTMLDivElement>, card: BoardItem) => void;
@@ -27,11 +38,12 @@ const VirtualizedList = ({
   items,
   configMap,
   onScroll,
+  cardOverShadowCount,
   ...props
 }: ListProps) => {
   return (
     <VList
-      count={column?.totalChildrenCount}
+      count={column?.totalChildrenCount + cardOverShadowCount}
       onScroll={onScroll}
       className={withPrefix("column-content-list")}
     >
@@ -46,6 +58,7 @@ const VirtualizedList = ({
               column,
               configMap,
               isSkeleton: index >= items.length,
+              isShadow: cardOverShadowCount && index === items.length,
               ...props,
             }}
           />
@@ -60,23 +73,28 @@ const NormalList = ({
   items,
   configMap,
   onScroll,
+  cardOverShadowCount,
   ...props
 }: ListProps) => {
   return (
     <div className={withPrefix("column-content-list")} onScroll={onScroll}>
-      {Array.from({ length: column?.totalChildrenCount }, (_, index) => (
-        <GenericItem
-          key={index}
-          index={index}
-          options={{
-            data: items[index],
-            column,
-            configMap,
-            isSkeleton: index >= items.length,
-            ...props,
-          }}
-        />
-      ))}
+      {Array.from(
+        { length: column?.totalChildrenCount + cardOverShadowCount },
+        (_, index) => (
+          <GenericItem
+            key={index}
+            index={index}
+            options={{
+              data: items[index],
+              column,
+              configMap,
+              isSkeleton: index >= items.length,
+              isShadow: cardOverShadowCount && index === items.length,
+              ...props,
+            }}
+          />
+        )
+      )}
     </div>
   );
 };
@@ -98,6 +116,11 @@ interface Props {
   onScroll?: (e: ScrollEvent, column: BoardItem) => void;
   onCardClick?: (e: React.MouseEvent<HTMLDivElement>, card: BoardItem) => void;
   loadMore?: (columnId: string) => void;
+  cardOverShadowCount?: number;
+  cardOverHeight?: number;
+  onCardDndStateChange?: (info: DndState) => void;
+  renderCardDragIndicator?: (card: BoardItem, info: any) => React.ReactNode;
+  renderCardDragPreview?: (card: BoardItem, info: any) => React.ReactNode;
 }
 
 const ColumnContent = forwardRef<HTMLDivElement, Props>((props, ref) => {
@@ -114,6 +137,11 @@ const ColumnContent = forwardRef<HTMLDivElement, Props>((props, ref) => {
     cardsGap,
     onCardClick,
     loadMore,
+    cardOverShadowCount,
+    cardOverHeight,
+    onCardDndStateChange,
+    renderCardDragIndicator,
+    renderCardDragPreview,
   } = props;
 
   const containerClassName = classNames(
@@ -147,6 +175,11 @@ const ColumnContent = forwardRef<HTMLDivElement, Props>((props, ref) => {
         renderSkeletonCard={renderSkeletonCard}
         onScroll={(e) => handleScroll(e, virtualization, onScroll, column)}
         onCardClick={onCardClick}
+        cardOverShadowCount={cardOverShadowCount}
+        onCardDndStateChange={onCardDndStateChange}
+        renderCardDragIndicator={renderCardDragIndicator}
+        renderCardDragPreview={renderCardDragPreview}
+        cardOverHeight={cardOverHeight}
       />
     </div>
   );

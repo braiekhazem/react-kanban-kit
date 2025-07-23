@@ -8,6 +8,7 @@ import CardSkeleton from "./components/CardSkeleton"; // Uncomment to use in ren
 
 const App = () => {
   const [collapsed, setCollapsed] = useState(false);
+  const [dragOverColumn, setDragOverColumn] = useState<string | null>(null);
 
   return (
     <div style={{ width: "100%", height: "86dvh" }}>
@@ -18,9 +19,34 @@ const App = () => {
         onColumnClick={(e, column) => {
           console.log(e, column);
         }}
+        viewOnly={false}
         onCardClick={(e, card) => {
           console.log();
         }}
+        // renderCardDragPreview={(card, info) => {
+        //   return (
+        //     <div
+        //       style={{
+        //         height: "92px",
+        //         backgroundColor: "red",
+        //         width: "233px",
+        //       }}
+        //     >
+        //       Preview of {card.title}
+        //     </div>
+        //   );
+        // }}
+        // renderCardDragIndicator={(card, info) => {
+        //   return (
+        //     <div
+        //       style={{
+        //         height: info.height,
+        //         backgroundColor: "red",
+        //         borderRadius: "20px",
+        //       }}
+        //     ></div>
+        //   );
+        // }}
         // renderColumnFooter={(column) => (
         //   <div>
         //     {column.title} have total as {column?.totalChildrenCount}
@@ -57,6 +83,7 @@ const App = () => {
         //     Loading {index} {column.title} ...
         //   </div>
         // )}
+
         // Custom skeleton examples:
         renderSkeletonCard={({ index, column }) => (
           <CardSkeleton animationType="shimmer" />
@@ -70,6 +97,12 @@ const App = () => {
         // onScroll={(e, column) => {
         //   console.log(e, column);
         // }}
+        // columnStyle={(column) => ({
+        //   backgroundColor: dragOverColumn === column.id ? "red" : "blue",
+        // })}
+        columnClassName={(column) =>
+          dragOverColumn === column.id ? "drag-over-column" : ""
+        }
         rootClassName="check"
         dataSource={mockData}
         // cardsGap={30}
@@ -83,6 +116,19 @@ const App = () => {
         cardWrapperClassName="card-hazem"
         // loadMore={(columnId) => {
         //   console.log("loadMore", columnId);
+        // }}
+        // onCardDndStateChange={(info) => {
+        //   console.log({ info });
+        //   if (info.state.type === "idle") {
+        //     setDragOverColumn(info.column?.id);
+        //   }
+        // }}
+        // onColumnDndStateChange={(info) => {
+        //   if (info.state.type === "is-card-over") {
+        //     setDragOverColumn(info.column?.id);
+        //   } else {
+        //     setDragOverColumn(null);
+        //   }
         // }}
         virtualization={false} // Set to false to disable virtualization and use normal map instead
         configMap={{

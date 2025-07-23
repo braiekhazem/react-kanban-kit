@@ -1,5 +1,9 @@
 @use "../../global/assets/styles/abstracts/variables" as *;
 
+.#{$prefix}-card-shadow-container {
+  position: relative;
+}
+
 .#{$prefix}-card-shadow {
   border-radius: 8px;
   background-color: #ffffffb7;

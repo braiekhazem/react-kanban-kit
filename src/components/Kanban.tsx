@@ -6,7 +6,7 @@ import {
 import { withPrefix } from "@/utils/getPrefix";
 import classNames from "classnames";
 import { Column } from "./Column";
-import { useEffect, useRef } from "react";
+import { forwardRef, useEffect, useRef } from "react";
 
 import { autoScroller } from "@atlaskit/pragmatic-drag-and-drop-react-beautiful-dnd-autoscroll";
 import { monitorForElements } from "@atlaskit/pragmatic-drag-and-drop/element/adapter";
@@ -14,6 +14,8 @@ import { combine } from "@atlaskit/pragmatic-drag-and-drop/combine";
 import { autoScrollForElements } from "@atlaskit/pragmatic-drag-and-drop-auto-scroll/element";
 import { extractClosestEdge } from "@atlaskit/pragmatic-drag-and-drop-hitbox/closest-edge";
 import { reorderWithEdge } from "@atlaskit/pragmatic-drag-and-drop-hitbox/util/reorder-with-edge";
+import { KanbanProvider } from "@/context/KanbanContext";
+import mergeRefs from "@/utils/mergeRefs";
 
 //TODO: fix nested level expand and collapse system for nested subtasks
 
@@ -142,7 +144,7 @@ const handleCardDrop = ({
   });
 };
 
-const Kanban = (props: BoardProps) => {
+const Kanban = forwardRef<HTMLDivElement, BoardProps>((props, ref) => {
   const {
     dataSource,
     configMap,
@@ -168,6 +170,12 @@ const Kanban = (props: BoardProps) => {
     cardWrapperStyle,
     cardWrapperClassName,
     cardsGap,
+    onCardDndStateChange,
+    onColumnDndStateChange,
+    renderCardDragIndicator,
+    renderCardDragPreview,
+    columnClassName,
+    columnStyle,
   } = props;
 
   const columns = getColumnsFromDataSource(dataSource);
@@ -218,36 +226,48 @@ const Kanban = (props: BoardProps) => {
   const containerClassName = classNames(withPrefix("board"), rootClassName);
 
   return (
-    <div ref={internalRef} className={containerClassName} style={rootStyle}>
-      {columns?.map((column, index) => (
-        <Column
-          key={column.id || index}
-          index={index}
-          data={column}
-          configMap={configMap}
-          loadMore={loadMore}
-          items={getColumnChildren(column, dataSource)}
-          onColumnClick={onColumnClick}
-          onCardClick={onCardClick}
-          renderColumnHeader={renderColumnHeader}
-          renderColumnFooter={renderColumnFooter}
-          renderSkeletonCard={renderSkeletonCard}
-          renderColumnWrapper={renderColumnWrapper}
-          columnWrapperStyle={columnWrapperStyle}
-          columnHeaderStyle={columnHeaderStyle}
-          columnWrapperClassName={columnWrapperClassName}
-          columnHeaderClassName={columnHeaderClassName}
-          columnListContentStyle={columnListContentStyle}
-          columnListContentClassName={columnListContentClassName}
-          virtualization={virtualization}
-          cardWrapperStyle={cardWrapperStyle}
-          cardWrapperClassName={cardWrapperClassName}
-          cardsGap={cardsGap}
-          onScroll={onScroll}
-        />
-      ))}
-    </div>
+    <KanbanProvider {...props}>
+      <div
+        ref={mergeRefs(ref, internalRef)}
+        className={containerClassName}
+        style={rootStyle}
+      >
+        {columns?.map((column, index) => (
+          <Column
+            key={column.id || index}
+            index={index}
+            data={column}
+            configMap={configMap}
+            loadMore={loadMore}
+            items={getColumnChildren(column, dataSource)}
+            onColumnClick={onColumnClick}
+            onCardClick={onCardClick}
+            renderColumnHeader={renderColumnHeader}
+            renderColumnFooter={renderColumnFooter}
+            renderSkeletonCard={renderSkeletonCard}
+            renderColumnWrapper={renderColumnWrapper}
+            columnWrapperStyle={columnWrapperStyle}
+            columnHeaderStyle={columnHeaderStyle}
+            columnClassName={columnClassName}
+            columnStyle={columnStyle}
+            onCardDndStateChange={onCardDndStateChange}
+            onColumnDndStateChange={onColumnDndStateChange}
+            columnWrapperClassName={columnWrapperClassName}
+            columnHeaderClassName={columnHeaderClassName}
+            columnListContentStyle={columnListContentStyle}
+            renderCardDragIndicator={renderCardDragIndicator}
+            renderCardDragPreview={renderCardDragPreview}
+            columnListContentClassName={columnListContentClassName}
+            virtualization={virtualization}
+            cardWrapperStyle={cardWrapperStyle}
+            cardWrapperClassName={cardWrapperClassName}
+            cardsGap={cardsGap}
+            onScroll={onScroll}
+          />
+        ))}
+      </div>
+    </KanbanProvider>
   );
-};
+});
 
 export default Kanban;

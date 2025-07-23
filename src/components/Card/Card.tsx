@@ -1,17 +1,29 @@
 import { withPrefix } from "@/utils/getPrefix";
-import React, { memo, useMemo } from "react";
-import { BoardItem } from "../types";
+import React, { memo, useEffect, useMemo, useState } from "react";
+import { BoardItem, DndState } from "../types";
 import { createPortal } from "react-dom";
 import { TaskCardState, useCardDnd } from "@/global/dnd/useCardDnd";
 
-export const CardShadow = memo(({ height }: { height: number }) => {
-  return (
-    <div
-      className={withPrefix("card-shadow")}
-      style={{ height: `${height}px` }}
-    />
-  );
-});
+export const CardShadow = memo(
+  ({
+    height,
+    customIndicator,
+  }: {
+    height: number;
+    customIndicator?: React.ReactNode;
+  }) => {
+    return (
+      <div className={withPrefix("card-shadow-container")}>
+        {customIndicator || (
+          <div
+            className={withPrefix("card-shadow")}
+            style={{ height: `${height}px` }}
+          />
+        )}
+      </div>
+    );
+  }
+);
 
 const CardDisplay = (props: {
   outerRef?: React.RefObject<HTMLDivElement>;
@@ -29,6 +41,7 @@ const CardDisplay = (props: {
   }) => React.ReactNode;
   onClick?: (e: React.MouseEvent<HTMLDivElement>, card: BoardItem) => void;
   cardsGap?: number;
+  renderCardDragIndicator?: (card: BoardItem, info: any) => React.ReactNode;
 }) => {
   const {
     outerRef,
@@ -41,6 +54,7 @@ const CardDisplay = (props: {
     cardsGap,
     render,
     onClick,
+    renderCardDragIndicator,
   } = props;
 
   const containerStyle = useMemo(() => {
@@ -70,6 +84,12 @@ const CardDisplay = (props: {
     state.type === "is-over" && state.closestEdge === "bottom";
   const shadowHeight = state.type === "is-over" ? state.dragging.height : 0;
   const renderContent = render({ data, column, index, isDraggable });
+  const customIndicator = renderCardDragIndicator?.(
+    state.type === "is-dragging" ? data : null,
+    {
+      height: shadowHeight,
+    }
+  );
 
   return (
     <div
@@ -84,7 +104,9 @@ const CardDisplay = (props: {
       data-rkk-column={column.id}
       data-rkk-index={index}
     >
-      {showTopShadow && <CardShadow height={shadowHeight} />}
+      {showTopShadow && (
+        <CardShadow height={shadowHeight} customIndicator={customIndicator} />
+      )}
       <div
         ref={innerRef}
         className={withPrefix("card-inner")}
@@ -96,7 +118,9 @@ const CardDisplay = (props: {
       >
         {renderContent}
       </div>
-      {showBottomShadow && <CardShadow height={shadowHeight} />}
+      {showBottomShadow && (
+        <CardShadow height={shadowHeight} customIndicator={customIndicator} />
+      )}
     </div>
   );
 };
@@ -114,15 +138,30 @@ interface Props {
   isDraggable: boolean;
   onClick?: (e: React.MouseEvent<HTMLDivElement>, card: BoardItem) => void;
   cardsGap?: number;
+  onCardDndStateChange?: (info: DndState) => void;
+  renderCardDragIndicator?: (card: BoardItem, info: any) => React.ReactNode;
+  renderCardDragPreview?: (card: BoardItem, info: any) => React.ReactNode;
 }
 
 const Card = (props: Props) => {
-  const { render, data, column, index, isDraggable, onClick, cardsGap } = props;
+  const {
+    render,
+    data,
+    column,
+    index,
+    isDraggable,
+    cardsGap,
+    onClick,
+    onCardDndStateChange,
+    renderCardDragIndicator,
+    renderCardDragPreview,
+  } = props;
   const { outerRef, innerRef, state } = useCardDnd(
     data,
     column,
     index,
-    isDraggable
+    isDraggable,
+    onCardDndStateChange
   );
 
   return (
@@ -138,18 +177,27 @@ const Card = (props: Props) => {
         render={render}
         onClick={onClick}
         cardsGap={cardsGap}
+        renderCardDragIndicator={renderCardDragIndicator}
       />
 
       {state.type === "preview"
         ? createPortal(
-            <CardDisplay
-              state={state}
-              data={data}
-              column={column}
-              index={index}
-              isDraggable={isDraggable}
-              render={render}
-            />,
+            renderCardDragPreview?.(data, {
+              state,
+              data,
+              column,
+              index,
+              isDraggable,
+            }) || (
+              <CardDisplay
+                state={state}
+                data={data}
+                column={column}
+                index={index}
+                isDraggable={isDraggable}
+                render={render}
+              />
+            ),
             state.container
           )
         : null}
