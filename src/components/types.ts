@@ -26,6 +26,8 @@ export interface BoardItem {
   content?: any;
   type?: keyof ConfigMap;
   totalChildrenCount: number;
+  totalItems?: number; // Added back for compatibility
+  subtasks?: BoardItem[]; // Added back for compatibility
 }
 
 export interface BoardData {
@@ -48,6 +50,8 @@ export interface BoardProps {
   ) => ReactNode;
   columnWrapperStyle?: (column: BoardItem) => CSSProperties;
   columnHeaderStyle?: (column: BoardItem) => CSSProperties;
+  columnListContentStyle?: (column: BoardItem) => CSSProperties;
+  columnListContentClassName?: string;
   columnWrapperClassName?: string;
   columnHeaderClassName?: string;
   rootStyle?: CSSProperties;

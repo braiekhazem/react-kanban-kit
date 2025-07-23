@@ -1,5 +1,5 @@
 import { withPrefix } from "@/utils/getPrefix";
-import React from "react";
+import React, { forwardRef, useRef } from "react";
 import { BoardItem } from "../types";
 import classNames from "classnames";
 
@@ -10,7 +10,7 @@ interface Props {
   data: BoardItem;
 }
 
-const ColumnHeader = (props: Props) => {
+const ColumnHeader = forwardRef<HTMLDivElement, Props>((props, ref) => {
   const {
     renderColumnHeader,
     columnHeaderStyle,
@@ -23,16 +23,21 @@ const ColumnHeader = (props: Props) => {
     columnHeaderClassName
   );
 
-  if (renderColumnHeader) return renderColumnHeader(data);
+  if (renderColumnHeader)
+    return <div ref={ref}>{renderColumnHeader(data)}</div>;
 
   return (
-    <header className={headerClassName} style={columnHeaderStyle?.(data)}>
+    <header
+      ref={ref}
+      className={headerClassName}
+      style={columnHeaderStyle?.(data)}
+    >
       <div className={withPrefix("column-header-left")}>{data?.title}</div>
       <div className={withPrefix("column-header-right")}>
         {data?.totalChildrenCount || 0}
       </div>
     </header>
   );
-};
+});
 
 export default ColumnHeader;

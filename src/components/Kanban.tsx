@@ -1,5 +1,8 @@
 import { BoardData, BoardItem, BoardProps } from "./types";
-import { getColumnsFromDataSource } from "@/utils/columnsUtils";
+import {
+  getColumnChildren,
+  getColumnsFromDataSource,
+} from "@/utils/columnsUtils";
 import { withPrefix } from "@/utils/getPrefix";
 import classNames from "classnames";
 import { Column } from "./Column";
@@ -105,6 +108,8 @@ const Kanban = (props: BoardProps) => {
     columnHeaderStyle,
     columnWrapperClassName,
     columnHeaderClassName,
+    columnListContentStyle,
+    columnListContentClassName,
     rootStyle = {},
     rootClassName,
     onColumnMove,
@@ -129,14 +134,18 @@ const Kanban = (props: BoardProps) => {
           data={column}
           configMap={configMap}
           loadMore={loadMore}
+          items={getColumnChildren(column, dataSource)}
           onColumnClick={onColumnClick}
           onCardClick={onCardClick}
           renderColumnHeader={renderColumnHeader}
+          renderColumnFooter={renderColumnFooter}
           renderColumnWrapper={renderColumnWrapper}
           columnWrapperStyle={columnWrapperStyle}
           columnHeaderStyle={columnHeaderStyle}
           columnWrapperClassName={columnWrapperClassName}
           columnHeaderClassName={columnHeaderClassName}
+          columnListContentStyle={columnListContentStyle}
+          columnListContentClassName={columnListContentClassName}
         />
       ))}
     </div>

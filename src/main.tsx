@@ -5,7 +5,7 @@ import { mockData } from "./utils/mocks/data";
 // Registering Syncfusion license key
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
-  <div style={{ width: "100%", height: "100vh" }}>
+  <div style={{ width: "100%", height: "86dvh" }}>
     <Kanban
       onColumnClick={(e, column) => {
         console.log(e, column);
@@ -13,11 +13,16 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
       onCardClick={(e, card) => {
         console.log();
       }}
+      // renderColumnFooter={(column) => (
+      //   <div>
+      //     {column.title} have total as {column?.totalChildrenCount}
+      //   </div>
+      // )}
       // renderColumnWrapper={(column, { children, className, style }) => (
       //   <div style={{ ...style, backgroundColor: "red" }}>{children}</div>
       // )}
       // renderColumnHeader={(column) => (
-      //   <div>
+      //   <div style={{ padding: "10px" }}>
       //     {column.title} have total as {column?.totalChildrenCount}
       //   </div>
       // )}

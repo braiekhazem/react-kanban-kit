@@ -1,0 +1,23 @@
+@use "../../global/assets/styles/abstracts/variables" as *;
+
+.#{$prefix}-column-content {
+  flex: 1;
+  position: relative;
+  height: 0; // This forces the flex item to shrink and become scrollable
+  min-height: 0; // Ensure flex child can shrink below content size
+
+  &-list {
+    height: 100%;
+    overflow-y: auto; // Enable vertical scrolling
+    overflow-x: hidden;
+    contain: none !important;
+    scrollbar-width: thin; /* For Firefox */
+    scrollbar-color: transparent transparent; /* For Firefox - thumb and track color */
+    transition: scrollbar-color 0.3s ease;
+
+    // Show scrollbar on hover for better UX
+    &:hover {
+      scrollbar-color: rgba(0, 0, 0, 0.3) transparent;
+    }
+  }
+}
