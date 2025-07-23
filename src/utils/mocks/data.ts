@@ -14,7 +14,7 @@ export const mockData: BoardData = {
     parentId: "root",
     children: ["11", "12", "13"],
     content: {},
-    totalChildrenCount: 3,
+    totalChildrenCount: 200,
   },
   2: {
     id: "2",
@@ -22,7 +22,7 @@ export const mockData: BoardData = {
     parentId: "root",
     children: ["14", "15", "16"],
     content: {},
-    totalChildrenCount: 3,
+    totalChildrenCount: 200,
   },
   3: {
     id: "3",
@@ -53,7 +53,7 @@ export const mockData: BoardData = {
       "38", // Added more items for scrolling
     ],
     content: {},
-    totalChildrenCount: 22, // Updated count
+    totalChildrenCount: 400, // Updated count
   },
   11: {
     id: "11",

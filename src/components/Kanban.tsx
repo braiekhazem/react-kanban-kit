@@ -118,6 +118,7 @@ const Kanban = (props: BoardProps) => {
     onCardClick,
     renderColumnFooter,
     loadMore,
+    virtualization, // Added virtualization prop
   } = props;
 
   const columns = getColumnsFromDataSource(dataSource);
@@ -146,6 +147,7 @@ const Kanban = (props: BoardProps) => {
           columnHeaderClassName={columnHeaderClassName}
           columnListContentStyle={columnListContentStyle}
           columnListContentClassName={columnListContentClassName}
+          virtualization={virtualization}
         />
       ))}
     </div>

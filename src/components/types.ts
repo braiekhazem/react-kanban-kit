@@ -26,8 +26,6 @@ export interface BoardItem {
   content?: any;
   type?: keyof ConfigMap;
   totalChildrenCount: number;
-  totalItems?: number; // Added back for compatibility
-  subtasks?: BoardItem[]; // Added back for compatibility
 }
 
 export interface BoardData {
@@ -86,4 +84,5 @@ export interface BoardProps {
     column: BoardItem
   ) => void;
   onCardClick?: (e: React.MouseEvent<HTMLDivElement>, card: BoardItem) => void;
+  virtualization?: boolean; // Add option to enable/disable virtualization
 }

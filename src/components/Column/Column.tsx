@@ -36,6 +36,7 @@ interface Props {
   columnHeaderClassName?: string;
   columnListContentStyle?: (column: BoardItem) => React.CSSProperties;
   columnListContentClassName?: string;
+  virtualization?: boolean;
   items: BoardItem[];
 }
 
@@ -45,6 +46,7 @@ const Column = (props: Props) => {
     data,
     loadMore,
     items,
+    configMap,
     onColumnClick,
     onCardClick,
     renderColumnHeader,
@@ -56,14 +58,10 @@ const Column = (props: Props) => {
     columnHeaderClassName,
     columnListContentStyle,
     columnListContentClassName,
+    virtualization,
   } = props;
 
   const headerRef = useRef<HTMLDivElement>(null);
-  const [headerHeight, setHeaderHeight] = useState(0);
-
-  useEffect(() => {
-    setHeaderHeight(getHeaderHeight(headerRef.current));
-  }, [headerRef.current]);
 
   const containerClassName = classNames(
     withPrefix("column-outer"),
@@ -100,7 +98,8 @@ const Column = (props: Props) => {
               column={data}
               columnListContentStyle={columnListContentStyle}
               columnListContentClassName={columnListContentClassName}
-              headerHeight={headerHeight}
+              configMap={configMap}
+              virtualization={virtualization ?? true} // Default to true for backward compatibility
             />
             {renderColumnFooter?.(data)}
           </div>

@@ -22,7 +22,7 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
       //   <div style={{ ...style, backgroundColor: "red" }}>{children}</div>
       // )}
       // renderColumnHeader={(column) => (
-      //   <div style={{ padding: "10px" }}>
+      //   <div style={{ padding: "30px" }}>
       //     {column.title} have total as {column?.totalChildrenCount}
       //   </div>
       // )}
@@ -34,8 +34,10 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
       //   backgroundColor: "green",
       //   padding: "10px",
       // })}
+
       rootClassName="check"
       dataSource={mockData}
+      // virtualization={false} // Set to false to disable virtualization and use normal map instead
       configMap={{
         card: {
           render: (props) => <div>Card</div>,
