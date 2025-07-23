@@ -11,9 +11,16 @@ export interface Column {
   content: any;
 }
 
+export type CardRenderProps = {
+  data: BoardItem;
+  column: BoardItem;
+  index: number;
+  isDraggable: boolean;
+};
+
 export type ConfigMap = {
   [type: string]: {
-    render: (props: any) => React.ReactNode;
+    render: (props: CardRenderProps) => React.ReactNode;
     isDraggable?: boolean;
   };
 };
@@ -65,6 +72,7 @@ export interface BoardProps {
   cardWrapperStyle?: (card: BoardItem, column: BoardItem) => CSSProperties;
   cardWrapperClassName?: string;
   cardsGap?: number;
+  onScroll?: (e: React.UIEvent<HTMLDivElement>) => void;
   onColumnMove?: ({
     columnId,
     fromIndex,

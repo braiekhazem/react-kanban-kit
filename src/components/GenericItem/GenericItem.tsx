@@ -4,6 +4,7 @@ import classNames from "classnames";
 import { withPrefix } from "@/utils/getPrefix";
 import CardSkeleton from "../CardSkeleton";
 import Card from "../Card";
+import DefaultCard from "../DefaultCard";
 
 const isCardDraggable = (data: BoardItem, isTypeDraggable: boolean) => {
   return data?.isDraggable !== undefined ? data?.isDraggable : isTypeDraggable;
@@ -40,7 +41,8 @@ const GenericItem = (props: Props) => {
     renderSkeletonCard,
   } = options;
 
-  const { render, isDraggable } = configMap[data?.type] || {};
+  const { render = DefaultCard, isDraggable = true } =
+    configMap[data?.type] || {};
 
   const wrapperClassName = classNames(
     withPrefix("generic-item-wrapper"),
