@@ -74,7 +74,6 @@ export interface BoardProps {
     column: BoardItem;
   }) => ReactNode;
   renderColumnHeader?: (column: BoardItem) => ReactNode;
-
   renderCardDragIndicator?: (card: BoardItem, info: any) => ReactNode;
   renderCardDragPreview?: (card: BoardItem, info: any) => ReactNode;
   // renderColumnDragIndicator?: (column: BoardItem, info: any) => ReactNode;

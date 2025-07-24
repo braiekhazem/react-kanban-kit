@@ -12,6 +12,7 @@ import { VList } from "virtua";
 import GenericItem from "../GenericItem";
 import { handleScroll } from "@/utils/scroll";
 import { checkIfSkeletonIsVisible } from "@/utils/infinite-scroll";
+import { useKanbanContext } from "@/context/KanbanContext";
 
 interface ListProps {
   column: BoardItem;
@@ -105,14 +106,12 @@ interface Props {
   columnListContentStyle?: (column: BoardItem) => React.CSSProperties;
   columnListContentClassName?: string;
   configMap: ConfigMap;
-  virtualization: boolean;
   renderSkeletonCard?: BoardProps["renderSkeletonCard"];
   cardWrapperStyle?: (
     card: BoardItem,
     column: BoardItem
   ) => React.CSSProperties;
   cardWrapperClassName?: string;
-  cardsGap?: number;
   onScroll?: (e: ScrollEvent, column: BoardItem) => void;
   onCardClick?: (e: React.MouseEvent<HTMLDivElement>, card: BoardItem) => void;
   loadMore?: (columnId: string) => void;
@@ -130,11 +129,9 @@ const ColumnContent = forwardRef<HTMLDivElement, Props>((props, ref) => {
     configMap,
     columnListContentStyle,
     columnListContentClassName,
-    virtualization = true,
     cardWrapperStyle,
     renderSkeletonCard,
     cardWrapperClassName,
-    cardsGap,
     onCardClick,
     loadMore,
     cardOverShadowCount,
@@ -143,7 +140,7 @@ const ColumnContent = forwardRef<HTMLDivElement, Props>((props, ref) => {
     renderCardDragIndicator,
     renderCardDragPreview,
   } = props;
-
+  const { virtualization = true, cardsGap } = useKanbanContext();
   const containerClassName = classNames(
     withPrefix("column-content"),
     columnListContentClassName

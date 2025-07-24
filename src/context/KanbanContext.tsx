@@ -1,7 +1,7 @@
 import { BoardProps } from "@/components";
 import { createContext, useContext } from "react";
 
-const KanbanContext = createContext<BoardProps | undefined>(undefined);
+const KanbanContext = createContext<Partial<BoardProps> | undefined>(undefined);
 
 export const useKanbanContext = () => {
   const context = useContext(KanbanContext);
@@ -12,7 +12,7 @@ export const useKanbanContext = () => {
 export const KanbanProvider = ({
   children,
   ...props
-}: BoardProps & { children: React.ReactNode }) => {
+}: Partial<BoardProps> & { children: React.ReactNode }) => {
   return (
     <KanbanContext.Provider value={props}>{children}</KanbanContext.Provider>
   );

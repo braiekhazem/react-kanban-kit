@@ -14,44 +14,21 @@ import { autoScrollForElements } from "@atlaskit/pragmatic-drag-and-drop-auto-sc
 import { KanbanProvider } from "@/context/KanbanContext";
 import mergeRefs from "@/utils/mergeRefs";
 import { handleCardDrop } from "@/global/dnd/dropManager";
+import { getSharedProps } from "@/utils/getSharedProps";
 
 const Kanban = forwardRef<HTMLDivElement, BoardProps>((props, ref) => {
   const {
     dataSource,
-    configMap,
-    renderColumnHeader,
-    renderColumnWrapper,
-    columnWrapperStyle,
-    columnHeaderStyle,
-    columnWrapperClassName,
-    columnHeaderClassName,
-    columnListContentStyle,
-    columnListContentClassName,
     rootStyle = {},
     rootClassName,
-    onScroll,
     onColumnMove,
     onCardMove,
-    onColumnClick,
-    onCardClick,
-    renderColumnFooter,
-    renderSkeletonCard,
-    loadMore,
-    virtualization,
-    cardWrapperStyle,
-    cardWrapperClassName,
-    cardsGap,
-    onCardDndStateChange,
-    onColumnDndStateChange,
-    renderCardDragIndicator,
-    renderCardDragPreview,
-    columnClassName,
-    columnStyle,
+    renderColumnWrapper,
+    ...rest
   } = props;
 
   const columns = getColumnsFromDataSource(dataSource);
   const internalRef = useRef<HTMLDivElement>(null);
-  console.log({ dataSource, configMap, columns });
 
   useEffect(() => {
     if (!internalRef.current) return;
@@ -96,7 +73,7 @@ const Kanban = forwardRef<HTMLDivElement, BoardProps>((props, ref) => {
   const containerClassName = classNames(withPrefix("board"), rootClassName);
 
   return (
-    <KanbanProvider {...props}>
+    <KanbanProvider {...getSharedProps(props)}>
       <div
         ref={mergeRefs(ref, internalRef)}
         className={containerClassName}
@@ -104,35 +81,12 @@ const Kanban = forwardRef<HTMLDivElement, BoardProps>((props, ref) => {
       >
         {columns?.map((column, index) => (
           <Column
-            key={column.id || index}
+            key={column.id}
             index={index}
             data={column}
-            configMap={configMap}
-            loadMore={loadMore}
             items={getColumnChildren(column, dataSource)}
-            onColumnClick={onColumnClick}
-            onCardClick={onCardClick}
-            renderColumnHeader={renderColumnHeader}
-            renderColumnFooter={renderColumnFooter}
-            renderSkeletonCard={renderSkeletonCard}
             renderColumnWrapper={renderColumnWrapper}
-            columnWrapperStyle={columnWrapperStyle}
-            columnHeaderStyle={columnHeaderStyle}
-            columnClassName={columnClassName}
-            columnStyle={columnStyle}
-            onCardDndStateChange={onCardDndStateChange}
-            onColumnDndStateChange={onColumnDndStateChange}
-            columnWrapperClassName={columnWrapperClassName}
-            columnHeaderClassName={columnHeaderClassName}
-            columnListContentStyle={columnListContentStyle}
-            renderCardDragIndicator={renderCardDragIndicator}
-            renderCardDragPreview={renderCardDragPreview}
-            columnListContentClassName={columnListContentClassName}
-            virtualization={virtualization}
-            cardWrapperStyle={cardWrapperStyle}
-            cardWrapperClassName={cardWrapperClassName}
-            cardsGap={cardsGap}
-            onScroll={onScroll}
+            {...rest}
           />
         ))}
       </div>
