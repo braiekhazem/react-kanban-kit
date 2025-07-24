@@ -106,6 +106,10 @@ const App = () => {
         columnClassName={(column) =>
           dragOverColumn === column.id ? "drag-over-column" : ""
         }
+        allowColumnAdder={true}
+        renderColumnAdder={() => <div>Add new Column</div>}
+        renderListFooter={(column) => <div>Add new one</div>}
+        allowListFooter={(column) => true}
         rootClassName="check"
         dataSource={mockData}
         // cardsGap={30}
@@ -133,7 +137,7 @@ const App = () => {
         //     setDragOverColumn(null);
         //   }
         // }}
-        virtualization={false} // Set to false to disable virtualization and use normal map instead
+        virtualization={true} // Set to false to disable virtualization and use normal map instead
         configMap={{
           card: {
             render: (props) => (

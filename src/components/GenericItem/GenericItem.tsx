@@ -20,6 +20,8 @@ interface Props {
     //isSkeleton is used to show a skeleton UI when the item is not loaded yet
     isSkeleton: boolean;
     isShadow: boolean;
+    isListFooter: boolean;
+    renderListFooter?: (column: BoardItem) => React.ReactNode;
     cardWrapperStyle?: (
       card: BoardItem,
       column: BoardItem
@@ -49,11 +51,13 @@ const GenericItem = (props: Props) => {
     cardWrapperClassName,
     cardsGap = 8,
     isShadow,
+    isListFooter,
     cardOverHeight = 90,
     renderSkeletonCard,
     onCardClick,
     onCardDndStateChange,
     renderCardDragIndicator,
+    renderListFooter,
   } = options;
 
   const { render = DefaultCard, isDraggable = true } =
@@ -65,7 +69,13 @@ const GenericItem = (props: Props) => {
   );
 
   const renderCardContent = () => {
-    if (isShadow)
+    if (isListFooter)
+      return (
+        <div className={withPrefix("generic-item-list-footer")}>
+          {renderListFooter?.(column) || "Default Footer"}
+        </div>
+      );
+    else if (isShadow)
       return (
         <CardShadow
           height={cardOverHeight}

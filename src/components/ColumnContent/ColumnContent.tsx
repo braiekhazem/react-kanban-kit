@@ -32,7 +32,38 @@ interface ListProps {
   renderSkeletonCard?: BoardProps["renderSkeletonCard"];
   onScroll?: (e: React.UIEvent<HTMLDivElement>) => void;
   onCardClick?: (e: React.MouseEvent<HTMLDivElement>, card: BoardItem) => void;
+  renderListFooter?: (column: BoardItem) => React.ReactNode;
 }
+
+const renderGenericItem = (
+  items: BoardItem[],
+  index: number,
+  column: BoardItem,
+  configMap: ConfigMap,
+  cardOverShadowCount: number,
+  renderListFooter: (column: BoardItem) => React.ReactNode,
+  props: any,
+  count: number
+) => {
+  return (
+    <GenericItem
+      key={index}
+      index={index}
+      options={{
+        data: items[index],
+        column,
+        configMap,
+        isSkeleton: index >= items.length,
+        renderListFooter,
+        isShadow:
+          cardOverShadowCount && index === count - (renderListFooter ? 2 : 1),
+        isListFooter:
+          renderListFooter && index === count - (renderListFooter ? 1 : 0),
+        ...props,
+      }}
+    />
+  );
+};
 
 const VirtualizedList = ({
   column,
@@ -40,31 +71,32 @@ const VirtualizedList = ({
   configMap,
   onScroll,
   cardOverShadowCount,
+  renderListFooter,
   ...props
 }: ListProps) => {
+  const count =
+    column?.totalChildrenCount +
+    cardOverShadowCount +
+    (renderListFooter ? 1 : 0);
+
   return (
     <VList
-      count={column?.totalChildrenCount + cardOverShadowCount}
+      count={count}
       onScroll={onScroll}
       className={withPrefix("column-content-list")}
     >
-      {(index: number) => {
-        const item = items[index];
-        return (
-          <GenericItem
-            key={index}
-            index={index}
-            options={{
-              data: item,
-              column,
-              configMap,
-              isSkeleton: index >= items.length,
-              isShadow: cardOverShadowCount && index === items.length,
-              ...props,
-            }}
-          />
-        );
-      }}
+      {(index: number) =>
+        renderGenericItem(
+          items,
+          index,
+          column,
+          configMap,
+          cardOverShadowCount,
+          renderListFooter,
+          props,
+          count
+        )
+      }
     </VList>
   );
 };
@@ -75,26 +107,31 @@ const NormalList = ({
   configMap,
   onScroll,
   cardOverShadowCount,
+  renderListFooter,
   ...props
 }: ListProps) => {
+  const count =
+    column?.totalChildrenCount +
+    cardOverShadowCount +
+    (renderListFooter ? 1 : 0);
+
   return (
     <div className={withPrefix("column-content-list")} onScroll={onScroll}>
       {Array.from(
-        { length: column?.totalChildrenCount + cardOverShadowCount },
-        (_, index) => (
-          <GenericItem
-            key={index}
-            index={index}
-            options={{
-              data: items[index],
-              column,
-              configMap,
-              isSkeleton: index >= items.length,
-              isShadow: cardOverShadowCount && index === items.length,
-              ...props,
-            }}
-          />
-        )
+        {
+          length: count,
+        },
+        (_, index) =>
+          renderGenericItem(
+            items,
+            index,
+            column,
+            configMap,
+            cardOverShadowCount,
+            renderListFooter,
+            props,
+            count
+          )
       )}
     </div>
   );
@@ -120,6 +157,7 @@ interface Props {
   onCardDndStateChange?: (info: DndState) => void;
   renderCardDragIndicator?: (card: BoardItem, info: any) => React.ReactNode;
   renderCardDragPreview?: (card: BoardItem, info: any) => React.ReactNode;
+  renderListFooter?: (column: BoardItem) => React.ReactNode;
 }
 
 const ColumnContent = forwardRef<HTMLDivElement, Props>((props, ref) => {
@@ -139,8 +177,13 @@ const ColumnContent = forwardRef<HTMLDivElement, Props>((props, ref) => {
     onCardDndStateChange,
     renderCardDragIndicator,
     renderCardDragPreview,
+    renderListFooter,
   } = props;
-  const { virtualization = true, cardsGap } = useKanbanContext();
+  const {
+    virtualization = true,
+    cardsGap,
+    allowListFooter,
+  } = useKanbanContext();
   const containerClassName = classNames(
     withPrefix("column-content"),
     columnListContentClassName
@@ -177,6 +220,12 @@ const ColumnContent = forwardRef<HTMLDivElement, Props>((props, ref) => {
         renderCardDragIndicator={renderCardDragIndicator}
         renderCardDragPreview={renderCardDragPreview}
         cardOverHeight={cardOverHeight}
+        renderListFooter={
+          (allowListFooter !== undefined && allowListFooter?.(column)) ||
+          allowListFooter === undefined
+            ? renderListFooter
+            : null
+        }
       />
     </div>
   );

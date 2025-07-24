@@ -26,8 +26,8 @@ export const mockData: BoardData = {
       "56",
     ],
     content: {},
-    totalItemsCount: 10,
-    totalChildrenCount: 10,
+    totalItemsCount: 11,
+    totalChildrenCount: 11,
   },
   2222: {
     id: "2222",

@@ -53,6 +53,8 @@ interface Props {
   renderCardDragPreview?: (card: BoardItem, info: any) => React.ReactNode;
   renderColumnDragPreview?: (column: BoardItem, info: any) => React.ReactNode;
   columnListContentClassName?: (column: BoardItem) => string;
+  renderListFooter?: (column: BoardItem) => React.ReactNode;
+  renderColumnAdder?: (column: BoardItem) => React.ReactNode;
   items: BoardItem[];
   cardWrapperStyle?: (
     card: BoardItem,
@@ -79,6 +81,7 @@ const Column = (props: Props) => {
     columnListContentClassName,
     columnClassName,
     columnStyle,
+    renderColumnAdder,
     ...rest
   } = props;
 

@@ -15,6 +15,7 @@ import { KanbanProvider } from "@/context/KanbanContext";
 import mergeRefs from "@/utils/mergeRefs";
 import { handleCardDrop } from "@/global/dnd/dropManager";
 import { getSharedProps } from "@/utils/getSharedProps";
+import ColumnAdder from "./ColumnAdder";
 
 const Kanban = forwardRef<HTMLDivElement, BoardProps>((props, ref) => {
   const {
@@ -24,6 +25,7 @@ const Kanban = forwardRef<HTMLDivElement, BoardProps>((props, ref) => {
     onColumnMove,
     onCardMove,
     renderColumnWrapper,
+    renderColumnAdder,
     ...rest
   } = props;
 
@@ -89,6 +91,7 @@ const Kanban = forwardRef<HTMLDivElement, BoardProps>((props, ref) => {
             {...rest}
           />
         ))}
+        <ColumnAdder renderColumnAdder={renderColumnAdder} />
       </div>
     </KanbanProvider>
   );

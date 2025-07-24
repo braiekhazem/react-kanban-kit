@@ -79,6 +79,12 @@ export interface BoardProps {
   // renderColumnDragIndicator?: (column: BoardItem, info: any) => ReactNode;
   // renderColumnDragPreview?: (column: BoardItem, info: any) => ReactNode;
 
+  renderListFooter?: (column: BoardItem) => ReactNode;
+  allowListFooter?: (column: BoardItem) => boolean;
+
+  renderColumnAdder?: () => ReactNode;
+  allowColumnAdder?: boolean;
+
   renderColumnWrapper?: (
     column: BoardItem,
     {
