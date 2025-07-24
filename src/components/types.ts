@@ -136,3 +136,21 @@ export interface BoardProps {
   onCardDndStateChange?: (info: DndState) => void;
   onColumnDndStateChange?: (info: DndState) => void;
 }
+
+export interface DropParams {
+  source: {
+    id: string;
+    data: any;
+  };
+  location: {
+    current: {
+      dropTargets: Array<{
+        data: any;
+      }>;
+    };
+  };
+  columns: BoardItem[];
+  dataSource: BoardData;
+  onCardMove?: BoardProps["onCardMove"];
+  onColumnMove?: BoardProps["onColumnMove"];
+}

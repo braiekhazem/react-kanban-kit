@@ -100,6 +100,9 @@ const App = () => {
         // columnStyle={(column) => ({
         //   backgroundColor: dragOverColumn === column.id ? "red" : "blue",
         // })}
+        onCardMove={(event) => {
+          console.log({ event });
+        }}
         columnClassName={(column) =>
           dragOverColumn === column.id ? "drag-over-column" : ""
         }
@@ -150,6 +153,18 @@ const App = () => {
             ),
             isDraggable: true,
           },
+          // divider: {
+          //   render: (props) => (
+          //     <div
+          //       style={{
+          //         width: "100%",
+          //         height: "10px",
+          //         backgroundColor: "green",
+          //       }}
+          //     ></div>
+          //   ),
+          //   isDraggable: true,
+          // },
           cardLoading: {
             render: (props) => <div>Card Loading</div>,
             isDraggable: true,
