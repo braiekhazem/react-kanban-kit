@@ -1,5 +1,6 @@
 @use "./assets/styles/abstracts" as *;
-// Demo app theme
+
+// Clean professional theme
 .#{$demo-prefix} {
   &-app {
     min-height: 100vh;
@@ -7,13 +8,42 @@
     flex-direction: column;
     font-family: var(--font-sans);
     color: var(--gray-900);
-    background-color: var(--gray-50);
+    background: var(--bg-pattern-dots),
+      linear-gradient(135deg, var(--gray-25) 0%, var(--gray-50) 100%);
+    background-size:
+      20px 20px,
+      100% 100%;
+    position: relative;
+
+    // Subtle background overlay - no animation
+    &::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(
+        135deg,
+        rgba(59, 130, 246, 0.01) 0%,
+        transparent 100%
+      );
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    // All content above the background
+    > * {
+      position: relative;
+      z-index: 1;
+    }
   }
 
   &-main {
     display: flex;
     flex: 1;
     overflow: hidden;
+    position: relative;
   }
 
   &-content {
@@ -21,5 +51,191 @@
     overflow: hidden;
     display: flex;
     flex-direction: column;
+    position: relative;
+
+    > * {
+      position: relative;
+      z-index: 1;
+    }
+  }
+}
+
+// Professional focus styles
+*:focus-visible {
+  outline: 2px solid var(--primary-500);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+// Clean selection styles
+::selection {
+  background: rgba(59, 130, 246, 0.15);
+  color: var(--gray-900);
+}
+
+::-moz-selection {
+  background: rgba(59, 130, 246, 0.15);
+  color: var(--gray-900);
+}
+
+// Smooth scrolling
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: var(--header-height);
+}
+
+// Enhanced body styles
+body {
+  @include custom-scrollbar(8px, var(--gray-100), var(--primary-400));
+  overscroll-behavior: none;
+  font-feature-settings:
+    "liga" 1,
+    "kern" 1;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// Professional button utilities
+.btn-primary {
+  @include button-primary;
+  padding: var(--space-3) var(--space-6);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  min-height: var(--button-min-height);
+}
+
+.btn-secondary {
+  @include button-secondary;
+  padding: var(--space-3) var(--space-6);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  min-height: var(--button-min-height);
+}
+
+.btn-ghost {
+  @include button-ghost;
+  padding: var(--space-3) var(--space-6);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  min-height: var(--button-min-height);
+}
+
+// Professional card utilities
+.card {
+  @include card;
+}
+
+.card-hover {
+  @include card-hover;
+}
+
+.card-interactive {
+  @include card-interactive;
+}
+
+.card-elevated {
+  @include card-elevated;
+}
+
+// Badge utilities
+.badge-primary {
+  @include badge-primary;
+}
+
+.badge-success {
+  @include badge-success;
+}
+
+.badge-warning {
+  @include badge-warning;
+}
+
+.badge-danger {
+  @include badge-danger;
+}
+
+// Text utilities
+.text-gradient {
+  @include text-gradient;
+}
+
+// Animation utilities (reduced)
+.fade-in {
+  @include fade-in;
+}
+
+.slide-up {
+  @include slide-up;
+}
+
+// Professional loading states
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(4px);
+  @include flex-center;
+  z-index: var(--z-modal);
+
+  .loading-spinner {
+    width: 32px;
+    height: 32px;
+    border: 2px solid var(--gray-200);
+    border-top: 2px solid var(--primary-500);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+// Clean responsive typography
+@include media-down(sm) {
+  .#{$demo-prefix}-app {
+    font-size: 0.875rem;
+  }
+}
+
+// Input utilities
+.input-base {
+  @include input-base;
+  min-height: var(--input-min-height);
+}
+
+// Print styles
+@media print {
+  .#{$demo-prefix}-app {
+    background: white !important;
+
+    &::before {
+      display: none !important;
+    }
+  }
+
+  .#{$demo-prefix}-header,
+  .#{$demo-prefix}-sidebar {
+    display: none !important;
+  }
+}
+
+// Reduced motion support
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }

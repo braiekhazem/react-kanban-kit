@@ -1,0 +1,325 @@
+@use "../../global/assets/styles/abstracts" as *;
+
+.trello-example {
+  background-image: url(https://d2k1ftgv7pobq7.cloudfront.net/images/backgrounds/gradients/flower.svg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  .rkk-demo-page-content {
+    padding-bottom: 0 !important;
+  }
+
+  .rkk-board {
+    padding-bottom: 10px;
+  }
+  .rkk-column-outer {
+    width: 272px !important;
+    min-width: 272px !important;
+  }
+
+  &-column {
+    background-color: #ebecf0 !important;
+    padding: 6px !important;
+    padding-right: 2px !important;
+    border-radius: 3px;
+    box-shadow: var(
+      --ds-shadow-raised,
+      0px 1px 1px #091e4240,
+      0px 0px 1px #091e424f
+    );
+
+    .rkk-column-wrapper {
+      gap: 8px !important;
+    }
+
+    .rkk-column-content-list {
+      padding: 0 3px 0 2px;
+      -webkit-overflow-scrolling: touch !important;
+      -webkit-transform: translate3d(0, 0, 0) !important;
+      scrollbar-color: var(--ds-background-neutral-hovered, #091e4224)
+        var(--ds-background-neutral, #091e420f) !important;
+      scrollbar-width: thin !important;
+    }
+  }
+
+  &-column-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 32px;
+    font-size: 14px;
+    padding-right: 8px !important;
+    font-weight: 600;
+    color: #172b4d;
+    padding: var(--ds-space-075, 6px) 0 var(--ds-space-075, 6px)
+      var(--ds-space-150, 12px);
+
+    span {
+      flex: 1;
+    }
+
+    &-settings {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 3px;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+      color: #6b778c;
+
+      &:hover {
+        background-color: #091e4224;
+        color: #172b4d;
+      }
+    }
+  }
+}
+
+// Trello Card Styling
+.trello-card {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: var(
+    --ds-shadow-raised,
+    0px 1px 1px #091e4240,
+    0px 0px 1px #091e424f
+  );
+  cursor: pointer;
+
+  position: relative;
+  text-decoration: none;
+  transition: box-shadow 0.15s ease-in-out;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  -ms-border-radius: 8px;
+  -o-border-radius: 8px;
+  &:hover {
+    outline: 2px solid #0079bf;
+  }
+
+  // Cover Image
+  &-cover {
+    border-radius: 3px 3px 0 0;
+    height: 160px;
+    overflow: hidden;
+    position: relative;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+  }
+
+  // Card Content
+  &-content {
+    padding: var(--ds-space-100, 8px) var(--ds-space-150, 12px)
+      var(--ds-space-050, 4px);
+    position: relative;
+  }
+
+  // Labels
+  &-labels {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-bottom: 4px;
+    min-height: 0;
+  }
+
+  &-label {
+    border-radius: 3px;
+    color: #fff;
+    display: block;
+    font-size: 12px;
+    font-weight: 700;
+    height: 16px;
+    line-height: 16px;
+    max-width: 198px;
+    min-width: 40px;
+    overflow: hidden;
+    padding: 0 8px;
+    position: relative;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    &:hover {
+      max-width: none;
+      padding-right: 8px;
+    }
+  }
+
+  // Title
+  &-title {
+    color: #172b4d;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    margin: 0 0 4px;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+  }
+
+  // Badges (icons with counts)
+  &-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 4px;
+    align-items: center;
+  }
+
+  &-badge {
+    align-items: center;
+    color: #6b778c;
+    display: flex;
+    font-size: 12px;
+    font-weight: 400;
+    gap: 2px;
+    line-height: 16px;
+
+    svg {
+      flex-shrink: 0;
+    }
+
+    &.trello-card-due {
+      background-color: #091e420a;
+      border-radius: 2px;
+      padding: 0 4px;
+
+      &.complete {
+        background-color: #61bd4f;
+        color: #fff;
+      }
+    }
+
+    &.trello-card-checklist {
+      &.complete {
+        color: #61bd4f;
+      }
+    }
+  }
+
+  // Members
+  &-members {
+    display: flex;
+    gap: 4px;
+    margin-top: 8px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  &-member {
+    align-items: center;
+    background-color: #dfe1e6;
+    border-radius: 50%;
+    color: #172b4d;
+    display: flex;
+    font-size: 12px;
+    font-weight: 700;
+    height: 28px;
+    justify-content: center;
+    line-height: 1;
+    text-transform: uppercase;
+    width: 28px;
+    border: 2px solid #fff;
+    margin-left: -4px;
+
+    &:first-child {
+      margin-left: 0;
+    }
+
+    // Generate different background colors for members
+    &:nth-child(1) {
+      background-color: #dfe1e6;
+    }
+    &:nth-child(2) {
+      background-color: #b3d4fc;
+    }
+    &:nth-child(3) {
+      background-color: #c7f0db;
+    }
+    &:nth-child(4) {
+      background-color: #ffd3a5;
+    }
+    &:nth-child(5) {
+      background-color: #fd9ca7;
+    }
+  }
+
+  &-member-more {
+    align-items: center;
+    background-color: #f4f5f7;
+    border: 1px solid #dfe1e6;
+    border-radius: 50%;
+    color: #6b778c;
+    display: flex;
+    font-size: 11px;
+    font-weight: 600;
+    height: 28px;
+    justify-content: center;
+    width: 28px;
+    margin-left: -4px;
+  }
+}
+
+// Responsive adjustments
+@include media-down(sm) {
+  .trello-example-column {
+    min-width: 272px;
+  }
+
+  .trello-card {
+    &-cover {
+      height: 120px;
+    }
+
+    &-members {
+      margin-top: 6px;
+    }
+
+    &-member {
+      height: 24px;
+      width: 24px;
+      font-size: 11px;
+    }
+
+    &-member-more {
+      height: 24px;
+      width: 24px;
+      font-size: 10px;
+    }
+  }
+}
+
+.trello-example-list-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 35px;
+  padding: var(--ds-space-050, 4px) var(--ds-space-100, 8px);
+  cursor: pointer;
+  border-radius: 8px;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  -ms-border-radius: 8px;
+  -o-border-radius: 8px;
+  &-button {
+    color: #44546f;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    svg {
+      width: 20px;
+      height: 20px;
+      color: #44546f;
+    }
+  }
+
+  &:hover {
+    background-color: #091e4224;
+  }
+}

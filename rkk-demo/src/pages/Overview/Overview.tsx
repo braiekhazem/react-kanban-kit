@@ -1,79 +1,38 @@
 import React from "react";
 import { Kanban } from "react-kanban-kit";
+import { User } from "lucide-react";
+import { mockData } from "../../utils/_mock_";
 
-const mockData = {
-  root: {
-    id: "root",
-    title: "Root",
-    children: ["col-1", "col-2", "col-3"],
-    totalChildrenCount: 3,
-    parentId: null,
-  },
-  "col-1": {
-    id: "col-1",
-    title: "To Do",
-    children: ["task-1", "task-2"],
-    totalChildrenCount: 2,
-    parentId: "root",
-  },
-  "col-2": {
-    id: "col-2",
-    title: "In Progress",
-    children: ["task-3"],
-    totalChildrenCount: 1,
-    parentId: "root",
-  },
-  "col-3": {
-    id: "col-3",
-    title: "Done",
-    children: ["task-4"],
-    totalChildrenCount: 1,
-    parentId: "root",
-  },
-  "task-1": {
-    id: "task-1",
-    title: "Design Homepage",
-    parentId: "col-1",
-    children: [],
-    totalChildrenCount: 0,
-    type: "card",
-    content: {
-      description: "Create wireframes and mockups for the homepage",
-      priority: "high",
-    },
-  },
-  "task-2": {
-    id: "task-2",
-    title: "Setup Database",
-    parentId: "col-1",
-    children: [],
-    totalChildrenCount: 0,
-    type: "card",
-  },
-  "task-3": {
-    id: "task-3",
-    title: "Develop API",
-    parentId: "col-2",
-    children: [],
-    totalChildrenCount: 0,
-    type: "card",
-  },
-  "task-4": {
-    id: "task-4",
-    title: "Deploy to Production",
-    parentId: "col-3",
-    children: [],
-    totalChildrenCount: 0,
-    type: "card",
-  },
+const PriorityBadge: React.FC<{ priority: string }> = ({ priority }) => {
+  const getColorClass = (priority: string) => {
+    switch (priority) {
+      case "high":
+        return "priority-high";
+      case "medium":
+        return "priority-medium";
+      case "low":
+        return "priority-low";
+      default:
+        return "priority-medium";
+    }
+  };
+
+  return (
+    <span className={`demo-priority-badge ${getColorClass(priority)}`}>
+      {priority}
+    </span>
+  );
 };
 
 export const Overview: React.FC = () => {
   return (
     <div className="rkk-demo-page">
       <div className="rkk-demo-page-header">
-        <h1>Basic Kanban Board</h1>
-        <p>A simple example showcasing the core features of React Kanban Kit</p>
+        <h1>Project Management Board</h1>
+        <p>
+          A comprehensive example showcasing professional task cards with
+          realistic project data
+        </p>
       </div>
 
       <div className="rkk-demo-page-content">
@@ -82,25 +41,27 @@ export const Overview: React.FC = () => {
           configMap={{
             card: {
               render: ({ data }) => (
-                <div className="rkk-demo-card">
-                  <h4 className="rkk-demo-card-title">{data.title}</h4>
-                  {data.content?.description && (
-                    <p className="rkk-demo-card-description">
-                      {data.content.description}
-                    </p>
-                  )}
-                  {data.content?.priority && (
-                    <span
-                      className={`rkk-demo-card-priority priority-${data.content.priority}`}
-                    >
-                      {data.content.priority}
-                    </span>
-                  )}
+                <div className="demo-task-card">
+                  <div className="demo-task-card-header">
+                    <h4 className="demo-task-card-title">{data.title}</h4>
+                    <PriorityBadge
+                      priority={data.content?.priority || "medium"}
+                    />
+                  </div>
+
+                  <div className="demo-task-card-footer">
+                    <div className="demo-task-card-assignee">
+                      <User size={14} />
+                      <span>{data.content?.assignee || "Unassigned"}</span>
+                    </div>
+                  </div>
                 </div>
               ),
               isDraggable: true,
             },
           }}
+          cardsGap={6}
+          virtualization={false}
           onCardMove={(move) => {
             console.log("Card moved:", move);
           }}
