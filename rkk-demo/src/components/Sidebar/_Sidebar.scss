@@ -1,0 +1,85 @@
+@use "../../global/assets/styles/abstracts" as *;
+
+.#{$demo-prefix}-sidebar {
+  width: var(--sidebar-width);
+  background-color: var(--sidebar-bg);
+  border-right: 1px solid var(--sidebar-border);
+  height: calc(100vh - var(--header-height));
+  overflow-y: auto;
+  @include custom-scrollbar;
+
+  @include media-down(lg) {
+    width: var(--sidebar-collapsed-width);
+  }
+
+  @include media-down(md) {
+    position: fixed;
+    left: -100%;
+    top: var(--header-height);
+    width: var(--sidebar-width);
+    z-index: var(--z-fixed);
+    transition: left var(--transition-base);
+    box-shadow: var(--shadow-lg);
+
+    &.open {
+      left: 0;
+    }
+  }
+
+  &-content {
+    padding: var(--space-6) 0;
+  }
+
+  &-section {
+    padding: 0 var(--space-6);
+
+    &:not(:last-child) {
+      margin-bottom: var(--space-8);
+      padding-bottom: var(--space-8);
+      border-bottom: 1px solid var(--gray-200);
+    }
+  }
+
+  &-title {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--gray-500);
+    margin-bottom: var(--space-4);
+
+    @include media-down(lg) {
+      display: none;
+    }
+  }
+
+  &-nav {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+
+    &-item {
+      @include flex-start;
+      gap: var(--space-3);
+      padding: var(--space-3);
+      border-radius: var(--radius-md);
+      color: var(--gray-600);
+      text-decoration: none;
+      font-size: 0.875rem;
+      transition: all var(--transition-fast);
+
+      &:hover {
+        background-color: var(--gray-100);
+        color: var(--gray-900);
+      }
+
+      @include media-down(lg) {
+        justify-content: center;
+
+        span {
+          display: none;
+        }
+      }
+    }
+  }
+}

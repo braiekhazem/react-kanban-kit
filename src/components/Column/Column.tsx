@@ -25,6 +25,7 @@ interface Props {
   renderColumnHeader?: (column: BoardItem) => React.ReactNode;
   renderColumnFooter?: (column: BoardItem) => React.ReactNode;
   renderSkeletonCard?: BoardProps["renderSkeletonCard"];
+  renderGap?: (column: BoardItem) => React.ReactNode;
   renderColumnWrapper: (
     column: BoardItem,
     {

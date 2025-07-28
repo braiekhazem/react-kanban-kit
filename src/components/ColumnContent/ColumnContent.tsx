@@ -33,6 +33,7 @@ interface ListProps {
   onScroll?: (e: React.UIEvent<HTMLDivElement>) => void;
   onCardClick?: (e: React.MouseEvent<HTMLDivElement>, card: BoardItem) => void;
   renderListFooter?: (column: BoardItem) => React.ReactNode;
+  renderGap?: (column: BoardItem) => React.ReactNode;
 }
 
 const renderGenericItem = (
@@ -158,6 +159,7 @@ interface Props {
   renderCardDragIndicator?: (card: BoardItem, info: any) => React.ReactNode;
   renderCardDragPreview?: (card: BoardItem, info: any) => React.ReactNode;
   renderListFooter?: (column: BoardItem) => React.ReactNode;
+  renderGap?: (column: BoardItem) => React.ReactNode;
 }
 
 const ColumnContent = forwardRef<HTMLDivElement, Props>((props, ref) => {
@@ -178,6 +180,7 @@ const ColumnContent = forwardRef<HTMLDivElement, Props>((props, ref) => {
     renderCardDragIndicator,
     renderCardDragPreview,
     renderListFooter,
+    renderGap,
   } = props;
   const {
     virtualization = true,
@@ -220,6 +223,7 @@ const ColumnContent = forwardRef<HTMLDivElement, Props>((props, ref) => {
         renderCardDragIndicator={renderCardDragIndicator}
         renderCardDragPreview={renderCardDragPreview}
         cardOverHeight={cardOverHeight}
+        renderGap={renderGap}
         renderListFooter={
           (allowListFooter !== undefined && allowListFooter?.(column)) ||
           allowListFooter === undefined

@@ -1,0 +1,25 @@
+@use "./assets/styles/abstracts" as *;
+// Demo app theme
+.#{$demo-prefix} {
+  &-app {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    font-family: var(--font-sans);
+    color: var(--gray-900);
+    background-color: var(--gray-50);
+  }
+
+  &-main {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+  }
+
+  &-content {
+    flex: 1;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+}

@@ -107,6 +107,7 @@ export interface BoardProps {
   cardWrapperClassName?: string;
   virtualization?: boolean;
   cardsGap?: number;
+  // renderGap?: (column: BoardItem) => ReactNode;
   onScroll?: (e: ScrollEvent, column: BoardItem) => void;
   onColumnMove?: ({
     columnId,

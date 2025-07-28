@@ -37,6 +37,7 @@ interface Props {
     cardOverHeight?: number;
     renderCardDragIndicator?: (card: BoardItem, info: any) => React.ReactNode;
     renderCardDragPreview?: (card: BoardItem, info: any) => React.ReactNode;
+    renderGap?: (column: BoardItem) => React.ReactNode;
   };
 }
 
@@ -58,10 +59,11 @@ const GenericItem = (props: Props) => {
     onCardDndStateChange,
     renderCardDragIndicator,
     renderListFooter,
+    renderGap,
   } = options;
 
   const { render = DefaultCard, isDraggable = true } =
-    configMap[data?.type] || {};
+    configMap?.[data?.type] || {};
 
   const wrapperClassName = classNames(
     withPrefix("generic-item-wrapper"),
@@ -106,6 +108,7 @@ const GenericItem = (props: Props) => {
         index={index}
         onClick={onCardClick}
         cardsGap={cardsGap}
+        renderGap={renderGap}
         onCardDndStateChange={onCardDndStateChange}
         renderCardDragIndicator={renderCardDragIndicator}
       />

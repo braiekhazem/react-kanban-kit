@@ -40,9 +40,9 @@ const App = () => {
         //   return (
         //     <div
         //       style={{
-        //         height: info.height,
-        //         backgroundColor: "red",
+        //         height: 0,
         //         borderRadius: "20px",
+        //         border: "2px dashed red",
         //       }}
         //     ></div>
         //   );
@@ -112,7 +112,7 @@ const App = () => {
         allowListFooter={(column) => true}
         rootClassName="check"
         dataSource={mockData}
-        // cardsGap={30}
+        cardsGap={6}
         // cardWrapperStyle={(card, col) => {
         //   console.log({ col, card });
         //   return {

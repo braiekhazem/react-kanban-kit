@@ -1,0 +1,139 @@
+// Typography classes
+.text {
+  &-xs {
+    font-size: 0.75rem;
+    line-height: 1rem;
+  }
+
+  &-sm {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+  }
+
+  &-base {
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
+
+  &-lg {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+  }
+
+  &-xl {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+  }
+
+  &-2xl {
+    font-size: 1.5rem;
+    line-height: 2rem;
+  }
+
+  &-3xl {
+    font-size: 1.875rem;
+    line-height: 2.25rem;
+  }
+
+  &-4xl {
+    font-size: 2.25rem;
+    line-height: 2.5rem;
+  }
+}
+
+// Font weights
+.font {
+  &-light {
+    font-weight: 300;
+  }
+
+  &-normal {
+    font-weight: 400;
+  }
+
+  &-medium {
+    font-weight: 500;
+  }
+
+  &-semibold {
+    font-weight: 600;
+  }
+
+  &-bold {
+    font-weight: 700;
+  }
+}
+
+// Text colors
+.text {
+  &-gray-900 {
+    color: var(--gray-900);
+  }
+
+  &-gray-800 {
+    color: var(--gray-800);
+  }
+
+  &-gray-700 {
+    color: var(--gray-700);
+  }
+
+  &-gray-600 {
+    color: var(--gray-600);
+  }
+
+  &-gray-500 {
+    color: var(--gray-500);
+  }
+
+  &-gray-400 {
+    color: var(--gray-400);
+  }
+
+  &-primary {
+    color: var(--primary-600);
+  }
+}
+
+// Headings
+h1,
+.h1 {
+  @extend .text-3xl;
+  @extend .font-bold;
+  @extend .text-gray-900;
+}
+
+h2,
+.h2 {
+  @extend .text-2xl;
+  @extend .font-semibold;
+  @extend .text-gray-900;
+}
+
+h3,
+.h3 {
+  @extend .text-xl;
+  @extend .font-semibold;
+  @extend .text-gray-900;
+}
+
+h4,
+.h4 {
+  @extend .text-lg;
+  @extend .font-medium;
+  @extend .text-gray-900;
+}
+
+h5,
+.h5 {
+  @extend .text-base;
+  @extend .font-medium;
+  @extend .text-gray-900;
+}
+
+h6,
+.h6 {
+  @extend .text-sm;
+  @extend .font-medium;
+  @extend .text-gray-900;
+}

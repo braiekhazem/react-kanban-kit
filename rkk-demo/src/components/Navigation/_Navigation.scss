@@ -1,0 +1,92 @@
+@use "../../global/assets/styles/abstracts" as *;
+
+.#{$demo-prefix}-navigation {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+
+  &-item {
+    @include flex-start;
+    gap: var(--space-3);
+    padding: var(--space-4);
+    border-radius: var(--radius-lg);
+    color: var(--gray-600);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+    border: 2px solid transparent;
+    background-color: white;
+
+    &:hover {
+      background-color: var(--gray-50);
+      color: var(--gray-900);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    &.active {
+      background-color: var(--primary-50);
+      color: var(--primary-700);
+      border-color: var(--primary-200);
+      box-shadow: var(--shadow-sm);
+    }
+
+    @include media-down(lg) {
+      flex-direction: column;
+      text-align: center;
+      padding: var(--space-3);
+      gap: var(--space-2);
+    }
+
+    &-icon {
+      @include flex-center;
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-md);
+      background-color: var(--gray-100);
+      color: var(--gray-600);
+      transition: all var(--transition-fast);
+
+      @include media-down(lg) {
+        width: 32px;
+        height: 32px;
+      }
+
+      .#{$demo-prefix}-navigation-item:hover & {
+        background-color: var(--gray-200);
+        color: var(--gray-700);
+      }
+
+      .#{$demo-prefix}-navigation-item.active & {
+        background-color: var(--primary-100);
+        color: var(--primary-600);
+      }
+    }
+
+    &-content {
+      flex: 1;
+      min-width: 0;
+
+      @include media-down(lg) {
+        display: none;
+      }
+    }
+
+    &-label {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: inherit;
+      margin-bottom: var(--space-1);
+      @include text-truncate;
+    }
+
+    &-description {
+      font-size: 0.75rem;
+      color: var(--gray-500);
+      @include text-truncate;
+
+      .#{$demo-prefix}-navigation-item.active & {
+        color: var(--primary-600);
+      }
+    }
+  }
+}

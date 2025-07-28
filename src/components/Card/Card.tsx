@@ -1,5 +1,5 @@
 import { withPrefix } from "@/utils/getPrefix";
-import React, { memo, useEffect, useMemo, useState } from "react";
+import React, { Fragment, memo, useMemo } from "react";
 import { BoardItem, DndState } from "../types";
 import { createPortal } from "react-dom";
 import { TaskCardState, useCardDnd } from "@/global/dnd/useCardDnd";
@@ -17,7 +17,7 @@ export const CardShadow = memo(
         {customIndicator || (
           <div
             className={withPrefix("card-shadow")}
-            style={{ height: `${height}px` }}
+            style={{ height: `${height - 2}px` }}
           />
         )}
       </div>
@@ -42,6 +42,7 @@ const CardDisplay = (props: {
   onClick?: (e: React.MouseEvent<HTMLDivElement>, card: BoardItem) => void;
   cardsGap?: number;
   renderCardDragIndicator?: (card: BoardItem, info: any) => React.ReactNode;
+  renderGap?: (column: BoardItem) => React.ReactNode;
 }) => {
   const {
     outerRef,
@@ -55,6 +56,7 @@ const CardDisplay = (props: {
     render,
     onClick,
     renderCardDragIndicator,
+    renderGap,
   } = props;
 
   const containerStyle = useMemo(() => {
@@ -92,36 +94,39 @@ const CardDisplay = (props: {
   );
 
   return (
-    <div
-      ref={outerRef}
-      className={withPrefix("card-outer")}
-      onClick={(e) => onClick?.(e, data)}
-      style={{
-        ...containerStyle,
-        ...(cardsGap !== undefined ? { marginBottom: cardsGap } : {}),
-      }}
-      data-test-id={data.id}
-      data-rkk-column={column.id}
-      data-rkk-index={index}
-    >
-      {showTopShadow && (
-        <CardShadow height={shadowHeight} customIndicator={customIndicator} />
-      )}
+    <Fragment>
       <div
-        ref={innerRef}
-        className={withPrefix("card-inner")}
+        ref={outerRef}
+        className={withPrefix("card-outer")}
+        onClick={(e) => onClick?.(e, data)}
         style={{
-          ...innerStyle,
-          marginBottom: showBottomShadow ? 6 : 0,
-          marginTop: showTopShadow ? 6 : 0,
+          ...containerStyle,
+          ...(cardsGap !== undefined ? { marginBottom: cardsGap } : {}),
         }}
+        data-test-id={data.id}
+        data-rkk-column={column.id}
+        data-rkk-index={index}
       >
-        {renderContent}
+        {showTopShadow && (
+          <CardShadow height={shadowHeight} customIndicator={customIndicator} />
+        )}
+        <div
+          ref={innerRef}
+          className={withPrefix("card-inner")}
+          style={{
+            ...innerStyle,
+            marginBottom: showBottomShadow ? cardsGap : 0,
+            marginTop: showTopShadow ? cardsGap : 0,
+          }}
+        >
+          {renderContent}
+        </div>
+        {showBottomShadow && (
+          <CardShadow height={shadowHeight} customIndicator={customIndicator} />
+        )}
       </div>
-      {showBottomShadow && (
-        <CardShadow height={shadowHeight} customIndicator={customIndicator} />
-      )}
-    </div>
+      {/* {renderGap?.(column)} */}
+    </Fragment>
   );
 };
 
@@ -138,6 +143,7 @@ interface Props {
   isDraggable: boolean;
   onClick?: (e: React.MouseEvent<HTMLDivElement>, card: BoardItem) => void;
   cardsGap?: number;
+  renderGap?: (column: BoardItem) => React.ReactNode;
   onCardDndStateChange?: (info: DndState) => void;
   renderCardDragIndicator?: (card: BoardItem, info: any) => React.ReactNode;
   renderCardDragPreview?: (card: BoardItem, info: any) => React.ReactNode;
@@ -155,6 +161,7 @@ const Card = (props: Props) => {
     onCardDndStateChange,
     renderCardDragIndicator,
     renderCardDragPreview,
+    renderGap,
   } = props;
   const { outerRef, innerRef, state } = useCardDnd(
     data,
@@ -178,6 +185,7 @@ const Card = (props: Props) => {
         onClick={onClick}
         cardsGap={cardsGap}
         renderCardDragIndicator={renderCardDragIndicator}
+        renderGap={renderGap}
       />
 
       {state.type === "preview"

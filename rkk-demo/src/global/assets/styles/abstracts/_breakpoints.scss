@@ -1,0 +1,51 @@
+// Breakpoints
+$breakpoints: (
+  xs: 480px,
+  sm: 640px,
+  md: 768px,
+  lg: 1024px,
+  xl: 1280px,
+  2xl: 1536px,
+);
+
+// Media query mixins
+@mixin media-up($size) {
+  @if map-has-key($breakpoints, $size) {
+    @media (min-width: map-get($breakpoints, $size)) {
+      @content;
+    }
+  } @else {
+    @media (min-width: $size) {
+      @content;
+    }
+  }
+}
+
+@mixin media-down($size) {
+  @if map-has-key($breakpoints, $size) {
+    @media (max-width: map-get($breakpoints, $size) - 1px) {
+      @content;
+    }
+  } @else {
+    @media (max-width: $size - 1px) {
+      @content;
+    }
+  }
+}
+
+@mixin media-between($min, $max) {
+  $min-width: if(
+    map-has-key($breakpoints, $min),
+    map-get($breakpoints, $min),
+    $min
+  );
+  $max-width: if(
+    map-has-key($breakpoints, $max),
+    map-get($breakpoints, $max),
+    $max
+  );
+
+  @media (min-width: $min-width) and (max-width: $max-width - 1px) {
+    @content;
+  }
+}
