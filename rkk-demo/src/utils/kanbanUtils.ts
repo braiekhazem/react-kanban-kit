@@ -88,3 +88,13 @@ export const addCard = (
     },
   };
 };
+
+export const getPriorityColor = (priority: string) => {
+  const colors = {
+    high: "#ffc53d",
+    medium: "#f59e0b",
+    low: "#bbb",
+    urgent: "#c62a2f",
+  };
+  return colors[priority as keyof typeof colors] || "#6b7280";
+};

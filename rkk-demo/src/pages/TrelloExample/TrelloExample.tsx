@@ -160,7 +160,7 @@ export const TrelloExample: React.FC = () => {
             </div>
           )}
           cardsGap={8}
-          // virtualization={false}
+          virtualization={false}
           onCardMove={(move) => {
             setDataSource(
               dropHandler(

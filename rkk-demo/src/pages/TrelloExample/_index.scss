@@ -21,14 +21,17 @@
     background-color: #ebecf0 !important;
     padding: 6px !important;
     padding-right: 2px !important;
-    border-radius: 3px;
+    border-radius: 12px !important;
     box-shadow: var(
       --ds-shadow-raised,
       0px 1px 1px #091e4240,
       0px 0px 1px #091e424f
     );
-
-    .rkk-column-wrapper {
+    -webkit-border-radius: 12px !important;
+    -moz-border-radius: 12px !important;
+    -ms-border-radius: 12px !important;
+    -o-border-radius: 12px !important;
+    .rkk-column-wrappe {
       gap: 8px !important;
     }
 
@@ -87,6 +90,7 @@
     0px 0px 1px #091e424f
   );
   cursor: pointer;
+  overflow: hidden;
 
   position: relative;
   text-decoration: none;

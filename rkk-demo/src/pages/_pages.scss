@@ -1,5 +1,6 @@
 @use "../global/assets/styles/abstracts" as *;
 @forward "./TrelloExample/index";
+@forward "./ClickUpExample/index";
 
 // Clean page layout
 .#{$demo-prefix}-page {

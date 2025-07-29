@@ -1,6 +1,6 @@
 export const mockData = (() => {
   // Helper to generate tasks
-  const priorities = ["high", "medium", "low"];
+  const priorities = ["high", "medium", "low", "urgent"];
   const assignees = [
     "Sarah Chen",
     "Mike Johnson",
@@ -109,6 +109,12 @@ export const mockData = (() => {
       totalChildrenCount: backlogTasks.length,
       totalItemsCount: backlogTasks.length,
       parentId: "root",
+      content: {
+        id: "col-1",
+        name: "Backlog",
+        color: "#8d8d8d",
+        percentage: 0,
+      },
     },
     "col-2": {
       id: "col-2",
@@ -117,6 +123,12 @@ export const mockData = (() => {
       totalChildrenCount: 2,
       parentId: "root",
       totalItemsCount: 2,
+      content: {
+        id: "col-2",
+        name: "In Progress",
+        color: "#5a43d6",
+        percentage: 60,
+      },
     },
     "col-3": {
       id: "col-3",
@@ -125,6 +137,12 @@ export const mockData = (() => {
       totalChildrenCount: 1,
       totalItemsCount: 1,
       parentId: "root",
+      content: {
+        id: "col-3",
+        name: "Review",
+        color: "#9c2bad",
+        percentage: 80,
+      },
     },
     "col-4": {
       id: "col-4",
@@ -133,6 +151,12 @@ export const mockData = (() => {
       totalChildrenCount: doneTasks.length,
       totalItemsCount: doneTasks.length,
       parentId: "root",
+      content: {
+        id: "col-4",
+        name: "Done",
+        color: "#299764",
+        percentage: 100,
+      },
     },
   };
 
