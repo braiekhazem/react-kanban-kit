@@ -35,7 +35,10 @@ export const addCardPlaceholder = (
       parentId: columnId,
       children: [],
       type: "new-card",
-      content: {},
+      content: {
+        inTop,
+        id: addCardPlaceholderKey,
+      },
     },
   } as BoardData;
 };
@@ -60,22 +63,25 @@ export const removeCardPlaceholder = (
 export const addCard = (
   columnId: string,
   dataSource: BoardData,
-  title: string
-) => {
+  title: string,
+  inTop: boolean = true
+): BoardData => {
+  const newTaskId = `task-${title}-${Date.now()}`;
   return {
     ...dataSource,
     [columnId]: {
       ...dataSource[columnId],
       totalItemsCount: (dataSource[columnId].totalItemsCount || 0) + 1,
       children: [
+        inTop ? newTaskId : null,
         ...dataSource[columnId].children.filter(
           (child: string) => child !== getAddCardPlaceholderKey(columnId)
         ),
-        `task-${title}-${Date.now()}`,
-      ],
+        !inTop ? newTaskId : null,
+      ].filter(Boolean),
     },
-    [`task-${title}-${Date.now()}`]: {
-      id: `task-${title}-${Date.now()}`,
+    [newTaskId]: {
+      id: newTaskId,
       title,
       parentId: columnId,
       children: [],
@@ -83,7 +89,23 @@ export const addCard = (
       type: "card",
       content: {
         title,
-        id: `task-${title}-${Date.now()}`,
+        id: newTaskId,
+      },
+    },
+  } as BoardData;
+};
+
+export const toggleCollapsedColumn = (
+  columnId: string,
+  dataSource: BoardData
+): BoardData => {
+  return {
+    ...dataSource,
+    [columnId]: {
+      ...dataSource[columnId],
+      content: {
+        ...dataSource?.[columnId]?.content,
+        isExpanded: !dataSource?.[columnId]?.content?.isExpanded,
       },
     },
   };

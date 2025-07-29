@@ -13,7 +13,8 @@ const TrelloCardAdder: React.FC<{
   columnId: string;
   dataSource: BoardData;
   setDataSource: (dataSource: BoardData) => void;
-}> = ({ columnId, dataSource, setDataSource }) => {
+  inTop: boolean;
+}> = ({ columnId, dataSource, setDataSource, inTop }) => {
   const [newCardTitle, setNewCardTitle] = useState("");
 
   const removeCardPlaceholderHandler = (columnId: string) => {
@@ -22,7 +23,7 @@ const TrelloCardAdder: React.FC<{
 
   const addCardHandler = (columnId: string, title: string) => {
     if (!title.trim()) return;
-    setDataSource(addCard(columnId, dataSource, title));
+    setDataSource(addCard(columnId, dataSource, title, inTop));
   };
 
   return (
@@ -31,6 +32,14 @@ const TrelloCardAdder: React.FC<{
         type="text"
         onChange={(e) => setNewCardTitle(e.target.value)}
         placeholder="Enter a title for this card..."
+        autoFocus
+        onKeyDown={(e) => {
+          if (e.key === "Enter") {
+            addCardHandler(columnId, newCardTitle);
+          } else if (e.key === "Escape") {
+            removeCardPlaceholderHandler(columnId);
+          }
+        }}
       />
       <div className="trello-example-new-card-buttons">
         <button onClick={() => addCardHandler(columnId, newCardTitle)}>
@@ -137,11 +146,12 @@ export const TrelloExample: React.FC = () => {
               isDraggable: true,
             },
             "new-card": {
-              render: ({ column }) => (
+              render: ({ column, data }) => (
                 <TrelloCardAdder
                   columnId={column.id}
                   dataSource={dataSource}
                   setDataSource={setDataSource}
+                  inTop={data?.content?.inTop}
                 />
               ),
               isDraggable: false,

@@ -2,6 +2,27 @@
   .rkk-column-outer {
     width: 264px !important;
     min-width: 264px !important;
+
+    &.expanded {
+      width: 32px !important;
+      min-width: 32px !important;
+      .rkk-column-content-list {
+        display: none !important;
+      }
+
+      .clickup-column-header {
+        transform: rotate(90deg);
+        transition: all 0.2s ease-in-out;
+        -webkit-transition: all 0.2s ease-in-out;
+        -moz-transition: all 0.2s ease-in-out;
+        -ms-transition: all 0.2s ease-in-out;
+        -o-transition: all 0.2s ease-in-out;
+      }
+
+      .clickup-column {
+        height: 150px;
+      }
+    }
   }
 
   .clickup-column {
@@ -13,7 +34,7 @@
     -o-border-radius: 0.5rem !important;
 
     .rkk-column-content-list {
-      padding: 0 0.25rem !important;
+      padding: 0 0.25rem 0.25rem !important;
       scrollbar-color: var(--cu-border-hover)
         var(--board-group-color-translucent);
       scrollbar-width: thin;
@@ -44,6 +65,8 @@
         margin-right: 8px;
         padding: 4px 8px 4px 5px;
         border-radius: 5px;
+        text-transform: uppercase;
+        white-space: nowrap;
         span {
           font-size: 12px;
           font-weight: 500;
@@ -90,6 +113,15 @@
           -ms-transition: all 0.2s ease-in-out;
           -o-transition: all 0.2s ease-in-out;
         }
+      }
+
+      &-count {
+        font-size: 0.75rem;
+        font-weight: 500;
+        color: #838383;
+        line-height: 1.4;
+        word-wrap: break-word;
+        flex: 1;
       }
     }
   }
@@ -161,4 +193,92 @@
       }
     }
   }
+}
+
+// ClickUp Card Adder Styling
+.clickup-example-new-card {
+  background: #fff;
+  border: 1px solid #0091ff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+
+  &-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px;
+
+    input[type="text"] {
+      flex: 1;
+      min-height: 32px;
+      padding: 0;
+      font-size: 14px;
+      font-weight: 400;
+      color: #333;
+      background: #fff;
+      outline: none;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+        "Noto Sans", "Ubuntu", "Droid Sans", "Helvetica Neue", sans-serif;
+      border: none;
+
+      &::placeholder {
+        color: #999;
+      }
+
+      &:focus {
+        border-color: none;
+        box-shadow: none;
+      }
+    }
+  }
+
+  .clickup-save-btn {
+    background: #2196f3;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    height: 24px;
+    padding: 0 8px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+      "Noto Sans", "Ubuntu", "Droid Sans", "Helvetica Neue", sans-serif;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    -ms-border-radius: 6px;
+    -o-border-radius: 6px;
+    &:hover {
+      background: #1976d2;
+    }
+
+    &:active {
+      background: #1565c0;
+    }
+  }
+}
+
+.clickup-list-footer {
+  display: flex;
+  align-items: center;
+  height: 32px;
+  gap: 4px;
+  padding-inline: 11px;
+  border-radius: 0.5rem;
+  -webkit-border-radius: 0.5rem;
+  -moz-border-radius: 0.5rem;
+  -ms-border-radius: 0.5rem;
+  -o-border-radius: 0.5rem;
+  cursor: pointer;
+  &:hover {
+    background-color: #00000017;
+  }
+  p {
+    color: #838383;
+    font-size: 0.865rem;
+    font-weight: 500;
+  }
+  transition: all 0.2s ease-in-out;
 }

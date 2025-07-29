@@ -96,7 +96,7 @@ const Column = (props: Props) => {
 
   const containerClassName = classNames(
     withPrefix("column-outer"),
-    columnWrapperClassName
+    columnWrapperClassName?.(data)
   );
 
   const ColumnWrapper = (children: React.ReactNode) =>

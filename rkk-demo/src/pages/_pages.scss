@@ -11,7 +11,7 @@
   position: relative;
 
   &-header {
-    padding: var(--space-8) var(--space-8) var(--space-6);
+    padding: var(--space-5) var(--space-5) var(--space-5);
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(16px);
     border-bottom: 1px solid rgba(59, 130, 246, 0.08);
@@ -28,8 +28,8 @@
 
     h1 {
       @include text-gradient;
-      margin-bottom: var(--space-2);
-      font-size: 2rem;
+      margin-bottom: var(--space-1);
+      font-size: 1.3rem;
       font-weight: 700;
       letter-spacing: var(--tracking-tight);
       line-height: var(--leading-tight);
@@ -49,6 +49,7 @@
       font-weight: 400;
       line-height: var(--leading-relaxed);
       max-width: 600px;
+      white-space: nowrap;
 
       @include media-down(md) {
         font-size: 0.9375rem;
@@ -65,7 +66,7 @@
     padding: var(--space-3);
     position: relative;
     z-index: 1;
-    height: calc(100vh - 195px);
+    height: calc(100vh - 155px);
 
     @include media-down(md) {
       padding: var(--space-4);
