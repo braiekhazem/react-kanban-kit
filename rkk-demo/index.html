@@ -13,5 +13,15 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+    <script>
+      window.Fu = window.Fu || {};
+      Fu.access_token = "18a38baa26e8f17c22cbf989f59770";
+      (function (d) {
+        let s = d.createElement("script");
+        s.async = true;
+        s.src = "https://widget.feeduser.me/widget/v1.js";
+        (d.head || d.body).appendChild(s);
+      })(document);
+    </script>
   </body>
 </html>
