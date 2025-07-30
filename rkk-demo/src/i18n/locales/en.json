@@ -1,0 +1,56 @@
+{
+  "header": {
+    "title": "React Kanban Kit",
+    "subtitle": "Demo Showcase",
+    "github": "GitHub",
+    "npm": "NPM",
+    "settings": "Settings"
+  },
+  "navigation": {
+    "boardExamples": "Board Examples",
+    "documentation": "Documentation",
+    "overview": "Overview",
+    "overviewDescription": "Basic Kanban example",
+    "trelloStyle": "Trello Style",
+    "trelloDescription": "Trello-inspired board design",
+    "clickupStyle": "ClickUp Style",
+    "clickupDescription": "ClickUp-inspired board design",
+    "tamStyle": "Tam Style",
+    "tamDescription": "Tam-inspired board design"
+  },
+  "language": {
+    "english": "English",
+    "french": "Français",
+    "arabic": "العربية",
+    "switchLanguage": "Switch Language"
+  },
+  "pages": {
+    "overview": {
+      "title": "React Kanban Kit Overview",
+      "description": "A powerful and flexible Kanban board component for React applications",
+      "features": "Features",
+      "gettingStarted": "Getting Started",
+      "examples": "Examples"
+    },
+    "trello": {
+      "title": "Trello Style Board",
+      "description": "Experience the familiar Trello board layout with drag-and-drop functionality"
+    },
+    "clickup": {
+      "title": "ClickUp Style Board",
+      "description": "Modern task management interface inspired by ClickUp's design"
+    }
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "cancel": "Cancel",
+    "save": "Save",
+    "edit": "Edit",
+    "delete": "Delete",
+    "add": "Add",
+    "close": "Close",
+    "unassigned": "Unassigned"
+  }
+}

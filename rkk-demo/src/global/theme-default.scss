@@ -1,6 +1,6 @@
 @use "./assets/styles/abstracts" as *;
 
-// Clean professional theme
+// Clean professional theme with RTL support
 .#{$demo-prefix} {
   &-app {
     min-height: 100vh;
@@ -14,8 +14,9 @@
       20px 20px,
       100% 100%;
     position: relative;
+    transition: all var(--transition-base);
 
-    // Subtle background overlay - no animation
+    // Modern gradient overlay with improved visual appeal
     &::before {
       content: "";
       position: fixed;
@@ -25,9 +26,37 @@
       bottom: 0;
       background: linear-gradient(
         135deg,
-        rgba(59, 130, 246, 0.01) 0%,
+        rgba(59, 130, 246, 0.02) 0%,
+        rgba(147, 197, 253, 0.01) 50%,
         transparent 100%
       );
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    // Floating particles effect (subtle)
+    &::after {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: radial-gradient(
+          circle at 20% 80%,
+          rgba(59, 130, 246, 0.03) 0%,
+          transparent 50%
+        ),
+        radial-gradient(
+          circle at 80% 20%,
+          rgba(147, 197, 253, 0.02) 0%,
+          transparent 50%
+        ),
+        radial-gradient(
+          circle at 40% 40%,
+          rgba(59, 130, 246, 0.01) 0%,
+          transparent 50%
+        );
       pointer-events: none;
       z-index: 0;
     }
@@ -229,6 +258,96 @@ body {
   }
 }
 
+// RTL Support
+[dir="rtl"] {
+  .#{$demo-prefix}-app {
+    // RTL-specific background adjustments
+    &::after {
+      background-image: radial-gradient(
+          circle at 80% 80%,
+          rgba(59, 130, 246, 0.03) 0%,
+          transparent 50%
+        ),
+        radial-gradient(
+          circle at 20% 20%,
+          rgba(147, 197, 253, 0.02) 0%,
+          transparent 50%
+        ),
+        radial-gradient(
+          circle at 60% 40%,
+          rgba(59, 130, 246, 0.01) 0%,
+          transparent 50%
+        );
+    }
+  }
+
+  // RTL text alignment and spacing
+  .#{$demo-prefix}-main {
+    direction: rtl;
+  }
+
+  // RTL font support for Arabic
+  * {
+    font-family: var(--font-sans), "Noto Sans Arabic", "IBM Plex Sans Arabic",
+      sans-serif;
+  }
+}
+
+// Modern glassmorphism effects
+.glass-effect {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow:
+    0 8px 32px rgba(31, 38, 135, 0.37),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.glass-card {
+  @extend .glass-effect;
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  transition: all var(--transition-base);
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow:
+      0 12px 48px rgba(31, 38, 135, 0.45),
+      inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  }
+}
+
+// Enhanced focus states for accessibility
+*:focus-visible {
+  outline: 2px solid var(--primary-500);
+  outline-offset: 3px;
+  box-shadow:
+    0 0 0 3px rgba(59, 130, 246, 0.1),
+    0 0 20px rgba(59, 130, 246, 0.15);
+  border-radius: var(--radius-base);
+}
+
+// Improved selection styles
+::selection {
+  background: linear-gradient(
+    135deg,
+    rgba(59, 130, 246, 0.2),
+    rgba(147, 197, 253, 0.3)
+  );
+  color: var(--gray-900);
+  text-shadow: none;
+}
+
+::-moz-selection {
+  background: linear-gradient(
+    135deg,
+    rgba(59, 130, 246, 0.2),
+    rgba(147, 197, 253, 0.3)
+  );
+  color: var(--gray-900);
+  text-shadow: none;
+}
+
 // Reduced motion support
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -237,5 +356,26 @@ body {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+
+  .#{$demo-prefix}-app::after {
+    display: none !important;
+  }
+}
+
+// High contrast mode support
+@media (prefers-contrast: high) {
+  .#{$demo-prefix}-app {
+    &::before,
+    &::after {
+      display: none !important;
+    }
+  }
+
+  .glass-effect,
+  .glass-card {
+    background: white;
+    border: 2px solid var(--gray-900);
+    backdrop-filter: none;
   }
 }

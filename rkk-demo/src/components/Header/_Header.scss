@@ -2,19 +2,40 @@
 
 .#{$demo-prefix}-header {
   height: var(--header-height);
-  background: var(--header-bg);
-  border-bottom: 1px solid var(--header-border);
-  box-shadow: var(--header-shadow);
+  background: rgba(255, 255, 255, 0.85);
+  border-bottom: 1px solid rgba(59, 130, 246, 0.1);
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.1),
+    0 1px 20px rgba(59, 130, 246, 0.05);
   position: sticky;
   top: 0;
   z-index: var(--z-sticky);
-  backdrop-filter: var(--header-backdrop);
+  backdrop-filter: blur(20px);
+  transition: all var(--transition-base);
+
+  // Modern glassmorphism effect
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.4) 0%,
+      rgba(255, 255, 255, 0.1) 100%
+    );
+    pointer-events: none;
+  }
 
   &-content {
     @include flex-between;
     max-width: 100%;
     height: 100%;
     padding: 0 var(--space-6);
+    position: relative;
+    z-index: 1;
 
     @include media-down(md) {
       padding: 0 var(--space-4);
@@ -44,38 +65,77 @@
 
   &-nav {
     @include flex-start;
-    gap: var(--space-1);
+    gap: var(--space-2);
 
     &-item {
       @include flex-start;
       gap: var(--space-2);
-      padding: var(--space-2) var(--space-3);
+      padding: var(--space-2-5) var(--space-4);
       font-size: var(--text-sm);
       font-weight: 500;
       color: var(--gray-600);
       text-decoration: none;
-      border-radius: var(--radius-lg);
+      border-radius: var(--radius-xl);
       transition: all var(--transition-base);
       border: 1px solid transparent;
+      background: rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(8px);
+      position: relative;
+      overflow: hidden;
+
+      // Modern hover effect
+      &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(
+          135deg,
+          rgba(59, 130, 246, 0.1) 0%,
+          rgba(147, 197, 253, 0.05) 100%
+        );
+        opacity: 0;
+        transition: opacity var(--transition-base);
+      }
 
       &:hover {
-        color: var(--primary-600);
-        background-color: rgba(59, 130, 246, 0.05);
-        border-color: rgba(59, 130, 246, 0.1);
+        color: var(--primary-700);
+        background: rgba(255, 255, 255, 0.9);
+        border-color: rgba(59, 130, 246, 0.2);
+        transform: translateY(-1px);
+        box-shadow:
+          0 4px 12px rgba(59, 130, 246, 0.15),
+          0 0 0 1px rgba(59, 130, 246, 0.1);
+
+        &::before {
+          opacity: 1;
+        }
+      }
+
+      &:active {
+        transform: translateY(0);
       }
 
       span {
+        position: relative;
+        z-index: 1;
+
         @include media-down(md) {
           display: none;
         }
       }
 
       svg {
-        transition: color var(--transition-base);
+        transition: all var(--transition-base);
+        position: relative;
+        z-index: 1;
       }
 
       &:hover svg {
         color: var(--primary-600);
+        transform: scale(1.05);
       }
     }
   }
@@ -243,6 +303,31 @@
 
     &-title {
       font-size: var(--text-base);
+    }
+  }
+}
+
+// RTL Support for Header
+[dir="rtl"] .#{$demo-prefix}-header {
+  &-content {
+    flex-direction: row-reverse;
+  }
+
+  &-left {
+    flex-direction: row-reverse;
+  }
+
+  &-right {
+    flex-direction: row-reverse;
+  }
+
+  &-nav {
+    flex-direction: row-reverse;
+  }
+
+  &-logo {
+    .#{$demo-prefix}-logo {
+      flex-direction: row-reverse;
     }
   }
 }

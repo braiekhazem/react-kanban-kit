@@ -1,35 +1,38 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { Kanban, Layers, GitBranch } from "lucide-react";
 
 const navigationItems = [
   {
     path: "/",
-    label: "Overview",
+    labelKey: "navigation.overview",
     icon: Kanban,
-    description: "Basic Kanban example",
+    descriptionKey: "navigation.overviewDescription",
   },
   {
     path: "/trello",
-    label: "Trello Style",
+    labelKey: "navigation.trelloStyle",
     icon: Layers,
-    description: "Trello-inspired board design",
+    descriptionKey: "navigation.trelloDescription",
   },
   {
     path: "/clickup",
-    label: "ClickUp Style",
+    labelKey: "navigation.clickupStyle",
     icon: GitBranch,
-    description: "ClickUp-inspired board design",
+    descriptionKey: "navigation.clickupDescription",
   },
   // {
   //   path: "/tam",
-  //   label: "Tam Style",
+  //   labelKey: "navigation.tamStyle",
   //   icon: Kanban,
-  //   description: "Tam-inspired board design",
+  //   descriptionKey: "navigation.tamDescription",
   // },
 ];
 
 export const Navigation: React.FC = () => {
+  const { t } = useTranslation();
+
   return (
     <nav className="rkk-demo-navigation">
       {navigationItems.map((item) => {
@@ -48,9 +51,11 @@ export const Navigation: React.FC = () => {
               <IconComponent size={20} />
             </div>
             <div className="rkk-demo-navigation-item-content">
-              <div className="rkk-demo-navigation-item-label">{item.label}</div>
+              <div className="rkk-demo-navigation-item-label">
+                {t(item.labelKey)}
+              </div>
               <div className="rkk-demo-navigation-item-description">
-                {item.description}
+                {t(item.descriptionKey)}
               </div>
             </div>
           </NavLink>

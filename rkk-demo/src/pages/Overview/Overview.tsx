@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { dropHandler, Kanban, type BoardData } from "react-kanban-kit";
 import { User } from "lucide-react";
 import { mockData } from "../../utils/_mock_";
@@ -25,6 +26,7 @@ const PriorityBadge: React.FC<{ priority: string }> = ({ priority }) => {
 };
 
 export const Overview: React.FC = () => {
+  const { t } = useTranslation();
   const [dataSource, setDataSource] = useState<BoardData>(
     mockData as BoardData
   );
@@ -32,11 +34,8 @@ export const Overview: React.FC = () => {
   return (
     <div className="rkk-demo-page">
       <div className="rkk-demo-page-header">
-        <h1>Project Management Board</h1>
-        <p>
-          A comprehensive example showcasing professional task cards with
-          realistic project data
-        </p>
+        <h1>{t("pages.overview.title")}</h1>
+        <p>{t("pages.overview.description")}</p>
       </div>
 
       <div className="rkk-demo-page-content">
@@ -56,7 +55,10 @@ export const Overview: React.FC = () => {
                   <div className="demo-task-card-footer">
                     <div className="demo-task-card-assignee">
                       <User size={14} />
-                      <span>{data.content?.assignee || "Unassigned"}</span>
+                      <span>
+                        {data.content?.assignee ||
+                          t("common.unassigned", "Unassigned")}
+                      </span>
                     </div>
                   </div>
                 </div>
