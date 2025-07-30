@@ -27,7 +27,7 @@ export const Header: React.FC = () => {
         <div className="rkk-demo-header-right">
           <nav className="rkk-demo-header-nav">
             <a
-              href="https://github.com/your-username/react-kanban-kit"
+              href="https://github.com/braiekhazem/react-kanban-kit"
               target="_blank"
               rel="noopener noreferrer"
               className="rkk-demo-header-nav-item"
