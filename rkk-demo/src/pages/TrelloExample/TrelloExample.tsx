@@ -119,7 +119,7 @@ export const TrelloExample: React.FC = () => {
   const [dataSource, setDataSource] = useState<BoardData>(
     mockData as BoardData
   );
-  console.log({ dataSource });
+
   const addCardPlaceholderHandler = (
     columnId: string,
     inTop: boolean = true
@@ -194,9 +194,6 @@ export const TrelloExample: React.FC = () => {
                 }
               )
             );
-          }}
-          onColumnMove={(move) => {
-            console.log("Column moved:", move);
           }}
           renderListFooter={(column) => {
             return (

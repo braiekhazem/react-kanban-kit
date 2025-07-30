@@ -10,7 +10,7 @@ function App() {
           <Route path="/" element={<Overview />} />
           <Route path="/trello" element={<TrelloExample />} />
           <Route path="/clickup" element={<ClickUpExample />} />
-          <Route path="/jira" element={<JiraExample />} />
+          <Route path="/tam" element={<JiraExample />} />
         </Routes>
       </Layout>
     </BrowserRouter>

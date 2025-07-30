@@ -1,5 +1,5 @@
-import React from "react";
-import { Kanban } from "react-kanban-kit";
+import React, { useState } from "react";
+import { dropHandler, Kanban, type BoardData } from "react-kanban-kit";
 import { User } from "lucide-react";
 import { mockData } from "../../utils/_mock_";
 
@@ -25,6 +25,10 @@ const PriorityBadge: React.FC<{ priority: string }> = ({ priority }) => {
 };
 
 export const Overview: React.FC = () => {
+  const [dataSource, setDataSource] = useState<BoardData>(
+    mockData as BoardData
+  );
+
   return (
     <div className="rkk-demo-page">
       <div className="rkk-demo-page-header">
@@ -37,7 +41,7 @@ export const Overview: React.FC = () => {
 
       <div className="rkk-demo-page-content">
         <Kanban
-          dataSource={mockData}
+          dataSource={dataSource}
           configMap={{
             card: {
               render: ({ data }) => (
@@ -62,12 +66,30 @@ export const Overview: React.FC = () => {
           }}
           cardsGap={6}
           virtualization={false}
-          onCardMove={(move) => {
-            console.log("Card moved:", move);
-          }}
-          onColumnMove={(move) => {
-            console.log("Column moved:", move);
-          }}
+          onCardMove={(move) =>
+            setDataSource(
+              dropHandler(
+                move,
+                dataSource,
+                () => {},
+                (newColumn) => {
+                  return {
+                    ...newColumn,
+                    totalItemsCount: (newColumn.totalItemsCount || 0) + 1,
+                    totalChildrenCount: (newColumn.totalChildrenCount || 0) + 1,
+                  };
+                },
+                (sourceColumn) => {
+                  return {
+                    ...sourceColumn,
+                    totalItemsCount: (sourceColumn.totalItemsCount || 0) - 1,
+                    totalChildrenCount:
+                      (sourceColumn.totalChildrenCount || 0) - 1,
+                  };
+                }
+              )
+            )
+          }
         />
       </div>
     </div>

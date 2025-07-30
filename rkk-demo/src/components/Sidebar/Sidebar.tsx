@@ -14,28 +14,12 @@ export const Sidebar: React.FC = () => {
           <h3 className="rkk-demo-sidebar-title">Documentation</h3>
           <nav className="rkk-demo-sidebar-nav">
             <a
-              href="https://github.com/your-username/react-kanban-kit#readme"
+              href="https://github.com/braiekhazem/react-kanban-kit/?tab=readme-ov-file#react-kanban-kit"
               target="_blank"
               rel="noopener noreferrer"
               className="rkk-demo-sidebar-nav-item"
             >
-              Getting Started
-            </a>
-            <a
-              href="https://github.com/your-username/react-kanban-kit#props"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="rkk-demo-sidebar-nav-item"
-            >
-              API Reference
-            </a>
-            <a
-              href="https://github.com/your-username/react-kanban-kit#examples"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="rkk-demo-sidebar-nav-item"
-            >
-              Examples
+              Documentation
             </a>
           </nav>
         </div>

@@ -21,12 +21,12 @@ const navigationItems = [
     icon: GitBranch,
     description: "ClickUp-inspired board design",
   },
-  {
-    path: "/jira",
-    label: "Jira Style",
-    icon: Kanban,
-    description: "Jira-inspired board design",
-  },
+  // {
+  //   path: "/tam",
+  //   label: "Tam Style",
+  //   icon: Kanban,
+  //   description: "Tam-inspired board design",
+  // },
 ];
 
 export const Navigation: React.FC = () => {

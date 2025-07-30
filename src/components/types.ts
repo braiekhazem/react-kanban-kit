@@ -2,17 +2,6 @@ import { TaskCardState } from "@/global/dnd/useCardDnd";
 import { TColumnState } from "@/global/dnd/useColumnDnd";
 import { CSSProperties, ReactNode } from "react";
 
-export interface Column {
-  id: string;
-  name: string;
-  totalItems?: number;
-  isExpanded?: boolean;
-  updatedFieldKey?: string;
-  getUpdatedValue?: (value: any) => any;
-  groupType?: string;
-  content: any;
-}
-
 export interface DndState {
   state: TaskCardState | TColumnState;
   column?: BoardItem;
@@ -52,7 +41,6 @@ export interface BoardItem {
   totalChildrenCount: number;
   // totalItemsCount is the total number of items (real content) in the column
   totalItemsCount?: number;
-  totalItems?: number; // Added back for compatibility with Kanban.tsx
   isDraggable?: boolean;
 }
 

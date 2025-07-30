@@ -111,6 +111,22 @@ export const toggleCollapsedColumn = (
   };
 };
 
+export const toggleCardOver = (
+  columnId: string,
+  dataSource: BoardData
+): BoardData => {
+  return {
+    ...dataSource,
+    [columnId]: {
+      ...dataSource[columnId],
+      content: {
+        ...dataSource?.[columnId]?.content,
+        isCardOver: !dataSource?.[columnId]?.content?.isCardOver,
+      },
+    },
+  };
+};
+
 export const getPriorityColor = (priority: string) => {
   const colors = {
     high: "#ffc53d",
@@ -119,4 +135,23 @@ export const getPriorityColor = (priority: string) => {
     urgent: "#c62a2f",
   };
   return colors[priority as keyof typeof colors] || "#6b7280";
+};
+
+export const increaseColumnTotalItemsCount = (dataSource: BoardData) => {
+  const columnsIds = dataSource?.root?.children;
+  columnsIds.forEach((columnId: string) => {
+    dataSource[columnId].totalChildrenCount =
+      (dataSource[columnId].totalChildrenCount || 0) + 200;
+    dataSource[columnId].totalItemsCount =
+      (dataSource[columnId].totalItemsCount || 0) + 200;
+  });
+  return dataSource;
+};
+
+export const fetchTasks = (columnId: string) => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(200);
+    }, 1000);
+  });
 };

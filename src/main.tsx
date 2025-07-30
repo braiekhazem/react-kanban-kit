@@ -1,24 +1,12 @@
 import ReactDOM from "react-dom/client";
 import { Kanban } from "./";
 import { mockData } from "./utils/mocks/data";
-import { useState } from "react";
-import CardSkeleton from "./components/CardSkeleton"; // Uncomment to use in renderSkeletonCard examples
-
-// Registering Syncfusion license key
+import CardSkeleton from "./components/CardSkeleton";
 
 const App = () => {
-  const [collapsed, setCollapsed] = useState(false);
-  const [dragOverColumn, setDragOverColumn] = useState<string | null>(null);
-
   return (
     <div style={{ width: "100%", height: "86dvh" }}>
-      <button onClick={() => setCollapsed(!collapsed)}>
-        {collapsed ? "Expand" : "Collapse"}
-      </button>
       <Kanban
-        onColumnClick={(e, column) => {
-          console.log(e, column);
-        }}
         viewOnly={false}
         onCardClick={(e, card) => {
           console.log();
@@ -103,9 +91,6 @@ const App = () => {
         onCardMove={(event) => {
           console.log({ event });
         }}
-        columnClassName={(column) =>
-          dragOverColumn === column.id ? "drag-over-column" : ""
-        }
         allowColumnAdder={true}
         renderColumnAdder={() => <div>Add new Column</div>}
         renderListFooter={(column) => <div>Add new one</div>}
@@ -175,7 +160,6 @@ const App = () => {
           },
           footer: {
             render: (props) => {
-              console.log({ props });
               return <div>Add Task</div>;
             },
             isDraggable: false,

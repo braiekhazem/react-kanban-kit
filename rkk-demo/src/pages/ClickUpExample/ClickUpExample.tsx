@@ -148,7 +148,6 @@ export const ClickUpExample: React.FC = () => {
   };
 
   const toggleCollapsedColumnHandler = (columnId: string) => {
-    console.log("toggleCollapsedColumnHandler", columnId);
     setDataSource(toggleCollapsedColumn(columnId, dataSource));
   };
 
@@ -238,11 +237,13 @@ export const ClickUpExample: React.FC = () => {
             );
           }}
           onColumnClick={(_, column) => {
-            console.log("onColumnClick", column);
             if (column?.content?.isExpanded)
               toggleCollapsedColumnHandler(column.id);
           }}
-          columnWrapperClassName={"expanded"}
+          columnWrapperClassName={(column) => {
+            const className = column?.content?.isExpanded ? "expanded" : "";
+            return className;
+          }}
         />
       </div>
     </div>

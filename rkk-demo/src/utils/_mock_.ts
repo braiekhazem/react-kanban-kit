@@ -114,7 +114,6 @@ export const mockData = (() => {
         name: "Backlog",
         color: "#8d8d8d",
         percentage: 0,
-        isExpanded: true,
       },
     },
     "col-2": {
@@ -129,7 +128,6 @@ export const mockData = (() => {
         name: "In Progress",
         color: "#5a43d6",
         percentage: 60,
-        isExpanded: true,
       },
     },
     "col-3": {
@@ -144,7 +142,6 @@ export const mockData = (() => {
         name: "Review",
         color: "#9c2bad",
         percentage: 80,
-        isExpanded: true,
       },
     },
     "col-4": {
@@ -159,7 +156,6 @@ export const mockData = (() => {
         name: "Done",
         color: "#299764",
         percentage: 100,
-        isExpanded: true,
       },
     },
   };
