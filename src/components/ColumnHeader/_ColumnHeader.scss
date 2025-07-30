@@ -1,0 +1,26 @@
+@use "./../../global/assets/styles/abstracts/variables" as *;
+
+.#{$prefix}-column-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 10px;
+  height: 24px;
+  margin-bottom: 10px;
+  background-color: #f0f0f0;
+
+  &-left {
+    font-size: 18px;
+    font-weight: 600;
+    color: #000;
+  }
+
+  &-right {
+    font-size: 15px;
+    background-color: #37352f14;
+    color: #37352f;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-weight: 500;
+  }
+}

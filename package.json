@@ -3,7 +3,7 @@
   "name": "react-kanban-kit",
   "author": "hazem braiek",
   "private": false,
-  "version": "0.0.1-alpha.6",
+  "version": "0.0.2-beta.0",
   "type": "module",
   "main": "dist/index.cjs.js",
   "module": "dist/index.es.js",
@@ -18,7 +18,12 @@
   "keywords": [
     "react-kanban-kit",
     "board",
-    "kanban"
+    "kanban",
+    "rkk",
+    "react-kanban",
+    "drag-and-drop",
+    "virtualized",
+    "programmatic-drag-and-drop"
   ],
   "sideEffects": true,
   "files": [
@@ -58,12 +63,10 @@
     "@atlaskit/pragmatic-drag-and-drop-hitbox": "^1.0.3",
     "@atlaskit/pragmatic-drag-and-drop-react-beautiful-dnd-autoscroll": "^2.0.0",
     "@atlaskit/pragmatic-drag-and-drop-react-drop-indicator": "^2.1.0",
-    "antd": "^5.24.7",
     "classes": "^0.3.0",
     "classnames": "^2.5.1",
     "husky": "^8.0.3",
-    "lodash": "^4.17.21",
-    "virtua": "^0.40.3",
+    "virtua": "^0.40.4",
     "vite-plugin-css-injected-by-js": "^3.4.0",
     "vite-plugin-dts": "^3.7.3"
   },

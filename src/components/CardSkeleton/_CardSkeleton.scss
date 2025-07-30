@@ -1,0 +1,245 @@
+@use "../../global/assets/styles/abstracts/variables" as *;
+
+// Shimmer animation keyframes
+@keyframes skeleton-shimmer {
+  0% {
+    background-position: -200px 0;
+  }
+  100% {
+    background-position: calc(200px + 100%) 0;
+  }
+}
+
+// Wave animation keyframes
+@keyframes skeleton-wave {
+  0% {
+    transform: translateX(-100%);
+  }
+  50% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+// Pulse animation keyframes
+@keyframes skeleton-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+}
+
+.#{$prefix}-skeleton {
+  border-radius: 8px;
+  border: 1px solid #e8ecf5;
+  background: #fff;
+  padding: 16px;
+  margin-bottom: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.2s ease;
+  position: relative;
+  overflow: hidden;
+
+  &:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  }
+
+  &-content {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  // Base skeleton element styles
+  %skeleton-base {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200px 100%;
+    animation: skeleton-shimmer 1.5s infinite ease-in-out;
+    border-radius: 4px;
+    position: relative;
+  }
+
+  // Wave animation base
+  %skeleton-wave-base {
+    background: #f0f0f0;
+    position: relative;
+    overflow: hidden;
+    border-radius: 4px;
+
+    &::after {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      transform: translateX(-100%);
+      background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0) 0,
+        rgba(255, 255, 255, 0.2) 20%,
+        rgba(255, 255, 255, 0.5) 60%,
+        rgba(255, 255, 255, 0)
+      );
+      animation: skeleton-wave 2s infinite;
+      content: "";
+    }
+  }
+
+  // Title skeleton
+  &-title {
+    @extend %skeleton-base;
+    height: 20px;
+    width: 80%;
+    border-radius: 6px;
+  }
+
+  // Description section
+  &-description {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  &-line {
+    @extend %skeleton-base;
+    height: 14px;
+    width: 100%;
+
+    &-short {
+      width: 65%;
+    }
+  }
+
+  // Priority indicator
+  &-priority {
+    @extend %skeleton-base;
+    height: 4px;
+    width: 40px;
+    border-radius: 2px;
+    margin-bottom: 4px;
+  }
+
+  // Tags section
+  &-tags {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  &-tag {
+    @extend %skeleton-base;
+    height: 20px;
+    width: 60px;
+    border-radius: 12px;
+
+    &:nth-child(2) {
+      width: 45px;
+    }
+
+    &:nth-child(3) {
+      width: 55px;
+    }
+  }
+
+  // Footer section
+  &-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 4px;
+
+    &-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+  }
+
+  &-avatar {
+    @extend %skeleton-base;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  &-assignee {
+    @extend %skeleton-base;
+    height: 12px;
+    width: 60px;
+    border-radius: 3px;
+  }
+
+  &-date {
+    @extend %skeleton-base;
+    height: 12px;
+    width: 80px;
+    border-radius: 3px;
+  }
+}
+
+// Wave animation variant
+.#{$prefix}-skeleton-wave {
+  .#{$prefix}-skeleton-title,
+  .#{$prefix}-skeleton-line,
+  .#{$prefix}-skeleton-tag,
+  .#{$prefix}-skeleton-avatar,
+  .#{$prefix}-skeleton-assignee,
+  .#{$prefix}-skeleton-date,
+  .#{$prefix}-skeleton-priority {
+    @extend %skeleton-wave-base;
+    animation: none; // Remove shimmer animation
+  }
+}
+
+// Pulse animation variant
+.#{$prefix}-skeleton-pulse {
+  .#{$prefix}-skeleton-title,
+  .#{$prefix}-skeleton-line,
+  .#{$prefix}-skeleton-tag,
+  .#{$prefix}-skeleton-avatar,
+  .#{$prefix}-skeleton-assignee,
+  .#{$prefix}-skeleton-date,
+  .#{$prefix}-skeleton-priority {
+    background: #f0f0f0;
+    animation: skeleton-pulse 1.5s ease-in-out infinite;
+  }
+}
+
+// Responsive design for smaller screens
+@media (max-width: 768px) {
+  .#{$prefix}-skeleton {
+    padding: 12px;
+
+    &-content {
+      gap: 10px;
+    }
+
+    &-title {
+      height: 18px;
+    }
+
+    &-line {
+      height: 12px;
+    }
+
+    &-tag {
+      height: 18px;
+      width: 50px;
+
+      &:nth-child(2) {
+        width: 40px;
+      }
+    }
+
+    &-avatar {
+      width: 20px;
+      height: 20px;
+    }
+  }
+}

@@ -1,0 +1,381 @@
+@use "./assets/styles/abstracts" as *;
+
+// Clean professional theme with RTL support
+.#{$demo-prefix} {
+  &-app {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    font-family: var(--font-sans);
+    color: var(--gray-900);
+    background: var(--bg-pattern-dots),
+      linear-gradient(135deg, var(--gray-25) 0%, var(--gray-50) 100%);
+    background-size:
+      20px 20px,
+      100% 100%;
+    position: relative;
+    transition: all var(--transition-base);
+
+    // Modern gradient overlay with improved visual appeal
+    &::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(
+        135deg,
+        rgba(59, 130, 246, 0.02) 0%,
+        rgba(147, 197, 253, 0.01) 50%,
+        transparent 100%
+      );
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    // Floating particles effect (subtle)
+    &::after {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: radial-gradient(
+          circle at 20% 80%,
+          rgba(59, 130, 246, 0.03) 0%,
+          transparent 50%
+        ),
+        radial-gradient(
+          circle at 80% 20%,
+          rgba(147, 197, 253, 0.02) 0%,
+          transparent 50%
+        ),
+        radial-gradient(
+          circle at 40% 40%,
+          rgba(59, 130, 246, 0.01) 0%,
+          transparent 50%
+        );
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    // All content above the background
+    > * {
+      position: relative;
+      z-index: 1;
+    }
+  }
+
+  &-main {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+  }
+
+  &-content {
+    flex: 1;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+
+    > * {
+      position: relative;
+      z-index: 1;
+    }
+  }
+}
+
+// Professional focus styles
+*:focus-visible {
+  outline: 2px solid var(--primary-500);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+// Clean selection styles
+::selection {
+  background: rgba(59, 130, 246, 0.15);
+  color: var(--gray-900);
+}
+
+::-moz-selection {
+  background: rgba(59, 130, 246, 0.15);
+  color: var(--gray-900);
+}
+
+// Smooth scrolling
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: var(--header-height);
+}
+
+// Enhanced body styles
+body {
+  @include custom-scrollbar(8px, var(--gray-100), var(--primary-400));
+  overscroll-behavior: none;
+  font-feature-settings:
+    "liga" 1,
+    "kern" 1;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// Professional button utilities
+.btn-primary {
+  @include button-primary;
+  padding: var(--space-3) var(--space-6);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  min-height: var(--button-min-height);
+}
+
+.btn-secondary {
+  @include button-secondary;
+  padding: var(--space-3) var(--space-6);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  min-height: var(--button-min-height);
+}
+
+.btn-ghost {
+  @include button-ghost;
+  padding: var(--space-3) var(--space-6);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  min-height: var(--button-min-height);
+}
+
+// Professional card utilities
+.card {
+  @include card;
+}
+
+.card-hover {
+  @include card-hover;
+}
+
+.card-interactive {
+  @include card-interactive;
+}
+
+.card-elevated {
+  @include card-elevated;
+}
+
+// Badge utilities
+.badge-primary {
+  @include badge-primary;
+}
+
+.badge-success {
+  @include badge-success;
+}
+
+.badge-warning {
+  @include badge-warning;
+}
+
+.badge-danger {
+  @include badge-danger;
+}
+
+// Text utilities
+.text-gradient {
+  @include text-gradient;
+}
+
+// Animation utilities (reduced)
+.fade-in {
+  @include fade-in;
+}
+
+.slide-up {
+  @include slide-up;
+}
+
+// Professional loading states
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(4px);
+  @include flex-center;
+  z-index: var(--z-modal);
+
+  .loading-spinner {
+    width: 32px;
+    height: 32px;
+    border: 2px solid var(--gray-200);
+    border-top: 2px solid var(--primary-500);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+// Clean responsive typography
+@include media-down(sm) {
+  .#{$demo-prefix}-app {
+    font-size: 0.875rem;
+  }
+}
+
+// Input utilities
+.input-base {
+  @include input-base;
+  min-height: var(--input-min-height);
+}
+
+// Print styles
+@media print {
+  .#{$demo-prefix}-app {
+    background: white !important;
+
+    &::before {
+      display: none !important;
+    }
+  }
+
+  .#{$demo-prefix}-header,
+  .#{$demo-prefix}-sidebar {
+    display: none !important;
+  }
+}
+
+// RTL Support
+[dir="rtl"] {
+  .#{$demo-prefix}-app {
+    // RTL-specific background adjustments
+    &::after {
+      background-image: radial-gradient(
+          circle at 80% 80%,
+          rgba(59, 130, 246, 0.03) 0%,
+          transparent 50%
+        ),
+        radial-gradient(
+          circle at 20% 20%,
+          rgba(147, 197, 253, 0.02) 0%,
+          transparent 50%
+        ),
+        radial-gradient(
+          circle at 60% 40%,
+          rgba(59, 130, 246, 0.01) 0%,
+          transparent 50%
+        );
+    }
+  }
+
+  // RTL text alignment and spacing
+  .#{$demo-prefix}-main {
+    direction: rtl;
+  }
+
+  // RTL font support for Arabic
+  * {
+    font-family: var(--font-sans), "Noto Sans Arabic", "IBM Plex Sans Arabic",
+      sans-serif;
+  }
+}
+
+// Modern glassmorphism effects
+.glass-effect {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow:
+    0 8px 32px rgba(31, 38, 135, 0.37),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.glass-card {
+  @extend .glass-effect;
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  transition: all var(--transition-base);
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow:
+      0 12px 48px rgba(31, 38, 135, 0.45),
+      inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  }
+}
+
+// Enhanced focus states for accessibility
+*:focus-visible {
+  outline: 2px solid var(--primary-500);
+  outline-offset: 3px;
+  box-shadow:
+    0 0 0 3px rgba(59, 130, 246, 0.1),
+    0 0 20px rgba(59, 130, 246, 0.15);
+  border-radius: var(--radius-base);
+}
+
+// Improved selection styles
+::selection {
+  background: linear-gradient(
+    135deg,
+    rgba(59, 130, 246, 0.2),
+    rgba(147, 197, 253, 0.3)
+  );
+  color: var(--gray-900);
+  text-shadow: none;
+}
+
+::-moz-selection {
+  background: linear-gradient(
+    135deg,
+    rgba(59, 130, 246, 0.2),
+    rgba(147, 197, 253, 0.3)
+  );
+  color: var(--gray-900);
+  text-shadow: none;
+}
+
+// Reduced motion support
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .#{$demo-prefix}-app::after {
+    display: none !important;
+  }
+}
+
+// High contrast mode support
+@media (prefers-contrast: high) {
+  .#{$demo-prefix}-app {
+    &::before,
+    &::after {
+      display: none !important;
+    }
+  }
+
+  .glass-effect,
+  .glass-card {
+    background: white;
+    border: 2px solid var(--gray-900);
+    backdrop-filter: none;
+  }
+}

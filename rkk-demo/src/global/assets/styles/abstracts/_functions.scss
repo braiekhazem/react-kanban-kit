@@ -1,0 +1,9 @@
+// Utility functions
+@function with-demo-prefix($name) {
+  @return "#{$demo-prefix}-#{$name}";
+}
+
+// Color functions
+@function alpha($color, $opacity) {
+  @return rgba($color, $opacity);
+}

@@ -1,52 +1,18 @@
-import { debounce } from "lodash";
+import { withPrefix } from "./getPrefix";
 
-export const handleScroll = (
-  e: any,
-  listLength: number,
-  currentPage: number,
-  limit: number,
-  onBottom: (p) => void,
-  threshold?: number
-) => {
-  const { scrollTop, clientHeight, scrollHeight } = e.target;
-  const scrollBottom = scrollHeight - (scrollTop + clientHeight);
+export const checkIfSkeletonIsVisible = ({ columnId, limit = 20 }): boolean => {
+  const skeletons = document.querySelectorAll(
+    `.${withPrefix("generic-item-skeleton")}[data-rkk-column="${columnId}"]`
+  );
 
-  // const threshold = 40
+  if (!skeletons.length) return false;
 
-  if (scrollBottom < (threshold || 0.4) && listLength > currentPage * limit)
-    onBottom((prev) => prev + 1);
-};
+  const skeletonsToCheck = Array.from(skeletons).slice(0, limit);
 
-interface ScrollThresholdOptions {
-  threshold?: number;
-  debounceMs?: number;
-  onThresholdReached: () => void;
-}
+  const isVisible = skeletonsToCheck.some((skeleton) => {
+    const { top, bottom } = skeleton.getBoundingClientRect();
+    return top <= window.innerHeight && bottom >= 0;
+  });
 
-export const createInfiniteScrollHandler = ({
-  threshold = 0.7,
-  debounceMs = 0,
-  onThresholdReached,
-}: ScrollThresholdOptions) => {
-  if (threshold < 0 || threshold > 1) {
-    console.error("Threshold must be a number between 0 and 1");
-    return;
-  }
-
-  const handleInfiniteScroll = debounce((event) => {
-    const target = event.target as HTMLElement;
-
-    if (!target) {
-      console.error("Unexpected error: event target is not an HTMLElement");
-      return;
-    }
-
-    const { scrollTop, clientHeight, scrollHeight } = target;
-    const scrollBottom = scrollHeight - (scrollTop + clientHeight);
-    const scrollBottomPercentage = scrollBottom / scrollHeight;
-
-    if (scrollBottomPercentage <= 1 - threshold) onThresholdReached();
-  }, debounceMs);
-
-  return handleInfiniteScroll;
+  return isVisible;
 };

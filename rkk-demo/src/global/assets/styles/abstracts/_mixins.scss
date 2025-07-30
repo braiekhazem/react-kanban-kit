@@ -1,0 +1,912 @@
+@use "breakpoints" as *;
+
+// Enhanced utility mixins
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin flex-start {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+@mixin flex-end {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+@mixin flex-col-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+// Premium button mixins with advanced effects
+@mixin button-base {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: var(--radius-2xl);
+  font-family: var(--font-sans);
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all var(--transition-base);
+  outline: none;
+  position: relative;
+  overflow: hidden;
+  white-space: nowrap;
+  min-height: var(--button-min-height);
+  letter-spacing: var(--tracking-tight);
+
+  // Enhanced focus ring with glow
+  &:focus-visible {
+    outline: 2px solid var(--primary-500);
+    outline-offset: 2px;
+    box-shadow:
+      0 0 0 4px rgba(59, 130, 246, 0.15),
+      0 0 20px rgba(59, 130, 246, 0.3),
+      var(--shadow-lg);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none !important;
+    filter: grayscale(0.3);
+  }
+
+  // Sophisticated hover animation
+  &:not(:disabled):hover {
+    transform: translateY(-2px) scale(1.02);
+  }
+
+  &:not(:disabled):active {
+    transform: translateY(0) scale(0.98);
+  }
+}
+
+@mixin button-primary {
+  @include button-base;
+  background: var(--gradient-primary);
+  color: white;
+  box-shadow: var(--shadow-primary);
+  position: relative;
+
+  // Animated gradient background
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.3),
+      transparent
+    );
+    transition: left var(--transition-slow);
+  }
+
+  &:hover:not(:disabled) {
+    box-shadow: var(--shadow-2xl), var(--shadow-primary);
+    transform: translateY(-3px) scale(1.03);
+
+    &::before {
+      left: 100%;
+    }
+  }
+
+  &:active:not(:disabled) {
+    transform: translateY(-1px) scale(1.01);
+    box-shadow: var(--shadow-lg);
+  }
+
+  // Ripple effect on click
+  &::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.4);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: all var(--transition-base);
+  }
+
+  &:active::after {
+    width: 200px;
+    height: 200px;
+  }
+}
+
+@mixin button-secondary {
+  @include button-base;
+  background: rgba(255, 255, 255, 0.95);
+  color: var(--gray-700);
+  border: 2px solid var(--gray-200);
+  box-shadow: var(--shadow-sm);
+  backdrop-filter: blur(10px);
+
+  &:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 1);
+    border-color: var(--primary-300);
+    color: var(--primary-700);
+    box-shadow: var(--shadow-xl);
+    transform: translateY(-3px) scale(1.02);
+  }
+
+  &:active:not(:disabled) {
+    background: var(--gray-50);
+    transform: translateY(-1px) scale(1.01);
+    box-shadow: var(--shadow-md);
+  }
+}
+
+@mixin button-ghost {
+  @include button-base;
+  background: transparent;
+  color: var(--gray-600);
+  border: 2px solid transparent;
+
+  &:hover:not(:disabled) {
+    background: rgba(59, 130, 246, 0.08);
+    color: var(--primary-700);
+    border-color: rgba(59, 130, 246, 0.2);
+    box-shadow: var(--shadow-md);
+  }
+
+  &:active:not(:disabled) {
+    background: rgba(59, 130, 246, 0.12);
+    transform: translateY(0) scale(0.98);
+  }
+}
+
+@mixin button-luxury {
+  @include button-base;
+  background: var(--gradient-royal);
+  color: white;
+  box-shadow: var(--shadow-purple);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 1px;
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.2) 0%,
+      transparent 50%
+    );
+    border-radius: calc(var(--radius-2xl) - 1px);
+    pointer-events: none;
+  }
+
+  &:hover:not(:disabled) {
+    box-shadow: var(--shadow-3xl), var(--shadow-purple);
+    transform: translateY(-4px) scale(1.05);
+  }
+}
+
+// Advanced card mixins with morphing effects
+@mixin card {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: var(--radius-xl);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  box-shadow: var(--shadow-sm);
+  backdrop-filter: blur(20px);
+  position: relative;
+  overflow: hidden;
+  min-height: var(--card-min-height);
+  -webkit-border-radius: var(--radius-xl);
+  -moz-border-radius: var(--radius-xl);
+  -ms-border-radius: var(--radius-xl);
+  -o-border-radius: var(--radius-xl);
+}
+
+@mixin card-hover {
+  @include card;
+  transition: all var(--transition-base);
+  cursor: pointer;
+
+  &:hover {
+    box-shadow: var(--shadow-3xl);
+    transform: translateY(-8px) rotateX(5deg);
+    border-color: rgba(59, 130, 246, 0.3);
+
+    &::before {
+      opacity: 1;
+      transform: translateX(100%);
+    }
+  }
+
+  // Sophisticated shimmer effect
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.4),
+      transparent
+    );
+    opacity: 0;
+    transition: all var(--transition-slow);
+    transform: translateX(-100%);
+  }
+}
+
+@mixin card-interactive {
+  @include card-hover;
+
+  &:active {
+    transform: translateY(-4px) scale(0.98);
+    box-shadow: var(--shadow-xl);
+  }
+
+  // Floating particles effect on hover
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+      rgba(59, 130, 246, 0.1) 0%,
+      rgba(59, 130, 246, 0.05) 40%,
+      transparent 70%
+    );
+    opacity: 0;
+    transition: opacity var(--transition-base);
+    pointer-events: none;
+  }
+
+  &:hover::after {
+    opacity: 1;
+  }
+}
+
+@mixin card-luxury {
+  @include card;
+  background: var(--gradient-primary-light);
+  border: 2px solid rgba(255, 255, 255, 0.6);
+  box-shadow:
+    var(--shadow-2xl),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 1px;
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.3) 0%,
+      transparent 70%
+    );
+    border-radius: calc(var(--radius-3xl) - 1px);
+    pointer-events: none;
+  }
+}
+
+@mixin card-elevated {
+  @include card;
+  box-shadow: var(--shadow-lg);
+  border: none;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      var(--primary-200),
+      transparent
+    );
+  }
+}
+
+@mixin card-glassmorphism {
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  border-radius: var(--radius-3xl);
+  position: relative;
+  overflow: hidden;
+}
+
+// Enhanced text mixins
+@mixin text-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@mixin text-truncate-lines($lines: 2) {
+  display: -webkit-box;
+  -webkit-line-clamp: $lines;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  line-height: 1.5;
+}
+
+// Advanced text effects
+@mixin text-gradient($gradient: var(--gradient-primary)) {
+  background: $gradient;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 200% 200%;
+  animation: gradient-shift 3s ease infinite;
+}
+
+@mixin text-glow($color: var(--primary-500)) {
+  text-shadow:
+    0 0 10px rgba($color, 0.4),
+    0 0 20px rgba($color, 0.3),
+    0 0 40px rgba($color, 0.2);
+}
+
+@mixin text-luxury {
+  @include text-gradient(var(--gradient-royal));
+  font-weight: 700;
+  letter-spacing: var(--tracking-tight);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+@mixin text-floating {
+  animation: text-float 3s ease-in-out infinite;
+}
+
+// Enhanced scrollbar with luxury styling
+@mixin custom-scrollbar(
+  $width: 8px,
+  $track-color: rgba(255, 255, 255, 0.1),
+  $thumb-color: var(--primary-400)
+) {
+  &::-webkit-scrollbar {
+    width: $width;
+    height: $width;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: $track-color;
+    border-radius: var(--radius-full);
+    backdrop-filter: blur(10px);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, $thumb-color, rgba($thumb-color, 0.8));
+    border-radius: var(--radius-full);
+    border: 2px solid transparent;
+    background-clip: padding-box;
+    transition: all var(--transition-base);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+    &:hover {
+      background: linear-gradient(
+        135deg,
+        var(--primary-500),
+        var(--primary-600)
+      );
+      box-shadow: 0 4px 8px rgba(59, 130, 246, 0.3);
+    }
+  }
+
+  &::-webkit-scrollbar-corner {
+    background: transparent;
+  }
+}
+
+// Advanced animation mixins
+@mixin fade-in-up(
+  $duration: var(--transition-base),
+  $delay: 0s,
+  $distance: 30px
+) {
+  opacity: 0;
+  transform: translateY($distance);
+  animation: fadeInUp $duration var(--ease-out) $delay forwards;
+}
+
+@mixin fade-in-scale($duration: var(--transition-base), $delay: 0s) {
+  opacity: 0;
+  transform: scale(0.9);
+  animation: fadeInScale $duration var(--ease-bounce) $delay forwards;
+}
+
+@mixin slide-in-left($duration: var(--transition-base), $delay: 0s) {
+  opacity: 0;
+  transform: translateX(-50px);
+  animation: slideInLeft $duration var(--ease-back) $delay forwards;
+}
+
+@mixin fade-in($duration: var(--transition-base), $delay: 0s) {
+  opacity: 0;
+  animation: fadeIn $duration var(--ease-out) $delay forwards;
+}
+
+@mixin slide-up($duration: var(--transition-base), $delay: 0s) {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: slideUp $duration var(--ease-out) $delay forwards;
+}
+
+@mixin bounce-in($duration: 0.6s, $delay: 0s) {
+  opacity: 0;
+  transform: scale(0.3);
+  animation: bounceIn $duration var(--ease-bounce) $delay forwards;
+}
+
+@mixin morphing-hover {
+  transition: all var(--transition-slow);
+
+  &:hover {
+    border-radius: var(--radius-full);
+    transform: scale(1.1) rotate(5deg);
+  }
+}
+
+@mixin floating-animation($duration: 3s) {
+  animation: floating $duration ease-in-out infinite;
+}
+
+@mixin pulse-glow($color: var(--primary-500)) {
+  animation: pulse-glow 2s ease-in-out infinite;
+
+  @keyframes pulse-glow {
+    0%,
+    100% {
+      box-shadow: 0 0 20px rgba($color, 0.3);
+    }
+    50% {
+      box-shadow:
+        0 0 40px rgba($color, 0.6),
+        0 0 60px rgba($color, 0.4);
+    }
+  }
+}
+
+// Glassmorphism effects
+@mixin glass {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+}
+
+@mixin glass-dark {
+  background: rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.15);
+}
+
+@mixin glass-premium {
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow:
+    0 8px 32px 0 rgba(31, 38, 135, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+@mixin glass-dark-premium {
+  background: rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow:
+    0 8px 32px 0 rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+// Neumorphism effects
+@mixin neumorphism-light {
+  background: var(--neuro-light-bg);
+  box-shadow: var(--neuro-outset-shadow);
+  border: none;
+
+  &:hover {
+    box-shadow: var(--neuro-inset-shadow);
+  }
+}
+
+@mixin neumorphism-dark {
+  background: var(--neuro-dark-bg);
+  box-shadow: var(--neuro-outset-shadow);
+  border: none;
+}
+
+// Advanced loading states
+@mixin shimmer {
+  position: relative;
+  overflow: hidden;
+  background: var(--gray-200);
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.6),
+      transparent
+    );
+    transform: translateX(-100%);
+    animation: shimmer 1.5s infinite;
+  }
+}
+
+@mixin skeleton-premium {
+  background: linear-gradient(
+    90deg,
+    var(--gray-200) 25%,
+    var(--gray-100) 50%,
+    var(--gray-200) 75%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.5s infinite;
+  border-radius: var(--radius-lg);
+}
+
+@mixin loading-dots {
+  &::after {
+    content: "";
+    display: inline-block;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: currentColor;
+    animation: loading-dots 1.4s infinite both;
+    margin-left: 4px;
+  }
+}
+
+// Enhanced input styles
+@mixin input-base {
+  appearance: none;
+  background-color: white;
+  border: 1.5px solid var(--gray-200);
+  border-radius: var(--radius-lg);
+  padding: var(--space-3) var(--space-4);
+  font-size: 0.875rem;
+  font-family: var(--font-sans);
+  color: var(--gray-900);
+  transition: all var(--transition-base);
+  outline: none;
+
+  &::placeholder {
+    color: var(--gray-400);
+  }
+
+  &:focus {
+    border-color: var(--primary-500);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  }
+
+  &:hover:not(:focus) {
+    border-color: var(--gray-300);
+  }
+}
+
+// Premium input styles
+@mixin input-luxury {
+  appearance: none;
+  background: rgba(255, 255, 255, 0.95);
+  border: 2px solid var(--gray-200);
+  border-radius: var(--radius-2xl);
+  padding: var(--space-4) var(--space-6);
+  font-size: var(--text-base);
+  font-family: var(--font-sans);
+  color: var(--gray-900);
+  transition: all var(--transition-base);
+  outline: none;
+  min-height: var(--input-min-height);
+  backdrop-filter: blur(10px);
+
+  &::placeholder {
+    color: var(--gray-400);
+    font-weight: 400;
+  }
+
+  &:focus {
+    border-color: var(--primary-500);
+    background: rgba(255, 255, 255, 1);
+    box-shadow:
+      0 0 0 4px rgba(59, 130, 246, 0.1),
+      var(--shadow-xl);
+    transform: translateY(-2px);
+  }
+
+  &:hover:not(:focus) {
+    border-color: var(--primary-300);
+    box-shadow: var(--shadow-md);
+  }
+}
+
+// Badge mixins
+@mixin badge-base {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--space-1) var(--space-2-5);
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.025em;
+  position: relative;
+}
+
+@mixin badge-primary {
+  @include badge-base;
+  background-color: var(--primary-100);
+  color: var(--primary-700);
+  border: 1px solid var(--primary-200);
+}
+
+@mixin badge-success {
+  @include badge-base;
+  background-color: rgba(16, 185, 129, 0.1);
+  color: var(--accent-emerald);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+@mixin badge-warning {
+  @include badge-base;
+  background-color: rgba(245, 158, 11, 0.1);
+  color: var(--accent-amber);
+  border: 1px solid rgba(245, 158, 11, 0.2);
+}
+
+@mixin badge-danger {
+  @include badge-base;
+  background-color: rgba(239, 68, 68, 0.1);
+  color: var(--accent-rose);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+// Advanced badge mixins
+@mixin badge-luxury {
+  @include badge-base;
+  background: var(--gradient-primary);
+  color: white;
+  box-shadow: var(--shadow-primary);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 1px;
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.3) 0%,
+      transparent 50%
+    );
+    border-radius: calc(var(--radius-full) - 1px);
+    pointer-events: none;
+  }
+}
+
+@mixin badge-animated {
+  animation: badge-pulse 2s ease-in-out infinite;
+
+  @keyframes badge-pulse {
+    0%,
+    100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.05);
+    }
+  }
+}
+
+// Keyframe animations
+@keyframes gradient-shift {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInScale {
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slideInLeft {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes bounceIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+  70% {
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes floating {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes text-float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes skeleton-shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes loading-dots {
+  0%,
+  80%,
+  100% {
+    transform: scale(0);
+    opacity: 0.5;
+  }
+  40% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+// Responsive mixins for luxury design
+@mixin luxury-mobile {
+  @include media-down(sm) {
+    padding: var(--space-4);
+    font-size: var(--text-sm);
+    border-radius: var(--radius-xl);
+  }
+}
+
+@mixin luxury-tablet {
+  @include media-down(md) {
+    padding: var(--space-6);
+    font-size: var(--text-base);
+  }
+}
+
+// Particle effect mixin
+@mixin particles {
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(
+        circle at 20% 30%,
+        rgba(59, 130, 246, 0.1) 1px,
+        transparent 2px
+      ),
+      radial-gradient(
+        circle at 70% 20%,
+        rgba(59, 130, 246, 0.08) 1px,
+        transparent 2px
+      ),
+      radial-gradient(
+        circle at 40% 80%,
+        rgba(59, 130, 246, 0.06) 1px,
+        transparent 2px
+      ),
+      radial-gradient(
+        circle at 90% 60%,
+        rgba(59, 130, 246, 0.1) 1px,
+        transparent 2px
+      ),
+      radial-gradient(
+        circle at 10% 90%,
+        rgba(59, 130, 246, 0.08) 1px,
+        transparent 2px
+      );
+    animation: particles-float 10s linear infinite;
+    pointer-events: none;
+  }
+}
+
+@keyframes particles-float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}

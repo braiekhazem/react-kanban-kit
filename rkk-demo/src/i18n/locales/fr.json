@@ -1,0 +1,56 @@
+{
+  "header": {
+    "title": "React Kanban Kit",
+    "subtitle": "Vitrine de Démonstration",
+    "github": "GitHub",
+    "npm": "NPM",
+    "settings": "Paramètres"
+  },
+  "navigation": {
+    "boardExamples": "Exemples de Tableaux",
+    "documentation": "Documentation",
+    "overview": "Aperçu",
+    "overviewDescription": "Exemple Kanban de base",
+    "trelloStyle": "Style Trello",
+    "trelloDescription": "Design de tableau inspiré de Trello",
+    "clickupStyle": "Style ClickUp",
+    "clickupDescription": "Design de tableau inspiré de ClickUp",
+    "tamStyle": "Style Tam",
+    "tamDescription": "Design de tableau inspiré de Tam"
+  },
+  "language": {
+    "english": "English",
+    "french": "Français",
+    "arabic": "العربية",
+    "switchLanguage": "Changer de Langue"
+  },
+  "pages": {
+    "overview": {
+      "title": "Aperçu de React Kanban Kit",
+      "description": "Un composant de tableau Kanban puissant et flexible pour les applications React",
+      "features": "Fonctionnalités",
+      "gettingStarted": "Commencer",
+      "examples": "Exemples"
+    },
+    "trello": {
+      "title": "Tableau Style Trello",
+      "description": "Découvrez la mise en page familière du tableau Trello avec la fonctionnalité de glisser-déposer"
+    },
+    "clickup": {
+      "title": "Tableau Style ClickUp",
+      "description": "Interface moderne de gestion des tâches inspirée du design de ClickUp"
+    }
+  },
+  "common": {
+    "loading": "Chargement...",
+    "error": "Erreur",
+    "success": "Succès",
+    "cancel": "Annuler",
+    "save": "Enregistrer",
+    "edit": "Modifier",
+    "delete": "Supprimer",
+    "add": "Ajouter",
+    "close": "Fermer",
+    "unassigned": "Non assigné"
+  }
+}

@@ -1,0 +1,128 @@
+// Breakpoints
+$breakpoints: (
+  xs: 480px,
+  sm: 640px,
+  md: 768px,
+  lg: 1024px,
+  xl: 1280px,
+  2xl: 1536px,
+) !default;
+
+// Get breakpoint value
+@function breakpoint($name) {
+  @return map-get($breakpoints, $name);
+}
+
+// Media query mixins
+@mixin media-up($name) {
+  $value: breakpoint($name);
+  @if $value {
+    @media (min-width: $value) {
+      @content;
+    }
+  }
+}
+
+@mixin media-down($name) {
+  $value: breakpoint($name);
+  @if $value {
+    @media (max-width: ($value - 1px)) {
+      @content;
+    }
+  }
+}
+
+@mixin media-between($lower, $upper) {
+  $lower-value: breakpoint($lower);
+  $upper-value: breakpoint($upper);
+
+  @if $lower-value and $upper-value {
+    @media (min-width: $lower-value) and (max-width: ($upper-value - 1px)) {
+      @content;
+    }
+  }
+}
+
+@mixin media-only($name) {
+  $value: breakpoint($name);
+  $next: null;
+
+  // Find next breakpoint
+  $breakpoint-names: map-keys($breakpoints);
+  $index: index($breakpoint-names, $name);
+
+  @if $index and $index < length($breakpoint-names) {
+    $next-name: nth($breakpoint-names, $index + 1);
+    $next: breakpoint($next-name);
+  }
+
+  @if $value and $next {
+    @media (min-width: $value) and (max-width: ($next - 1px)) {
+      @content;
+    }
+  } @else if $value {
+    @media (min-width: $value) {
+      @content;
+    }
+  }
+}
+
+// Utility mixins for common breakpoints
+@mixin mobile-only {
+  @include media-down(sm) {
+    @content;
+  }
+}
+
+@mixin tablet-only {
+  @include media-between(sm, lg) {
+    @content;
+  }
+}
+
+@mixin desktop-only {
+  @include media-up(lg) {
+    @content;
+  }
+}
+
+// High DPI / Retina display mixin
+@mixin retina {
+  @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    @content;
+  }
+}
+
+// Orientation mixins
+@mixin landscape {
+  @media (orientation: landscape) {
+    @content;
+  }
+}
+
+@mixin portrait {
+  @media (orientation: portrait) {
+    @content;
+  }
+}
+
+// Reduced motion mixin
+@mixin reduced-motion {
+  @media (prefers-reduced-motion: reduce) {
+    @content;
+  }
+}
+
+// Dark mode mixin
+@mixin dark-mode {
+  @media (prefers-color-scheme: dark) {
+    @content;
+  }
+}
+
+// High contrast mixin
+@mixin high-contrast {
+  @media (prefers-contrast: high) {
+    @content;
+  }
+}

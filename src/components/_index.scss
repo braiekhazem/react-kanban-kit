@@ -1,5 +1,9 @@
-@forward './Board';
-@forward './BoardColumn';
-@forward './TaskCard';
-@forward './TaskSkeleton';
-@forward './ItemRow';
+@forward "./Kanban";
+@forward "./Column";
+@forward "./ColumnHeader";
+@forward "./ColumnContent";
+@forward "./GenericItem";
+@forward "./CardSkeleton";
+@forward "./Card";
+@forward "./DefaultCard";
+@forward "./ColumnAdder";

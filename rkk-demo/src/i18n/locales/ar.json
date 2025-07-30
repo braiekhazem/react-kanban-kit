@@ -1,0 +1,56 @@
+{
+  "header": {
+    "title": "React Kanban Kit",
+    "subtitle": "معرض التوضيح",
+    "github": "GitHub",
+    "npm": "NPM",
+    "settings": "الإعدادات"
+  },
+  "navigation": {
+    "boardExamples": "أمثلة اللوحات",
+    "documentation": "التوثيق",
+    "overview": "نظرة عامة",
+    "overviewDescription": "مثال كانبان أساسي",
+    "trelloStyle": "نمط تريلو",
+    "trelloDescription": "تصميم لوحة مستوحى من تريلو",
+    "clickupStyle": "نمط كليك أب",
+    "clickupDescription": "تصميم لوحة مستوحى من كليك أب",
+    "tamStyle": "نمط تام",
+    "tamDescription": "تصميم لوحة مستوحى من تام"
+  },
+  "language": {
+    "english": "English",
+    "french": "Français",
+    "arabic": "العربية",
+    "switchLanguage": "تغيير اللغة"
+  },
+  "pages": {
+    "overview": {
+      "title": "نظرة عامة على React Kanban Kit",
+      "description": "مكون لوحة كانبان قوي ومرن لتطبيقات React",
+      "features": "المميزات",
+      "gettingStarted": "البدء",
+      "examples": "أمثلة"
+    },
+    "trello": {
+      "title": "لوحة نمط تريلو",
+      "description": "اختبر تخطيط لوحة تريلو المألوف مع وظيفة السحب والإفلات"
+    },
+    "clickup": {
+      "title": "لوحة نمط كليك أب",
+      "description": "واجهة إدارة المهام الحديثة المستوحاة من تصميم كليك أب"
+    }
+  },
+  "common": {
+    "loading": "جاري التحميل...",
+    "error": "خطأ",
+    "success": "نجح",
+    "cancel": "إلغاء",
+    "save": "حفظ",
+    "edit": "تعديل",
+    "delete": "حذف",
+    "add": "إضافة",
+    "close": "إغلاق",
+    "unassigned": "غير مخصص"
+  }
+}

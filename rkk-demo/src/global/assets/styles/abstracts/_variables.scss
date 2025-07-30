@@ -1,0 +1,202 @@
+// Demo app prefix
+$demo-prefix: "rkk-demo";
+
+// Layout variables with professional sizing
+:root {
+  // Header with professional sizing
+  --header-height: 64px;
+  --header-bg: rgba(255, 255, 255, 0.95);
+  --header-border: rgba(59, 130, 246, 0.08);
+  --header-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  --header-backdrop: blur(16px);
+
+  // Sidebar with professional proportions
+  --sidebar-width: 280px;
+  --sidebar-collapsed-width: 72px;
+  --sidebar-bg: linear-gradient(145deg, #fafbff 0%, #f5f7ff 100%);
+  --sidebar-border: rgba(59, 130, 246, 0.08);
+
+  // Professional color palette
+  --primary-50: #eff6ff;
+  --primary-100: #dbeafe;
+  --primary-200: #bfdbfe;
+  --primary-300: #93c5fd;
+  --primary-400: #60a5fa;
+  --primary-500: #3b82f6;
+  --primary-600: #2563eb;
+  --primary-700: #1d4ed8;
+  --primary-800: #1e40af;
+  --primary-900: #1e3a8a;
+  --primary-950: #172554;
+
+  // Clean gray scale
+  --gray-25: #fcfcfd;
+  --gray-50: #f9fafb;
+  --gray-100: #f3f4f6;
+  --gray-200: #e5e7eb;
+  --gray-300: #d1d5db;
+  --gray-400: #9ca3af;
+  --gray-500: #6b7280;
+  --gray-600: #4b5563;
+  --gray-700: #374151;
+  --gray-800: #1f2937;
+  --gray-900: #111827;
+  --gray-950: #030712;
+
+  // Professional accent colors
+  --accent-success: #10b981;
+  --accent-warning: #f59e0b;
+  --accent-danger: #ef4444;
+  --accent-info: #06b6d4;
+
+  // Professional typography
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "JetBrains Mono", "SF Mono", Monaco, Consolas, monospace;
+  --font-display: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+
+  // Clean spacing scale
+  --space-px: 1px;
+  --space-0-5: 0.125rem;
+  --space-1: 0.25rem;
+  --space-1-5: 0.375rem;
+  --space-2: 0.5rem;
+  --space-2-5: 0.625rem;
+  --space-3: 0.75rem;
+  --space-3-5: 0.875rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-7: 1.75rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  --space-24: 6rem;
+
+  // Professional border radius
+  --radius-none: 0px;
+  --radius-sm: 0.125rem;
+  --radius-base: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  --radius-2xl: 1rem;
+  --radius-3xl: 1.5rem;
+  --radius-full: 9999px;
+
+  // Clean shadow system
+  --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-base: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  --shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
+
+  // Professional colored shadows
+  --shadow-primary: 0 4px 6px -1px rgba(59, 130, 246, 0.1),
+    0 2px 4px -1px rgba(59, 130, 246, 0.06);
+  --shadow-success: 0 4px 6px -1px rgba(16, 185, 129, 0.1),
+    0 2px 4px -1px rgba(16, 185, 129, 0.06);
+  --shadow-warning: 0 4px 6px -1px rgba(245, 158, 11, 0.1),
+    0 2px 4px -1px rgba(245, 158, 11, 0.06);
+  --shadow-danger: 0 4px 6px -1px rgba(239, 68, 68, 0.1),
+    0 2px 4px -1px rgba(239, 68, 68, 0.06);
+
+  // Subtle transitions
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-base: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  // Professional easing
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+
+  // Z-index scale
+  --z-hide: -1;
+  --z-auto: auto;
+  --z-base: 0;
+  --z-docked: 10;
+  --z-dropdown: 1000;
+  --z-sticky: 1020;
+  --z-banner: 1030;
+  --z-overlay: 1040;
+  --z-modal: 1050;
+  --z-popover: 1060;
+  --z-tooltip: 1090;
+
+  // Professional gradients
+  --gradient-primary: linear-gradient(
+    135deg,
+    var(--primary-500) 0%,
+    var(--primary-600) 100%
+  );
+  --gradient-secondary: linear-gradient(
+    135deg,
+    var(--gray-600) 0%,
+    var(--gray-700) 100%
+  );
+  --gradient-success: linear-gradient(
+    135deg,
+    var(--accent-success) 0%,
+    #059669 100%
+  );
+  --gradient-warning: linear-gradient(
+    135deg,
+    var(--accent-warning) 0%,
+    #d97706 100%
+  );
+  --gradient-danger: linear-gradient(
+    135deg,
+    var(--accent-danger) 0%,
+    #dc2626 100%
+  );
+
+  // Subtle background patterns
+  --bg-pattern-dots: radial-gradient(
+    circle at 1px 1px,
+    rgba(59, 130, 246, 0.03) 1px,
+    transparent 0
+  );
+  --bg-pattern-grid: linear-gradient(
+      rgba(59, 130, 246, 0.02) 1px,
+      transparent 1px
+    ),
+    linear-gradient(90deg, rgba(59, 130, 246, 0.02) 1px, transparent 1px);
+
+  // Professional spacing tokens
+  --content-max-width: 1200px;
+  --sidebar-max-width: 280px;
+  --header-max-height: 64px;
+  --card-min-height: 100px;
+  --button-min-height: 40px;
+  --input-min-height: 40px;
+
+  // Professional typography scale
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 1.875rem;
+  --text-4xl: 2.25rem;
+
+  // Line height scale
+  --leading-tight: 1.25;
+  --leading-snug: 1.375;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.625;
+
+  // Letter spacing scale
+  --tracking-tight: -0.025em;
+  --tracking-normal: 0em;
+  --tracking-wide: 0.025em;
+}

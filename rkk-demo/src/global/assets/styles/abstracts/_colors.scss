@@ -1,0 +1,36 @@
+// Brand colors for different board examples
+:root {
+  // Trello brand colors
+  --trello-primary: #0079bf;
+  --trello-secondary: #026aa7;
+  --trello-bg: #f4f5f7;
+  --trello-card: #ffffff;
+  --trello-list: #ebecf0;
+
+  // ClickUp brand colors
+  --clickup-primary: #7b68ee;
+  --clickup-secondary: #6c5ce7;
+  --clickup-bg: #f8f9fa;
+  --clickup-card: #ffffff;
+  --clickup-list: #f1f2f4;
+
+  // Jira brand colors
+  --jira-primary: #0052cc;
+  --jira-secondary: #0747a6;
+  --jira-bg: #f4f5f7;
+  --jira-card: #ffffff;
+  --jira-list: #ebecf0;
+
+  // Status colors
+  --status-todo: var(--gray-400);
+  --status-progress: var(--primary-500);
+  --status-review: #f59e0b;
+  --status-done: #10b981;
+  --status-blocked: #ef4444;
+
+  // Priority colors
+  --priority-low: #10b981;
+  --priority-medium: #f59e0b;
+  --priority-high: #ef4444;
+  --priority-critical: #dc2626;
+}
