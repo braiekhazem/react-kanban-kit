@@ -28,7 +28,7 @@ const PriorityBadge: React.FC<{ priority: string }> = ({ priority }) => {
 export const Overview: React.FC = () => {
   const { t } = useTranslation();
   const [dataSource, setDataSource] = useState<BoardData>(
-    mockData as BoardData
+    structuredClone(mockData) as BoardData
   );
 
   return (

@@ -2,6 +2,10 @@
 
 A flexible and customizable Kanban board component for React applications, built with TypeScript and modern drag-and-drop functionality powered by Atlassian's pragmatic-drag-and-drop.
 
+## Demo
+
+Check out the live demo: [https://react-kanban-kit.netlify.app/](https://react-kanban-kit.netlify.app/)
+
 ## Features
 
 - 🎯 **Drag and Drop**: Cards and columns with smooth animations
