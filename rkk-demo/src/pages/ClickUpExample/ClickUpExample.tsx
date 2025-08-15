@@ -6,6 +6,7 @@ import {
   dropHandler,
 } from "react-kanban-kit";
 import { mockData } from "../../utils/_mock_";
+import deepClone from "deep-clone";
 import { Calendar, User, Flag, ChevronLeft, Plus } from "lucide-react";
 import {
   getPriorityColor,
@@ -137,7 +138,7 @@ const ClickUpCard = ({ data }: { data: BoardItem }) => {
 
 export const ClickUpExample: React.FC = () => {
   const [dataSource, setDataSource] = useState<BoardData>(
-    mockData as BoardData
+    deepClone(mockData) as BoardData
   );
 
   const addCardPlaceholderHandler = (

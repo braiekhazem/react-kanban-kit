@@ -117,7 +117,7 @@ const TrelloCard: React.FC<{ data: any }> = ({ data }) => {
 
 export const TrelloExample: React.FC = () => {
   const [dataSource, setDataSource] = useState<BoardData>(
-    mockData as BoardData
+    structuredClone(mockData) as BoardData
   );
 
   const addCardPlaceholderHandler = (
