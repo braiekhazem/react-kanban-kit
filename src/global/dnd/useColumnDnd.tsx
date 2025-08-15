@@ -162,8 +162,6 @@ export const useColumnDnd = (
       `.${withPrefix("column-content-list")}`
     );
 
-    console.log({ outerFullHeightRef, innerRef, headerRef, scroller });
-
     const columnData = {
       type: "column",
       columnId: data.id,
