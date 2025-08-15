@@ -249,10 +249,10 @@ export const dropHandler = (
       fromColumnId
     ].children.filter((id: string) => id !== cardId);
     if (
-      newDataSource[fromColumnId]?.totalItemsCount !== undefined &&
-      newDataSource[fromColumnId].totalItemsCount > 0
+      newDataSource[fromColumnId]?.totalItems !== undefined &&
+      newDataSource[fromColumnId].totalItems > 0
     )
-      newDataSource[fromColumnId].totalItemsCount--;
+      newDataSource[fromColumnId].totalItems--;
   }
 
   if (updateSourceColumn && newDataSource[fromColumnId])
@@ -269,10 +269,10 @@ export const dropHandler = (
   const alreadyExistInTarget = targetChildren.includes(cardId);
 
   if (
-    newDataSource[toColumnId]?.totalItemsCount !== undefined &&
+    newDataSource[toColumnId]?.totalItems !== undefined &&
     !alreadyExistInTarget
   )
-    newDataSource[toColumnId].totalItemsCount++;
+    newDataSource[toColumnId].totalItems++;
 
   if (updateDroppedItem && newDataSource[cardId]) {
     const updatedItem = updateDroppedItem?.(
