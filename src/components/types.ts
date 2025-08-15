@@ -37,6 +37,7 @@ export interface BoardItem {
   children: string[];
   content?: any;
   type?: keyof ConfigMap;
+  totalItems?: number;
   // totalChildrenCount is the total number of children in the column
   totalChildrenCount: number;
   // totalItemsCount is the total number of items (real content) in the column
