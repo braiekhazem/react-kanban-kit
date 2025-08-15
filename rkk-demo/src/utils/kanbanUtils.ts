@@ -148,7 +148,7 @@ export const increaseColumnTotalItemsCount = (dataSource: BoardData) => {
   return dataSource;
 };
 
-export const fetchTasks = (columnId: string) => {
+export const fetchTasks = () => {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve(200);
