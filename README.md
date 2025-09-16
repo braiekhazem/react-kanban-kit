@@ -4,6 +4,8 @@ A flexible and customizable Kanban board component for React applications, built
 
 ## Demo
 
+<img src="https://dl.dropboxusercontent.com/scl/fi/18zb79la4t5xgmt07eihn/1758020089915_GIF-ScreenRecording2025-09-16at11.52.15AM-ezgif.com-video-to-gif-converter.gif?rlkey=ikdmkrl4swpcqht09v4fvm3bo&dl=0"/>
+
 Check out the live demo: [https://react-kanban-kit.netlify.app/](https://react-kanban-kit.netlify.app/)
 
 ## Features
