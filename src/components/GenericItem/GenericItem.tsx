@@ -59,6 +59,7 @@ const GenericItem = (props: Props) => {
     onCardDndStateChange,
     renderCardDragIndicator,
     renderListFooter,
+    renderCardDragPreview,
     renderGap,
   } = options;
 
@@ -111,6 +112,7 @@ const GenericItem = (props: Props) => {
         renderGap={renderGap}
         onCardDndStateChange={onCardDndStateChange}
         renderCardDragIndicator={renderCardDragIndicator}
+        renderCardDragPreview={renderCardDragPreview}
       />
     );
   };

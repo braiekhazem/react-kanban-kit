@@ -105,6 +105,22 @@ const App = () => {
         //     padding: "10px",
         //   };
         // }}
+        renderCardDragPreview={(card, info) => {
+          console.log({ card, info });
+          return (
+            <div
+              style={{
+                backgroundColor: "red",
+                height: info?.state?.dragging?.height,
+                width: info?.state?.dragging?.width,
+                transform: "rotate(4deg)",
+                borderRadius: "10px",
+              }}
+            >
+              Preview of {card.title}
+            </div>
+          );
+        }}
         cardWrapperClassName="card-hazem"
         // loadMore={(columnId) => {
         //   console.log("loadMore", columnId);
