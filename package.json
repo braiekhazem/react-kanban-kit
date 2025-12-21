@@ -3,7 +3,7 @@
   "name": "react-kanban-kit",
   "author": "hazem braiek",
   "private": false,
-  "version": "0.0.2-beta.5",
+  "version": "0.0.2-beta.6",
   "type": "module",
   "main": "dist/index.cjs.js",
   "module": "dist/index.es.js",
