@@ -39,8 +39,8 @@ const idle: TaskCardState = { type: "idle" };
 
 // Custom hook to handle all drag and drop logic
 export const useCardDnd = (
-  data: BoardItem,
-  column: BoardItem,
+  data: BoardItem = {} as BoardItem,
+  column: BoardItem = {} as BoardItem,
   index: number,
   isDraggable: boolean,
   onCardDndStateChange?: (info: DndState) => void
@@ -54,14 +54,14 @@ export const useCardDnd = (
   const getInitialData = useCallback(
     () => ({
       type: "card",
-      itemId: data.id,
-      columnId: column.id,
+      itemId: data?.id,
+      columnId: column?.id,
       index,
       isDraggable,
       parentId: data.parentId,
       rect: innerRef.current?.getBoundingClientRect() || null,
     }),
-    [data.id, column.id, index, isDraggable, data.parentId]
+    [data?.id, column?.id, index, isDraggable, data?.parentId]
   );
 
   const getDropTargetData = useCallback(
@@ -82,7 +82,7 @@ export const useCardDnd = (
         allowedEdges: ["top", "bottom"],
       });
     },
-    [data.id, column.id, index, isDraggable, data.parentId]
+    [data?.id, column?.id, index, isDraggable, data?.parentId]
   );
 
   // Optimize the drop check to avoid recalculating on every drag move
@@ -92,7 +92,7 @@ export const useCardDnd = (
       if (sourceData.itemId === data.parentId) return false;
       return sourceData.isDraggable;
     },
-    [data.id, data.parentId]
+    [data?.id, data?.parentId]
   );
 
   // Drag and drop event handlers
@@ -139,7 +139,7 @@ export const useCardDnd = (
         closestEdge,
       });
     },
-    [data.id]
+    [data?.id]
   );
 
   const handleDrag = useCallback(
@@ -156,14 +156,14 @@ export const useCardDnd = (
         closestEdge,
       });
     },
-    [data.id]
+    [data?.id]
   );
 
   const handleDragLeave = useCallback(
     ({ source }) => {
       if (source.data.type !== "card") return;
 
-      if (source.data.itemId === data.id) {
+      if (source.data.itemId === data?.id) {
         setState({ type: "is-dragging-and-left-self" });
         return;
       }

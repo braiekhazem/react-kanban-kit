@@ -36,57 +36,72 @@ pnpm add react-kanban-kit
 import { Kanban } from "react-kanban-kit";
 
 const MyKanbanBoard = () => {
-  const dataSource = {
-    root: {
-      id: "root",
-      title: "Root",
-      children: ["col-1", "col-2", "col-3"],
-      totalChildrenCount: 3,
-      parentId: null,
-    },
-    "col-1": {
-      id: "col-1",
-      title: "To Do",
-      children: ["task-1", "task-2"],
-      totalChildrenCount: 2,
-      parentId: "root",
-    },
-    "col-2": {
-      id: "col-2",
-      title: "In Progress",
-      children: ["task-3"],
-      totalChildrenCount: 1,
-      parentId: "root",
-    },
-    "col-3": {
-      id: "col-3",
-      title: "Done",
-      children: ["task-4"],
-      totalChildrenCount: 1,
-      parentId: "root",
-    },
-    "task-1": {
-      id: "task-1",
-      title: "Design Homepage",
-      parentId: "col-1",
-      children: [],
-      totalChildrenCount: 0,
-      type: "card",
-      content: {
-        description: "Create wireframes and mockups for the homepage",
-        priority: "high",
-      },
-    },
-    "task-2": {
-      id: "task-2",
-      title: "Setup Database",
-      parentId: "col-1",
-      children: [],
-      totalChildrenCount: 0,
-      type: "card",
-    },
-    // ... more tasks
-  };
+  const dataSource = {{
+          root: {
+            id: "root",
+            title: "Root",
+            children: ["col-1", "col-2", "col-3"],
+            totalChildrenCount: 3,
+            parentId: null,
+          },
+          "col-1": {
+            id: "col-1",
+            title: "To Do",
+            children: ["task-1", "task-2"],
+            totalChildrenCount: 2,
+            parentId: "root",
+          },
+          "col-2": {
+            id: "col-2",
+            title: "In Progress",
+            children: ["task-3"],
+            totalChildrenCount: 1,
+            parentId: "root",
+          },
+          "col-3": {
+            id: "col-3",
+            title: "Done",
+            children: ["task-4"],
+            totalChildrenCount: 1,
+            parentId: "root",
+          },
+          "task-1": {
+            id: "task-1",
+            title: "DesigHomepage",
+            parentId: "col-1",
+            children: [],
+            totalChildrenCount: 0,
+            type: "card",
+            content: {
+              description: "Create wireframeand mockups for thhomepage",
+              priority: "high",
+            },
+          },
+          "task-2": {
+            id: "task-2",
+            title: "SetuDatabase",
+            parentId: "col-1",
+            children: [],
+            totalChildrenCount: 0,
+            type: "card",
+          },
+          "task-3": {
+            id: "task-3",
+            title: "Task 3",
+            parentId: "col-2",
+            children: [],
+            totalChildrenCount: 0,
+            type: "card",
+          },
+          "task-4": {
+            id: "task-4",
+            title: "Task 4",
+            parentId: "col-3",
+            children: [],
+            totalChildrenCount: 0,
+            type: "card",
+          },
+        }}
 
   const configMap = {
     card: {

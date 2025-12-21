@@ -103,8 +103,8 @@ const CardDisplay = (props: {
           ...containerStyle,
           ...(cardsGap !== undefined ? { marginBottom: cardsGap } : {}),
         }}
-        data-test-id={data.id}
-        data-rkk-column={column.id}
+        data-test-id={data?.id}
+        data-rkk-column={column?.id}
         data-rkk-index={index}
       >
         {showTopShadow && (
