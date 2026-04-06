@@ -190,24 +190,24 @@ const Card = (props: Props) => {
 
       {state.type === "preview"
         ? createPortal(
-            renderCardDragPreview?.(data, {
-              state,
-              data,
-              column,
-              index,
-              isDraggable,
-            }) || (
-              <CardDisplay
-                state={state}
-                data={data}
-                column={column}
-                index={index}
-                isDraggable={isDraggable}
-                render={render}
-              />
-            ),
-            state.container
-          )
+          renderCardDragPreview?.(data, {
+            state,
+            data,
+            column,
+            index,
+            isDraggable,
+          }) || (
+            <CardDisplay
+              state={state}
+              data={data}
+              column={column}
+              index={index}
+              isDraggable={isDraggable}
+              render={render}
+            />
+          ),
+          state.container
+        )
         : null}
     </>
   );

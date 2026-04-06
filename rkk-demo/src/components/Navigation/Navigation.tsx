@@ -1,7 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { Kanban, Layers, GitBranch } from "lucide-react";
+import { Kanban, Layers, GitBranch, ScrollText } from "lucide-react";
 
 const navigationItems = [
   {
@@ -22,12 +22,12 @@ const navigationItems = [
     icon: GitBranch,
     descriptionKey: "navigation.clickupDescription",
   },
-  // {
-  //   path: "/tam",
-  //   labelKey: "navigation.tamStyle",
-  //   icon: Kanban,
-  //   descriptionKey: "navigation.tamDescription",
-  // },
+  {
+    path: "/infinite-scroll",
+    labelKey: "navigation.infiniteScroll",
+    icon: ScrollText,
+    descriptionKey: "navigation.infiniteScrollDescription",
+  },
 ];
 
 export const Navigation: React.FC = () => {

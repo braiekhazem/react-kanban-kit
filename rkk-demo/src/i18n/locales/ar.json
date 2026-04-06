@@ -16,7 +16,9 @@
     "clickupStyle": "نمط كليك أب",
     "clickupDescription": "تصميم لوحة مستوحى من كليك أب",
     "tamStyle": "نمط تام",
-    "tamDescription": "تصميم لوحة مستوحى من تام"
+    "tamDescription": "تصميم لوحة مستوحى من تام",
+    "infiniteScroll": "التمرير اللانهائي",
+    "infiniteScrollDescription": "تحميل مرقّم عند التمرير"
   },
   "language": {
     "english": "English",

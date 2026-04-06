@@ -16,7 +16,9 @@
     "clickupStyle": "Style ClickUp",
     "clickupDescription": "Design de tableau inspiré de ClickUp",
     "tamStyle": "Style Tam",
-    "tamDescription": "Design de tableau inspiré de Tam"
+    "tamDescription": "Design de tableau inspiré de Tam",
+    "infiniteScroll": "Défilement Infini",
+    "infiniteScrollDescription": "Chargement paginé au défilement"
   },
   "language": {
     "english": "English",

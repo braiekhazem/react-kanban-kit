@@ -183,8 +183,8 @@ export const mockData = (() => {
           i % 3 === 0
             ? [labels[i % labels.length]]
             : i % 2 === 0
-            ? [labels[i % labels.length], labels[(i + 1) % labels.length]]
-            : [],
+              ? [labels[i % labels.length], labels[(i + 1) % labels.length]]
+              : [],
         coverImage: i % 4 === 0 ? coverImages[i % coverImages.length] : null,
         members: i % 3 === 0 ? [assignees[i % assignees.length]] : [],
         dueComplete: i % 8 === 0,
@@ -298,3 +298,94 @@ export const mockData = (() => {
 
   return data;
 })();
+
+// ─── Infinite Scroll Mock API ────────────────────────────────────────────────
+
+const IS_PAGE_SIZE = 10;
+
+const IS_CATEGORIES = ["Feature", "Bug", "Improvement", "Docs", "Refactor"] as const;
+const IS_CATEGORY_COLORS: Record<string, string> = {
+  Feature: "#6366f1",
+  Bug: "#ef4444",
+  Improvement: "#0ea5e9",
+  Docs: "#10b981",
+  Refactor: "#f59e0b",
+};
+const IS_ASSIGNEES = ["SC", "MJ", "AR", "ED", "DW", "LT", "TA", "RG"];
+const IS_AVATAR_COLORS = ["#6366f1", "#0ea5e9", "#10b981", "#f59e0b", "#ef4444", "#8b5cf6", "#ec4899", "#14b8a6"];
+const IS_VERBS = ["Implement", "Fix", "Update", "Refactor", "Review", "Migrate", "Optimize", "Add"];
+const IS_NOUNS = ["authentication", "dashboard", "API integration", "UI components", "database schema", "notification system", "search feature", "payment flow", "settings page", "analytics module"];
+
+const generateInfiniteScrollCard = (columnId: string, globalIndex: number) => {
+  const category = IS_CATEGORIES[globalIndex % IS_CATEGORIES.length];
+  return {
+    id: `${columnId}-card-${globalIndex}`,
+    title: `${IS_VERBS[globalIndex % IS_VERBS.length]} ${IS_NOUNS[globalIndex % IS_NOUNS.length]}`,
+    parentId: columnId,
+    children: [] as string[],
+    totalChildrenCount: 0,
+    type: "card",
+    content: {
+      category,
+      categoryColor: IS_CATEGORY_COLORS[category],
+      assignee: IS_ASSIGNEES[globalIndex % IS_ASSIGNEES.length],
+      avatarColor: IS_AVATAR_COLORS[globalIndex % IS_AVATAR_COLORS.length],
+      index: globalIndex,
+    },
+  };
+};
+
+export const fetchMoreCards = (
+  columnId: string,
+  page: number
+): Promise<ReturnType<typeof generateInfiniteScrollCard>[]> => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      const start = page * IS_PAGE_SIZE;
+      resolve(
+        Array.from({ length: IS_PAGE_SIZE }, (_, i) =>
+          generateInfiniteScrollCard(columnId, start + i + 1)
+        )
+      );
+    }, 900);
+  });
+};
+
+export const getInfiniteScrollInitialData = () => {
+  const columns = [
+    { id: "is-col-1", title: "To Do", total: 80, color: "#6366f1" },
+    { id: "is-col-2", title: "In Progress", total: 45, color: "#0ea5e9" },
+    { id: "is-col-3", title: "Review", total: 28, color: "#f59e0b" },
+    { id: "is-col-4", title: "Done", total: 120, color: "#10b981" },
+  ];
+
+  const data: Record<string, any> = {
+    root: {
+      id: "root",
+      title: "Root",
+      children: columns.map((c) => c.id),
+      totalChildrenCount: columns.length,
+      parentId: null,
+    },
+  };
+
+  columns.forEach((col) => {
+    const initialItems = Array.from({ length: IS_PAGE_SIZE }, (_, i) =>
+      generateInfiniteScrollCard(col.id, i + 1)
+    );
+    data[col.id] = {
+      id: col.id,
+      title: col.title,
+      children: initialItems.map((item) => item.id),
+      totalChildrenCount: col.total,
+      totalItemsCount: col.total,
+      parentId: "root",
+      content: { color: col.color, total: col.total },
+    };
+    initialItems.forEach((item) => {
+      data[item.id] = item;
+    });
+  });
+
+  return data;
+};

@@ -197,7 +197,7 @@ export const ClickUpExample: React.FC = () => {
               dropHandler(
                 move,
                 dataSource,
-                () => {},
+                () => { },
                 (newColumn) => {
                   return {
                     ...newColumn,
