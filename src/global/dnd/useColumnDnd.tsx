@@ -41,9 +41,12 @@ export const useColumnDnd = (
   data: BoardItem,
   index: number,
   items: BoardItem[],
-  onColumnDndStateChange?: (info: DndState) => void
+  onColumnDndStateChange?: (info: DndState) => void,
+  allowColumnDrag?: boolean,
 ) => {
   const { viewOnly } = useKanbanContext();
+  const isColumnDraggable =
+    !viewOnly && allowColumnDrag !== false && data.isDraggable !== false;
   const headerRef = useRef<HTMLDivElement>(null);
   const outerFullHeightRef = useRef<HTMLDivElement | null>(null);
   const innerRef = useRef<HTMLDivElement | null>(null);
@@ -66,7 +69,7 @@ export const useColumnDnd = (
 
       setState(proposed);
     },
-    []
+    [],
   );
 
   const handleGenerateDragPreview = useCallback(
@@ -90,7 +93,7 @@ export const useColumnDnd = (
         },
       });
     },
-    []
+    [],
   );
 
   const handleDragStart = useCallback(() => {
@@ -111,7 +114,7 @@ export const useColumnDnd = (
         setState({ type: "is-column-over" });
       }
     },
-    [data.id, setIsCardOver]
+    [data.id, setIsCardOver],
   );
 
   const handleDropTargetChange = useCallback(
@@ -121,7 +124,7 @@ export const useColumnDnd = (
         return;
       }
     },
-    [setIsCardOver]
+    [setIsCardOver],
   );
 
   const handleDragLeave = useCallback(
@@ -131,7 +134,7 @@ export const useColumnDnd = (
       }
       setState(idle);
     },
-    [data.id]
+    [data.id],
   );
 
   const canDrop = useCallback(({ source }) => {
@@ -159,7 +162,7 @@ export const useColumnDnd = (
     }
 
     const scroller = outerFullHeightRef.current.querySelector(
-      `.${withPrefix("column-content-list")}`
+      `.${withPrefix("column-content-list")}`,
     );
 
     const columnData = {
@@ -176,8 +179,7 @@ export const useColumnDnd = (
         onGenerateDragPreview: handleGenerateDragPreview,
         onDragStart: handleDragStart,
         onDrop: handleDrop,
-        //TODO: add dnd in columns
-        canDrag: () => false,
+        canDrag: () => isColumnDraggable,
       }),
       dropTargetForElements({
         element: outerFullHeightRef.current,
@@ -198,12 +200,13 @@ export const useColumnDnd = (
         canScroll,
         getConfiguration,
         element: scroller,
-      })
+      }),
     );
   }, [
     data,
     index,
     items?.length,
+    isColumnDraggable,
     handleGenerateDragPreview,
     handleDragStart,
     handleDrop,

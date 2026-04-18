@@ -24,7 +24,7 @@ interface Props {
     renderListFooter?: (column: BoardItem) => React.ReactNode;
     cardWrapperStyle?: (
       card: BoardItem,
-      column: BoardItem
+      column: BoardItem,
     ) => React.CSSProperties;
     cardWrapperClassName?: string;
     cardsGap?: number;
@@ -32,7 +32,7 @@ interface Props {
     onCardDndStateChange?: (info: DndState) => void;
     onCardClick?: (
       e: React.MouseEvent<HTMLDivElement>,
-      card: BoardItem
+      card: BoardItem,
     ) => void;
     cardOverHeight?: number;
     renderCardDragIndicator?: (card: BoardItem, info: any) => React.ReactNode;
@@ -68,7 +68,7 @@ const GenericItem = (props: Props) => {
 
   const wrapperClassName = classNames(
     withPrefix("generic-item-wrapper"),
-    cardWrapperClassName
+    cardWrapperClassName,
   );
 
   const renderCardContent = () => {

@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useRef, useState } from "react";
+import React from "react";
 import {
   BoardItem,
   BoardProps,
@@ -56,6 +56,7 @@ interface Props {
   columnListContentClassName?: (column: BoardItem) => string;
   renderListFooter?: (column: BoardItem) => React.ReactNode;
   renderColumnAdder?: (column: BoardItem) => React.ReactNode;
+  allowColumnDrag?: boolean;
   items: BoardItem[];
   cardWrapperStyle?: (
     card: BoardItem,
@@ -83,6 +84,7 @@ const Column = (props: Props) => {
     columnClassName,
     columnStyle,
     renderColumnAdder,
+    allowColumnDrag,
     ...rest
   } = props;
 
@@ -92,7 +94,13 @@ const Column = (props: Props) => {
     innerRef,
     state,
     cardOverShadowCount,
-  } = useColumnDnd(data, index, items, onColumnDndStateChange);
+  } = useColumnDnd(
+    data,
+    index,
+    items,
+    onColumnDndStateChange,
+    allowColumnDrag
+  );
 
   const containerClassName = classNames(
     withPrefix("column-outer"),

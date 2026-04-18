@@ -1,13 +1,44 @@
 import ReactDOM from "react-dom/client";
-import { Kanban } from "./";
+import { useState } from "react";
+import { Kanban, dropColumnHandler } from "./";
 import { mockData } from "./utils/mocks/data";
 import CardSkeleton from "./components/CardSkeleton";
 
+import type { BoardData } from "./";
+
 const App = () => {
+  const [dataSource, setDataSource] = useState<BoardData>(mockData);
+
   return (
     <div style={{ width: "100%", height: "86dvh" }}>
       <Kanban
         viewOnly={false}
+        allowColumnDrag
+        dataSource={dataSource}
+        onColumnMove={(move) => {
+          setDataSource(dropColumnHandler(move, dataSource));
+        }}
+        renderColumnHeader={(column) => (
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              gap: "8px",
+              padding: "10px",
+            }}
+          >
+            <span>{column.title}</span>
+            {column.isDraggable === false && (
+              <span style={{ fontSize: "12px", opacity: 0.6 }}>locked</span>
+            )}
+          </div>
+        )}
+        renderColumnAdder={() => <div>Add new Column</div>}
+        allowColumnAdder={true}
+        allowListFooter={(column) => true}
+        renderListFooter={(column) => <div>Add new one</div>}
+        rootClassName="check"
         onCardClick={(e, card) => {
           console.log();
         }}
@@ -52,11 +83,6 @@ const App = () => {
         //     {collapsed ? column?.title : children}
         //   </div>
         // )}
-        // renderColumnHeader={(column) => (
-        //   <div style={{ padding: "30px" }}>
-        //     {column.title} have total as {column?.totalChildrenCount}
-        //   </div>
-        // )}
         // columnHeaderStyle={(column) => ({
         //   backgroundColor: "red",
         //   padding: "10px",
@@ -73,9 +99,7 @@ const App = () => {
         // )}
 
         // Custom skeleton examples:
-        renderSkeletonCard={({ index, column }) => (
-          <CardSkeleton animationType="shimmer" />
-        )}
+        renderSkeletonCard={() => <CardSkeleton animationType="shimmer" />}
         // renderSkeletonCard={({ index, column }) => (
         //   <CardSkeleton
         //     variant="compact"
@@ -91,12 +115,6 @@ const App = () => {
         onCardMove={(event) => {
           console.log({ event });
         }}
-        allowColumnAdder={true}
-        renderColumnAdder={() => <div>Add new Column</div>}
-        renderListFooter={(column) => <div>Add new one</div>}
-        allowListFooter={(column) => true}
-        rootClassName="check"
-        dataSource={mockData}
         cardsGap={6}
         // cardWrapperStyle={(card, col) => {
         //   console.log({ col, card });
@@ -171,11 +189,11 @@ const App = () => {
           //   isDraggable: true,
           // },
           cardLoading: {
-            render: (props) => <div>Card Loading</div>,
+            render: () => <div>Card Loading</div>,
             isDraggable: true,
           },
           footer: {
-            render: (props) => {
+            render: () => {
               return <div>Add Task</div>;
             },
             isDraggable: false,
@@ -187,5 +205,5 @@ const App = () => {
 };
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
-  <App />
+  <App />,
 );
