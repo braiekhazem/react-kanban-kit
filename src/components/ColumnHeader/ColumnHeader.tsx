@@ -20,7 +20,7 @@ const ColumnHeader = forwardRef<HTMLDivElement, Props>((props, ref) => {
 
   const headerClassName = classNames(
     withPrefix("column-header"),
-    columnHeaderClassName
+    columnHeaderClassName,
   );
 
   if (renderColumnHeader)

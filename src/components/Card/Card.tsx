@@ -22,7 +22,7 @@ export const CardShadow = memo(
         )}
       </div>
     );
-  }
+  },
 );
 
 const CardDisplay = (props: {
@@ -90,7 +90,7 @@ const CardDisplay = (props: {
     state.type === "is-dragging" ? data : null,
     {
       height: shadowHeight,
-    }
+    },
   );
 
   return (
@@ -168,7 +168,7 @@ const Card = (props: Props) => {
     column,
     index,
     isDraggable,
-    onCardDndStateChange
+    onCardDndStateChange,
   );
 
   return (
@@ -190,24 +190,24 @@ const Card = (props: Props) => {
 
       {state.type === "preview"
         ? createPortal(
-          renderCardDragPreview?.(data, {
-            state,
-            data,
-            column,
-            index,
-            isDraggable,
-          }) || (
-            <CardDisplay
-              state={state}
-              data={data}
-              column={column}
-              index={index}
-              isDraggable={isDraggable}
-              render={render}
-            />
-          ),
-          state.container
-        )
+            renderCardDragPreview?.(data, {
+              state,
+              data,
+              column,
+              index,
+              isDraggable,
+            }) || (
+              <CardDisplay
+                state={state}
+                data={data}
+                column={column}
+                index={index}
+                isDraggable={isDraggable}
+                render={render}
+              />
+            ),
+            state.container,
+          )
         : null}
     </>
   );

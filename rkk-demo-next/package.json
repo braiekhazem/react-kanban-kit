@@ -1,0 +1,30 @@
+{
+  "name": "rkk-demo-next",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --port 3031",
+    "build": "next build",
+    "start": "next start --port 3031"
+  },
+  "dependencies": {
+    "framer-motion": "^12.38.0",
+    "i18next": "^26.0.3",
+    "i18next-browser-languagedetector": "^8.2.1",
+    "lucide-react": "^1.7.0",
+    "next": "16.2.2",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
+    "react-i18next": "^17.0.2",
+    "react-kanban-kit": "^0.0.2-beta.6"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "sass": "^1.99.0",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  }
+}

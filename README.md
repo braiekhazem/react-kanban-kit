@@ -281,7 +281,7 @@ Infinite scroll lets each column load cards on demand as the user scrolls, inste
 
 The library uses `totalChildrenCount` and the actual `children` array to determine how many skeleton placeholders to render. When `totalChildrenCount > children.length`, the board renders skeleton cards to fill the gap. As the user scrolls and those skeletons become visible in the viewport, the library automatically calls your `loadMore(columnId)` callback.
 
-For a full working implementation, see the [Infinite Scroll example in the demo](https://github.com/hazembraiek/react-kanban-kit/tree/main/rkk-demo/src/pages/InfiniteScrollExample) or try it live at [react-kanban-kit.netlify.app](https://react-kanban-kit.netlify.app).
+For a full working implementation, see the [Infinite Scroll example in the demo](https://github.com/braiekhazem/react-kanban-kit/tree/main/rkk-demo/src/pages/InfiniteScrollExample) or try it live at [react-kanban-kit.netlify.app](https://react-kanban-kit.netlify.app).
 
 ---
 

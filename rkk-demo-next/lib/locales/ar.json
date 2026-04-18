@@ -1,0 +1,63 @@
+{
+  "header": {
+    "title": "React Kanban Kit",
+    "subtitle": "معرض التوضيح",
+    "github": "GitHub",
+    "npm": "NPM",
+    "settings": "الإعدادات"
+  },
+  "navigation": {
+    "boardExamples": "أمثلة اللوحات",
+    "documentation": "التوثيق",
+    "overview": "نظرة عامة",
+    "overviewDescription": "مثال كانبان أساسي",
+    "trelloStyle": "نمط تريلو",
+    "trelloDescription": "تصميم لوحة مستوحى من تريلو",
+    "clickupStyle": "نمط كليك أب",
+    "clickupDescription": "تصميم لوحة مستوحى من كليك أب",
+    "jiraStyle": "نمط جيرا",
+    "jiraDescription": "تصميم لوحة مستوحى من جيرا",
+    "infiniteScroll": "التمرير اللانهائي",
+    "infiniteScrollDescription": "تحميل مرقّم عند التمرير"
+  },
+  "language": {
+    "english": "English",
+    "french": "Français",
+    "arabic": "العربية",
+    "switchLanguage": "تغيير اللغة"
+  },
+  "pages": {
+    "overview": {
+      "title": "نظرة عامة على React Kanban Kit",
+      "description": "مكون لوحة كانبان قوي ومرن لتطبيقات React"
+    },
+    "trello": {
+      "title": "لوحة كانبان نمط تريلو",
+      "description": "لوحة مستوحاة من تريلو مع ملصقات وصور غلاف وصور أعضاء"
+    },
+    "clickup": {
+      "title": "لوحة كانبان نمط كليك أب",
+      "description": "لوحة مستوحاة من كليك أب مع مؤشرات الأولوية وتصميم بطاقة نظيف"
+    },
+    "jira": {
+      "title": "لوحة نمط جيرا",
+      "description": "لوحة كانبان مستوحاة من جيرا بميزات المؤسسة وسير العمل الرشيق"
+    },
+    "infiniteScroll": {
+      "title": "التمرير اللانهائي",
+      "description": "تحميل مرقّم عند التمرير في اللوحة"
+    }
+  },
+  "common": {
+    "loading": "جاري التحميل...",
+    "error": "خطأ",
+    "success": "نجح",
+    "cancel": "إلغاء",
+    "save": "حفظ",
+    "edit": "تعديل",
+    "delete": "حذف",
+    "add": "إضافة",
+    "close": "إغلاق",
+    "unassigned": "غير مخصص"
+  }
+}
