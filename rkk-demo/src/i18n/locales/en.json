@@ -16,7 +16,9 @@
     "clickupStyle": "ClickUp Style",
     "clickupDescription": "ClickUp-inspired board design",
     "tamStyle": "Tam Style",
-    "tamDescription": "Tam-inspired board design"
+    "tamDescription": "Tam-inspired board design",
+    "infiniteScroll": "Infinite Scroll",
+    "infiniteScrollDescription": "Paginated loading as you scroll"
   },
   "language": {
     "english": "English",

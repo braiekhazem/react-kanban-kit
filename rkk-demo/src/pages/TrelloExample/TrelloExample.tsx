@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Kanban, type BoardData, dropHandler } from "react-kanban-kit";
+import { Kanban, type BoardData, dropHandler, dropColumnHandler } from "react-kanban-kit";
 import { mockData } from "../../utils/_mock_";
 import { Eye } from "lucide-react";
 import {
@@ -156,6 +156,10 @@ export const TrelloExample: React.FC = () => {
               ),
               isDraggable: false,
             },
+          }}
+          allowColumnDrag
+          onColumnMove={(move) => {
+            setDataSource(dropColumnHandler(move, dataSource));
           }}
           columnClassName={() => "trello-example-column"}
           renderColumnHeader={(column) => (

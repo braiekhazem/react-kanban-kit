@@ -1,0 +1,63 @@
+{
+  "header": {
+    "title": "React Kanban Kit",
+    "subtitle": "Vitrine de Démonstration",
+    "github": "GitHub",
+    "npm": "NPM",
+    "settings": "Paramètres"
+  },
+  "navigation": {
+    "boardExamples": "Exemples de Tableaux",
+    "documentation": "Documentation",
+    "overview": "Aperçu",
+    "overviewDescription": "Exemple Kanban de base",
+    "trelloStyle": "Style Trello",
+    "trelloDescription": "Design de tableau inspiré de Trello",
+    "clickupStyle": "Style ClickUp",
+    "clickupDescription": "Design de tableau inspiré de ClickUp",
+    "jiraStyle": "Style Jira",
+    "jiraDescription": "Design de tableau inspiré de Jira",
+    "infiniteScroll": "Défilement Infini",
+    "infiniteScrollDescription": "Chargement paginé au défilement"
+  },
+  "language": {
+    "english": "English",
+    "french": "Français",
+    "arabic": "العربية",
+    "switchLanguage": "Changer de Langue"
+  },
+  "pages": {
+    "overview": {
+      "title": "Aperçu de React Kanban Kit",
+      "description": "Un composant de tableau Kanban puissant et flexible pour les applications React"
+    },
+    "trello": {
+      "title": "Tableau Kanban Style Trello",
+      "description": "Un tableau inspiré de Trello avec étiquettes, images de couverture et avatars"
+    },
+    "clickup": {
+      "title": "Tableau Kanban Style ClickUp",
+      "description": "Un tableau inspiré de ClickUp avec indicateurs de priorité et design épuré"
+    },
+    "jira": {
+      "title": "Tableau Style Jira",
+      "description": "Un tableau Kanban inspiré de Jira avec fonctionnalités enterprise"
+    },
+    "infiniteScroll": {
+      "title": "Défilement Infini",
+      "description": "Chargement paginé au défilement dans le tableau"
+    }
+  },
+  "common": {
+    "loading": "Chargement...",
+    "error": "Erreur",
+    "success": "Succès",
+    "cancel": "Annuler",
+    "save": "Enregistrer",
+    "edit": "Modifier",
+    "delete": "Supprimer",
+    "add": "Ajouter",
+    "close": "Fermer",
+    "unassigned": "Non assigné"
+  }
+}

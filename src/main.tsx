@@ -1,209 +1,103 @@
 import ReactDOM from "react-dom/client";
-import { Kanban } from "./";
+import { useState } from "react";
+import { Kanban, dropColumnHandler } from "./";
 import { mockData } from "./utils/mocks/data";
 import CardSkeleton from "./components/CardSkeleton";
 
+import type { BoardData } from "./";
+
 const App = () => {
+  const [dataSource, setDataSource] = useState<BoardData>(mockData);
+
   return (
     <div style={{ width: "100%", height: "86dvh" }}>
       <Kanban
-        viewOnly={false}
-        onCardClick={(e, card) => {
-          console.log();
+        dataSource={dataSource}
+        onColumnMove={(move) => {
+          setDataSource(dropColumnHandler(move, dataSource));
         }}
-        // renderCardDragPreview={(card, info) => {
-        //   return (
-        //     <div
-        //       style={{
-        //         height: "92px",
-        //         backgroundColor: "red",
-        //         width: "233px",
-        //       }}
-        //     >
-        //       Preview of {card.title}
-        //     </div>
-        //   );
-        // }}
-        // renderCardDragIndicator={(card, info) => {
-        //   return (
-        //     <div
-        //       style={{
-        //         height: 0,
-        //         borderRadius: "20px",
-        //         border: "2px dashed red",
-        //       }}
-        //     ></div>
-        //   );
-        // }}
-        // renderColumnFooter={(column) => (
-        //   <div>
-        //     {column.title} have total as {column?.totalChildrenCount}
-        //   </div>
-        // )}
-        // renderColumnWrapper={(column, { children, className, style }) => (
+        onCardMove={(event) => {
+          console.log("card moved:", event);
+        }}
+        renderColumnHeader={(column) => (
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              gap: "8px",
+              padding: "10px",
+            }}
+          >
+            <span>{column.title}</span>
+            {column.isDraggable === false && (
+              <span style={{ fontSize: "12px", opacity: 0.6 }}>locked</span>
+            )}
+          </div>
+        )}
+        renderColumnAdder={() => <div>Add new Column</div>}
+        allowColumnAdder={true}
+        allowListFooter={() => true}
+        renderListFooter={() => <div>Add new one</div>}
+        renderSkeletonCard={() => <CardSkeleton animationType="shimmer" />}
+        renderCardDragPreview={(card, info) => (
+          <div
+            style={{
+              backgroundColor: "#fff",
+              height: info?.state?.dragging?.height,
+              width: info?.state?.dragging?.width,
+              transform: "rotate(4deg)",
+              borderRadius: "10px",
+              border: "1px solid #ccc",
+              padding: "10px",
+              boxShadow: "0 8px 24px rgba(0,0,0,0.15)",
+            }}
+          >
+            Preview of {card.title}
+          </div>
+        )}
+        renderCardDragIndicator={() => (
+          <div
+            style={{
+              height: 0,
+              borderRadius: "20px",
+              border: "2px dashed #4a90d9",
+            }}
+          />
+        )}
+        // renderColumnDragPreview={(column, info) => (
         //   <div
         //     style={{
-        //       ...style,
-        //       backgroundColor: "red",
-        //       ...(collapsed ? { width: "100px", minWidth: "100px" } : {}),
+        //       backgroundColor: "#fff",
+        //       border: "1px solid #ddd",
+        //       borderRadius: "12px",
+        //       padding: "12px",
+        //       width: info?.state?.dragging?.width,
+        //       height: info?.state?.dragging?.height,
+        //       boxShadow: "0 12px 30px rgba(0,0,0,0.2)",
+        //       transform: "rotate(4deg)",
         //     }}
-        //     className={`${className} hello there`}
         //   >
-        //     {collapsed ? column?.title : children}
+        //     <div style={{ fontWeight: 600, marginBottom: "8px" }}>
+        //       {column.title}
+        //     </div>
+        //     <div style={{ opacity: 0.7, fontSize: "12px" }}>
+        //       Dragging column
+        //     </div>
         //   </div>
         // )}
-        // renderColumnHeader={(column) => (
-        //   <div style={{ padding: "30px" }}>
-        //     {column.title} have total as {column?.totalChildrenCount}
-        //   </div>
-        // )}
-        // columnHeaderStyle={(column) => ({
-        //   backgroundColor: "red",
-        //   padding: "10px",
-        // })}
-        // columnWrapperStyle={(column) => ({
-        //   backgroundColor: "green",
-        //   padding: "10px",
-        // })}
-
-        // renderSkeletonCard={({ index, column }) => (
-        //   <div>
-        //     Loading {index} {column.title} ...
-        //   </div>
-        // )}
-
-        // Custom skeleton examples:
-        renderSkeletonCard={({ index, column }) => (
-          <CardSkeleton animationType="shimmer" />
+        renderColumnDragIndicator={(_column, _info) => (
+          <div
+            style={{
+              width: _info.width,
+              height: _info.height,
+              backgroundColor: "#4a90d9",
+              borderRadius: 4,
+            }}
+          />
         )}
-        // renderSkeletonCard={({ index, column }) => (
-        //   <CardSkeleton
-        //     variant="compact"
-        //     animationType="pulse"
-        //   />
-        // )}
-        // onScroll={(e, column) => {
-        //   console.log(e, column);
-        // }}
-        // columnStyle={(column) => ({
-        //   backgroundColor: dragOverColumn === column.id ? "red" : "blue",
-        // })}
-        onCardMove={(event) => {
-          console.log({ event });
-        }}
-        allowColumnAdder={true}
-        renderColumnAdder={() => <div>Add new Column</div>}
-        renderListFooter={(column) => <div>Add new one</div>}
-        allowListFooter={(column) => true}
-        rootClassName="check"
-        dataSource={{
-          root: {
-            id: "root",
-            title: "Root",
-            children: ["col-1", "col-2", "col-3"],
-            totalChildrenCount: 3,
-            parentId: null,
-          },
-          "col-1": {
-            id: "col-1",
-            title: "To Do",
-            children: ["task-1", "task-2"],
-            totalChildrenCount: 2,
-            parentId: "root",
-          },
-          "col-2": {
-            id: "col-2",
-            title: "In Progress",
-            children: ["task-3"],
-            totalChildrenCount: 1,
-            parentId: "root",
-          },
-          "col-3": {
-            id: "col-3",
-            title: "Done",
-            children: ["task-4"],
-            totalChildrenCount: 1,
-            parentId: "root",
-          },
-          "task-1": {
-            id: "task-1",
-            title: "DesigHomepage",
-            parentId: "col-1",
-            children: [],
-            totalChildrenCount: 0,
-            type: "card",
-            content: {
-              description: "Create wireframeand mockups for thhomepage",
-              priority: "high",
-            },
-          },
-          "task-2": {
-            id: "task-2",
-            title: "SetuDatabase",
-            parentId: "col-1",
-            children: [],
-            totalChildrenCount: 0,
-            type: "card",
-          },
-          "task-3": {
-            id: "task-3",
-            title: "Task 3",
-            parentId: "col-2",
-            children: [],
-            totalChildrenCount: 0,
-            type: "card",
-          },
-          "task-4": {
-            id: "task-4",
-            title: "Task 4",
-            parentId: "col-3",
-            children: [],
-            totalChildrenCount: 0,
-            type: "card",
-          },
-        }}
+        virtualization={true}
         cardsGap={6}
-        // cardWrapperStyle={(card, col) => {
-        //   console.log({ col, card });
-        //   return {
-        //     backgroundColor: "red",
-        //     padding: "10px",
-        //   };
-        // }}
-        renderCardDragPreview={(card, info) => {
-          console.log({ card, info });
-          return (
-            <div
-              style={{
-                backgroundColor: "red",
-                height: info?.state?.dragging?.height,
-                width: info?.state?.dragging?.width,
-                transform: "rotate(4deg)",
-                borderRadius: "10px",
-              }}
-            >
-              Preview of {card.title}
-            </div>
-          );
-        }}
-        cardWrapperClassName="card-hazem"
-        // loadMore={(columnId) => {
-        //   console.log("loadMore", columnId);
-        // }}
-        // onCardDndStateChange={(info) => {
-        //   console.log({ info });
-        //   if (info.state.type === "idle") {
-        //     setDragOverColumn(info.column?.id);
-        //   }
-        // }}
-        // onColumnDndStateChange={(info) => {
-        //   if (info.state.type === "is-card-over") {
-        //     setDragOverColumn(info.column?.id);
-        //   } else {
-        //     setDragOverColumn(null);
-        //   }
-        // }}
-        virtualization={true} // Set to false to disable virtualization and use normal map instead
         configMap={{
           card: {
             render: (props) => (
@@ -223,26 +117,8 @@ const App = () => {
             ),
             isDraggable: true,
           },
-          // divider: {
-          //   render: (props) => (
-          //     <div
-          //       style={{
-          //         width: "100%",
-          //         height: "10px",
-          //         backgroundColor: "green",
-          //       }}
-          //     ></div>
-          //   ),
-          //   isDraggable: true,
-          // },
-          cardLoading: {
-            render: (props) => <div>Card Loading</div>,
-            isDraggable: true,
-          },
           footer: {
-            render: (props) => {
-              return <div>Add Task</div>;
-            },
+            render: () => <div>Add Task</div>,
             isDraggable: false,
           },
         }}
@@ -252,5 +128,5 @@ const App = () => {
 };
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
-  <App />
+  <App />,
 );

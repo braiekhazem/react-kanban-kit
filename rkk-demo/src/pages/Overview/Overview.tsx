@@ -28,7 +28,7 @@ const PriorityBadge: React.FC<{ priority: string }> = ({ priority }) => {
 export const Overview: React.FC = () => {
   const { t } = useTranslation();
   const [dataSource, setDataSource] = useState<BoardData>(
-    structuredClone(mockData) as BoardData
+    structuredClone(mockData) as BoardData,
   );
 
   return (
@@ -88,8 +88,8 @@ export const Overview: React.FC = () => {
                     totalChildrenCount:
                       (sourceColumn.totalChildrenCount || 0) - 1,
                   };
-                }
-              )
+                },
+              ),
             )
           }
         />

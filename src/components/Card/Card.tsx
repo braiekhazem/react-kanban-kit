@@ -22,7 +22,7 @@ export const CardShadow = memo(
         )}
       </div>
     );
-  }
+  },
 );
 
 const CardDisplay = (props: {
@@ -90,7 +90,7 @@ const CardDisplay = (props: {
     state.type === "is-dragging" ? data : null,
     {
       height: shadowHeight,
-    }
+    },
   );
 
   return (
@@ -168,7 +168,7 @@ const Card = (props: Props) => {
     column,
     index,
     isDraggable,
-    onCardDndStateChange
+    onCardDndStateChange,
   );
 
   return (
@@ -206,7 +206,7 @@ const Card = (props: Props) => {
                 render={render}
               />
             ),
-            state.container
+            state.container,
           )
         : null}
     </>

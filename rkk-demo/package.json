@@ -16,12 +16,13 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-i18next": "^15.6.1",
-    "react-kanban-kit": "^0.0.2-beta.6",
+    "react-kanban-kit": "^0.0.2-beta.7",
     "react-router-dom": "^6.28.0",
     "sass": "^1.89.2"
   },
   "devDependencies": {
     "@eslint/js": "^9.30.1",
+    "@types/node": "^25.5.2",
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.0",
     "@vitejs/plugin-react": "^4.3.1",

@@ -26,6 +26,7 @@ const Kanban = forwardRef<HTMLDivElement, BoardProps>((props, ref) => {
     onCardMove,
     renderColumnWrapper,
     renderColumnAdder,
+    allowColumnDrag,
     ...rest
   } = props;
 
@@ -68,7 +69,7 @@ const Kanban = forwardRef<HTMLDivElement, BoardProps>((props, ref) => {
         getConfiguration: () => ({
           maxScrollSpeed: "standard",
         }),
-      })
+      }),
     );
   }, [columns, dataSource, onCardMove, onColumnMove]);
 
@@ -88,6 +89,7 @@ const Kanban = forwardRef<HTMLDivElement, BoardProps>((props, ref) => {
             data={column}
             items={getColumnChildren(column, dataSource)}
             renderColumnWrapper={renderColumnWrapper}
+            allowColumnDrag={allowColumnDrag}
             {...rest}
           />
         ))}

@@ -21,7 +21,6 @@
     background-color: #f0f0f0;
     position: relative;
     overflow: hidden;
-    // height: 100%; // Ensure column takes full height
 
     &-wrapper {
       display: flex;
@@ -31,4 +30,15 @@
       max-height: 100%;
     }
   }
+}
+
+.#{$prefix}-column-shadow-container {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.#{$prefix}-column-shadow {
+  border-radius: 10px;
+  background-color: #ffffffb7;
+  border: 1px solid var(--Schemes-Outline-Variant, #e8ecf5);
 }

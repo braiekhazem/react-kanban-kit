@@ -50,6 +50,21 @@ export interface BoardData {
   [key: string]: BoardItem;
 }
 
+export interface DropColumnParams {
+  columnId: string;
+  fromIndex: number;
+  toIndex: number;
+}
+
+export interface DropCardParams {
+  cardId: string;
+  fromColumnId: string;
+  toColumnId: string;
+  taskAbove: string | null;
+  taskBelow: string | null;
+  position: number;
+}
+
 export interface BoardProps {
   dataSource: BoardData;
   configMap: ConfigMap;
@@ -65,14 +80,18 @@ export interface BoardProps {
   renderColumnHeader?: (column: BoardItem) => ReactNode;
   renderCardDragIndicator?: (card: BoardItem, info: any) => ReactNode;
   renderCardDragPreview?: (card: BoardItem, info: any) => ReactNode;
-  // renderColumnDragIndicator?: (column: BoardItem, info: any) => ReactNode;
-  // renderColumnDragPreview?: (column: BoardItem, info: any) => ReactNode;
+  renderColumnDragIndicator?: (
+    column: BoardItem,
+    info: { width: number; height: number; edge: "left" | "right" },
+  ) => ReactNode;
+  renderColumnDragPreview?: (column: BoardItem, info: any) => ReactNode;
 
   renderListFooter?: (column: BoardItem) => ReactNode;
   allowListFooter?: (column: BoardItem) => boolean;
 
   renderColumnAdder?: () => ReactNode;
   allowColumnAdder?: boolean;
+  allowColumnDrag?: boolean;
 
   renderColumnWrapper?: (
     column: BoardItem,
@@ -80,7 +99,7 @@ export interface BoardProps {
       children,
       className,
       style,
-    }: { children: ReactNode; className?: string; style?: CSSProperties }
+    }: { children: ReactNode; className?: string; style?: CSSProperties },
   ) => ReactNode;
   columnWrapperStyle?: (column: BoardItem) => CSSProperties;
   columnHeaderStyle?: (column: BoardItem) => CSSProperties;
@@ -98,15 +117,7 @@ export interface BoardProps {
   cardsGap?: number;
   // renderGap?: (column: BoardItem) => ReactNode;
   onScroll?: (e: ScrollEvent, column: BoardItem) => void;
-  onColumnMove?: ({
-    columnId,
-    fromIndex,
-    toIndex,
-  }: {
-    columnId: string;
-    fromIndex: number;
-    toIndex: number;
-  }) => void;
+  onColumnMove?: ({ columnId, fromIndex, toIndex }: DropColumnParams) => void;
   onCardMove?: ({
     cardId,
     fromColumnId,
@@ -114,18 +125,11 @@ export interface BoardProps {
     taskAbove,
     taskBelow,
     position,
-  }: {
-    cardId: string;
-    fromColumnId: string;
-    toColumnId: string;
-    taskAbove: string | null;
-    taskBelow: string | null;
-    position: number;
-  }) => void;
+  }: DropCardParams) => void;
   renderColumnFooter?: (column: BoardItem) => ReactNode;
   onColumnClick?: (
     e: React.MouseEvent<HTMLDivElement>,
-    column: BoardItem
+    column: BoardItem,
   ) => void;
   onCardClick?: (e: React.MouseEvent<HTMLDivElement>, card: BoardItem) => void;
   onCardDndStateChange?: (info: DndState) => void;
