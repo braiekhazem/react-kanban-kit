@@ -1,15 +1,14 @@
 import {
   BoardData,
   BoardItem,
-  BoardProps,
   DropColumnParams,
   DropParams,
 } from "@/components";
 import { extractClosestEdge } from "@atlaskit/pragmatic-drag-and-drop-hitbox/closest-edge";
 import { reorderWithEdge } from "@atlaskit/pragmatic-drag-and-drop-hitbox/util/reorder-with-edge";
 
-const isCardData = (data) => data?.type === "card";
-const isColumnData = (data) => data?.type === "column";
+const isCardData = (data: Record<string, unknown>) => data?.type === "card";
+const isColumnData = (data: Record<string, unknown>) => data?.type === "column";
 
 const getTasksByColumnId = (columnId: string, dataSource: BoardData) => {
   const tasks: BoardItem[] = [];
@@ -31,49 +30,47 @@ export const handleCardDrop = ({
   onCardMove,
   onColumnMove,
 }: DropParams) => {
+  // ── Column drop ───────────────────────────────────────────────────
   if (isColumnData(source.data)) {
     if (!onColumnMove) return;
 
-    const sourceColumnId = source.data.columnId;
-    // const sourceIndex = source.data.index
-
-    // Find innermost drop target
     const innerMost = location.current.dropTargets[0];
     if (!innerMost) return;
 
     const dropTargetData = innerMost.data;
+    if (!isColumnData(dropTargetData)) return;
 
-    // Only proceed if dropping on another column
-    if (isColumnData(dropTargetData)) {
-      const targetColumnId = dropTargetData.columnId;
-      const targetIndex = columns.findIndex((col) => col.id === targetColumnId);
+    const sourceColumnId = source.data.columnId as string;
+    const targetColumnId = dropTargetData.columnId as string;
+    if (sourceColumnId === targetColumnId) return;
 
-      if (targetIndex === -1) return;
+    const sourceIndex = columns.findIndex((c) => c.id === sourceColumnId);
+    const targetIndex = columns.findIndex((c) => c.id === targetColumnId);
+    if (sourceIndex === -1 || targetIndex === -1) return;
 
-      // Don't reorder if dropped on itself
-      if (sourceColumnId === targetColumnId) return;
+    const closestEdge = extractClosestEdge(dropTargetData);
+    const reordered = reorderWithEdge({
+      axis: "horizontal",
+      list: columns,
+      startIndex: sourceIndex,
+      indexOfTarget: targetIndex,
+      closestEdgeOfTarget: closestEdge,
+    });
 
-      // Call the provided onColumnMove handler
-      onColumnMove?.({
-        columnId: sourceColumnId,
-        fromIndex: columns.findIndex((col) => col.id === sourceColumnId),
-        toIndex: targetIndex,
-      });
-    }
+    onColumnMove({
+      columnId: sourceColumnId,
+      fromIndex: sourceIndex,
+      toIndex: reordered.findIndex((c) => c.id === sourceColumnId),
+    });
 
     return;
   }
 
-  // Handle card reordering
-  if (!isCardData(source.data)) {
-    return;
-  }
+  if (!isCardData(source.data)) return;
 
   const draggingCardId = source.data.itemId;
   const sourceColumnId = source.data.columnId;
-  // const sourceCardIndex = source.data.index
 
-  // Find innermost drop target (card or column)
   const innerMost = location.current.dropTargets[0];
   if (!innerMost) return;
 

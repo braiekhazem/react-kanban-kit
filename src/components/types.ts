@@ -80,8 +80,11 @@ export interface BoardProps {
   renderColumnHeader?: (column: BoardItem) => ReactNode;
   renderCardDragIndicator?: (card: BoardItem, info: any) => ReactNode;
   renderCardDragPreview?: (card: BoardItem, info: any) => ReactNode;
-  // renderColumnDragIndicator?: (column: BoardItem, info: any) => ReactNode;
-  // renderColumnDragPreview?: (column: BoardItem, info: any) => ReactNode;
+  renderColumnDragIndicator?: (
+    column: BoardItem,
+    info: { width: number; height: number; edge: "left" | "right" },
+  ) => ReactNode;
+  renderColumnDragPreview?: (column: BoardItem, info: any) => ReactNode;
 
   renderListFooter?: (column: BoardItem) => ReactNode;
   allowListFooter?: (column: BoardItem) => boolean;

@@ -1,4 +1,5 @@
-import React from "react";
+import React, { memo, useMemo } from "react";
+import { createPortal } from "react-dom";
 import {
   BoardItem,
   BoardProps,
@@ -12,59 +13,82 @@ import ColumnHeader from "../ColumnHeader";
 import ColumnContent from "../ColumnContent";
 import { useColumnDnd } from "@/global/dnd/useColumnDnd";
 
+const ColumnDropIndicator = memo(
+  ({
+    width,
+    height,
+    customIndicator,
+  }: {
+    width: number;
+    height: number;
+    customIndicator?: React.ReactNode;
+  }) => (
+    <div className={withPrefix("column-shadow-container")}>
+      {customIndicator || (
+        <div
+          className={withPrefix("column-shadow")}
+          style={{ width, height }}
+        />
+      )}
+    </div>
+  ),
+);
+
+
 interface Props {
   index: number;
   data: BoardItem;
+  items: BoardItem[];
   configMap: ConfigMap;
-  loadMore?: (columnId: string) => void;
-  onColumnClick?: (
-    e: React.MouseEvent<HTMLDivElement>,
-    column: BoardItem
-  ) => void;
-  onCardClick?: (e: React.MouseEvent<HTMLDivElement>, card: BoardItem) => void;
+  allowColumnDrag?: boolean;
+
+  // Renderers
   renderColumnHeader?: (column: BoardItem) => React.ReactNode;
   renderColumnFooter?: (column: BoardItem) => React.ReactNode;
-  renderSkeletonCard?: BoardProps["renderSkeletonCard"];
-  renderGap?: (column: BoardItem) => React.ReactNode;
   renderColumnWrapper: (
     column: BoardItem,
-    {
-      children,
-      className,
-      style,
-      ref,
-    }: {
+    props: {
       children: React.ReactNode;
       className?: string;
       style?: React.CSSProperties;
       ref?: React.RefObject<HTMLDivElement>;
-    }
+    },
   ) => React.ReactNode;
-  columnWrapperStyle?: (column: BoardItem) => React.CSSProperties;
-  columnHeaderStyle?: (column: BoardItem) => React.CSSProperties;
-  columnStyle?: (column: BoardItem) => React.CSSProperties;
-  columnClassName?: (column: BoardItem) => string;
-  onCardDndStateChange?: (info: DndState) => void;
-  onColumnDndStateChange?: (info: DndState) => void;
-  columnWrapperClassName?: (column: BoardItem) => string;
-  columnHeaderClassName?: (column: BoardItem) => string;
-  columnListContentStyle?: (column: BoardItem) => React.CSSProperties;
-  renderCardDragIndicator?: (card: BoardItem, info: any) => React.ReactNode;
-  renderColumnDragIndicator?: (column: BoardItem, info: any) => React.ReactNode;
-  renderCardDragPreview?: (card: BoardItem, info: any) => React.ReactNode;
-  renderColumnDragPreview?: (column: BoardItem, info: any) => React.ReactNode;
-  columnListContentClassName?: (column: BoardItem) => string;
+  renderSkeletonCard?: BoardProps["renderSkeletonCard"];
   renderListFooter?: (column: BoardItem) => React.ReactNode;
   renderColumnAdder?: (column: BoardItem) => React.ReactNode;
-  allowColumnDrag?: boolean;
-  items: BoardItem[];
-  cardWrapperStyle?: (
-    card: BoardItem,
-    column: BoardItem
-  ) => React.CSSProperties;
+  renderGap?: (column: BoardItem) => React.ReactNode;
+
+  // DnD renderers
+  renderCardDragIndicator?: (card: BoardItem, info: any) => React.ReactNode;
+  renderCardDragPreview?: (card: BoardItem, info: any) => React.ReactNode;
+  renderColumnDragIndicator?: (
+    column: BoardItem,
+    info: { width: number; height: number; edge: "left" | "right" },
+  ) => React.ReactNode;
+  renderColumnDragPreview?: (column: BoardItem, info: any) => React.ReactNode;
+
+  // Styling
+  columnWrapperStyle?: (column: BoardItem) => React.CSSProperties;
+  columnWrapperClassName?: (column: BoardItem) => string;
+  columnHeaderStyle?: (column: BoardItem) => React.CSSProperties;
+  columnHeaderClassName?: (column: BoardItem) => string;
+  columnStyle?: (column: BoardItem) => React.CSSProperties;
+  columnClassName?: (column: BoardItem) => string;
+  columnListContentStyle?: (column: BoardItem) => React.CSSProperties;
+  columnListContentClassName?: (column: BoardItem) => string;
+  cardWrapperStyle?: (card: BoardItem, column: BoardItem) => React.CSSProperties;
   cardWrapperClassName?: string;
+
+  onColumnClick?: (e: React.MouseEvent<HTMLDivElement>, column: BoardItem) => void;
+  onCardClick?: (e: React.MouseEvent<HTMLDivElement>, card: BoardItem) => void;
+  onCardDndStateChange?: (info: DndState) => void;
+  onColumnDndStateChange?: (info: DndState) => void;
   onScroll?: (e: ScrollEvent, column: BoardItem) => void;
+
+  loadMore?: (columnId: string) => void;
 }
+
 
 const Column = (props: Props) => {
   const {
@@ -83,10 +107,12 @@ const Column = (props: Props) => {
     columnListContentClassName,
     columnClassName,
     columnStyle,
-    renderColumnAdder,
+    renderColumnDragPreview,
+    renderColumnDragIndicator,
     allowColumnDrag,
     ...rest
   } = props;
+
 
   const {
     headerRef,
@@ -99,15 +125,52 @@ const Column = (props: Props) => {
     index,
     items,
     onColumnDndStateChange,
-    allowColumnDrag
+    allowColumnDrag,
+    !!renderColumnDragPreview,
   );
+
+
+  const isDragging = state.type === "is-dragging" || state.type === "preview";
+  const isHidden = state.type === "is-dragging-and-left-self";
+  const isColumnOver = state.type === "is-column-over";
+  const closestEdge = isColumnOver ? state.closestEdge : null;
+
+
+  const columnIndicator = useMemo(() => {
+    if (!isColumnOver) return null;
+
+    const { width, height } = state.rect;
+    const edge = state.closestEdge === "left" ? "left" : "right";
+    const custom = renderColumnDragIndicator?.(data, { width, height, edge });
+
+    return (
+      <ColumnDropIndicator
+        width={width}
+        height={height}
+        customIndicator={custom}
+      />
+    );
+  }, [isColumnOver, state, renderColumnDragIndicator, data]);
+
+
+  const previewContent = useMemo(() => {
+    if (state.type !== "preview" || !renderColumnDragPreview) return null;
+
+    return renderColumnDragPreview(data, {
+      state,
+      data,
+      index,
+      isDraggable: data.isDraggable !== false,
+    });
+  }, [state, data, index, renderColumnDragPreview]);
+
 
   const containerClassName = classNames(
     withPrefix("column-outer"),
-    columnWrapperClassName?.(data)
+    columnWrapperClassName?.(data),
   );
 
-  const ColumnWrapper = (children: React.ReactNode) =>
+  const columnWrapperContent = (children: React.ReactNode) =>
     renderColumnWrapper ? (
       renderColumnWrapper(data, {
         children,
@@ -125,37 +188,58 @@ const Column = (props: Props) => {
       </div>
     );
 
+
+  const dragStyle = isHidden
+    ? { display: "none" as const }
+    : isDragging
+      ? { opacity: 0.4 }
+      : undefined;
+
+
   return (
-    <div onClick={(e) => onColumnClick?.(e, data)}>
-      {ColumnWrapper(
-        <div
-          className={classNames(withPrefix("column"), columnClassName?.(data))}
-          ref={innerRef}
-          style={columnStyle?.(data)}
-        >
-          <div className={withPrefix("column-wrapper")}>
-            <ColumnHeader
-              renderColumnHeader={renderColumnHeader}
-              columnHeaderStyle={columnHeaderStyle}
-              columnHeaderClassName={columnHeaderClassName?.(data)}
-              data={data}
-              ref={headerRef}
-            />
-            <ColumnContent
-              items={items}
-              column={data}
-              columnListContentClassName={columnListContentClassName?.(data)}
-              cardOverHeight={
-                cardOverShadowCount ? (state as any).dragging.height : null
-              }
-              cardOverShadowCount={cardOverShadowCount}
-              {...rest}
-            />
-            {renderColumnFooter?.(data)}
-          </div>
-        </div>
-      )}
-    </div>
+    <>
+      {closestEdge === "left" && columnIndicator}
+
+      <div onClick={(e) => onColumnClick?.(e, data)} style={dragStyle}>
+        {columnWrapperContent(
+          <div
+            className={classNames(
+              withPrefix("column"),
+              columnClassName?.(data),
+            )}
+            ref={innerRef}
+            style={columnStyle?.(data)}
+          >
+            <div className={withPrefix("column-wrapper")}>
+              <ColumnHeader
+                renderColumnHeader={renderColumnHeader}
+                columnHeaderStyle={columnHeaderStyle}
+                columnHeaderClassName={columnHeaderClassName?.(data)}
+                data={data}
+                ref={headerRef}
+              />
+              <ColumnContent
+                items={items}
+                column={data}
+                columnListContentClassName={columnListContentClassName?.(data)}
+                cardOverHeight={
+                  cardOverShadowCount ? (state as any).dragging.height : null
+                }
+                cardOverShadowCount={cardOverShadowCount}
+                {...rest}
+              />
+              {renderColumnFooter?.(data)}
+            </div>
+          </div>,
+        )}
+
+        {state.type === "preview" &&
+          previewContent &&
+          createPortal(previewContent, state.container)}
+      </div>
+
+      {closestEdge === "right" && columnIndicator}
+    </>
   );
 };
 
