@@ -13,7 +13,6 @@ const App = () => {
     <div style={{ width: "100%", height: "86dvh" }}>
       <Kanban
         dataSource={dataSource}
-        allowColumnDrag
         onColumnMove={(move) => {
           setDataSource(dropColumnHandler(move, dataSource));
         }}

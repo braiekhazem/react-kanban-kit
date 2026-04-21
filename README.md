@@ -205,7 +205,101 @@ const configMap = {
 />
 ```
 
-### Drag and Drop Customization
+### Column Drag and Drop
+
+Enable column reordering by dragging column headers. Columns are dragged by their header element and show a placeholder indicator at the drop position.
+
+```tsx
+import { Kanban, dropColumnHandler } from "react-kanban-kit";
+
+<Kanban
+  dataSource={dataSource}
+  configMap={configMap}
+  allowColumnDrag
+  onColumnMove={(move) => {
+    setDataSource(dropColumnHandler(move, dataSource));
+  }}
+  renderColumnHeader={(column) => (
+    <div style={{ cursor: "grab" }}>
+      <h3>{column.title}</h3>
+    </div>
+  )}
+/>;
+```
+
+#### How it works
+
+- The column **header** is the drag handle users grab the header to drag the entire column
+- While dragging, the source column dims (40% opacity), then hides once the cursor leaves it
+- A **drop indicator** (column-sized placeholder) appears between columns to show the landing position
+- On drop, `onColumnMove` fires with `{ columnId, fromIndex, toIndex }`
+- Use the `dropColumnHandler` utility to produce the updated `dataSource`
+
+#### Custom Column Drag Preview
+
+By default, the drag preview is a DOM clone of the column. Override it with `renderColumnDragPreview`:
+
+```tsx
+<Kanban
+  allowColumnDrag
+  renderColumnDragPreview={(column, info) => (
+    <div
+      style={{
+        width: info.state.dragging.width,
+        height: info.state.dragging.height,
+        backgroundColor: "#fff",
+        borderRadius: "12px",
+        padding: "12px",
+        boxShadow: "0 12px 30px rgba(0,0,0,0.2)",
+        transform: "rotate(4deg)",
+      }}
+    >
+      <strong>{column.title}</strong>
+      <p>{column.totalChildrenCount} cards</p>
+    </div>
+  )}
+/>
+```
+
+#### Custom Column Drop Indicator
+
+By default, the drop indicator is a column-sized placeholder box. Override it with `renderColumnDragIndicator`:
+
+```tsx
+<Kanban
+  allowColumnDrag
+  renderColumnDragIndicator={(column, info) => (
+    <div
+      style={{
+        width: 4,
+        height: info.height,
+        backgroundColor: "#4a90d9",
+        borderRadius: 4,
+      }}
+    />
+  )}
+/>
+```
+
+The `info` object provides `{ width, height, edge }` where `edge` is `"left"` or `"right"` indicating which side of the target column the indicator appears on.
+
+#### Disable Drag for Specific Columns
+
+Set `isDraggable: false` on individual `BoardItem` entries to lock specific columns in place:
+
+```tsx
+const dataSource = {
+  // ...
+  "col-1": {
+    id: "col-1",
+    title: "Backlog",
+    isDraggable: false, // This column cannot be dragged
+    // ...
+  },
+};
+```
+
+### Card Drag and Drop Customization
 
 ```tsx
 <Kanban
@@ -311,6 +405,20 @@ onCardMove={(move) => {
 }}
 ```
 
+## `dropColumnHandler` utility
+
+When a column is dropped, `onColumnMove` gives you the move details. Use `dropColumnHandler` to produce the updated `dataSource`:
+
+```tsx
+import { dropColumnHandler } from "react-kanban-kit";
+
+onColumnMove={(move) => {
+  setDataSource(dropColumnHandler(move, dataSource));
+}}
+```
+
+`dropColumnHandler` reorders the `root.children` array to move the column from `fromIndex` to `toIndex`.
+
 ---
 
 ## Props Reference
@@ -332,18 +440,22 @@ onCardMove={(move) => {
 
 ### Drag and Drop Events
 
-| Prop                     | Type                       | Description                  |
-| ------------------------ | -------------------------- | ---------------------------- |
-| `onCardMove`             | `(move: CardMove) => void` | Fired when a card is dropped |
-| `onCardDndStateChange`   | `(info: DndState) => void` | Card drag state changes      |
-| `onColumnDndStateChange` | `(info: DndState) => void` | Column drag state changes    |
+| Prop                     | Type                         | Description                    |
+| ------------------------ | ---------------------------- | ------------------------------ |
+| `onCardMove`             | `(move: CardMove) => void`   | Fired when a card is dropped   |
+| `onColumnMove`           | `(move: ColumnMove) => void` | Fired when a column is dropped |
+| `onCardDndStateChange`   | `(info: DndState) => void`   | Card drag state changes        |
+| `onColumnDndStateChange` | `(info: DndState) => void`   | Column drag state changes      |
 
 ### Drag and Drop Customization
 
-| Prop                      | Type                        | Description              |
-| ------------------------- | --------------------------- | ------------------------ |
-| `renderCardDragPreview`   | `(card, info) => ReactNode` | Custom card drag preview |
-| `renderCardDragIndicator` | `(card, info) => ReactNode` | Custom drop indicator    |
+| Prop                        | Type                          | Description                  |
+| --------------------------- | ----------------------------- | ---------------------------- |
+| `allowColumnDrag`           | `boolean`                     | Enable column reordering     |
+| `renderCardDragPreview`     | `(card, info) => ReactNode`   | Custom card drag preview     |
+| `renderCardDragIndicator`   | `(card, info) => ReactNode`   | Custom card drop indicator   |
+| `renderColumnDragPreview`   | `(column, info) => ReactNode` | Custom column drag preview   |
+| `renderColumnDragIndicator` | `(column, info) => ReactNode` | Custom column drop indicator |
 
 ### Column Customization
 
@@ -486,7 +598,11 @@ interface ColumnMove {
 .rkk-card-inner {
 } /* Card inner draggable element */
 .rkk-card-shadow {
-} /* Drop position indicator */
+} /* Card drop position indicator */
+.rkk-column-shadow-container {
+} /* Column drop indicator wrapper */
+.rkk-column-shadow {
+} /* Column drop position indicator */
 .rkk-skeleton {
 } /* Default skeleton card */
 ```

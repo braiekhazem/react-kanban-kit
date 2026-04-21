@@ -69,7 +69,7 @@ const Kanban = forwardRef<HTMLDivElement, BoardProps>((props, ref) => {
         getConfiguration: () => ({
           maxScrollSpeed: "standard",
         }),
-      })
+      }),
     );
   }, [columns, dataSource, onCardMove, onColumnMove]);
 

@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { Kanban, type BoardData, dropHandler } from "react-kanban-kit";
+import { Kanban, type BoardData, dropHandler, dropColumnHandler } from "react-kanban-kit";
 import { fetchMoreCards, getInfiniteScrollInitialData } from "../../utils/_mock_";
 import type { BoardItem } from "react-kanban-kit";
 
@@ -94,6 +94,10 @@ export const InfiniteScrollExample: React.FC = () => {
               render: ({ data }) => <InfiniteScrollCard data={data} />,
               isDraggable: true,
             },
+          }}
+          allowColumnDrag
+          onColumnMove={(move) => {
+            setDataSource((prev) => dropColumnHandler(move, prev));
           }}
           renderColumnHeader={(column) => <InfiniteScrollColumnHeader column={column} />}
           cardsGap={8}

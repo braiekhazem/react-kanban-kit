@@ -56,6 +56,11 @@
     color: #172b4d;
     padding: var(--ds-space-075, 6px) 0 var(--ds-space-075, 6px)
       var(--ds-space-150, 12px);
+    cursor: grab;
+
+    &:active {
+      cursor: grabbing;
+    }
 
     span {
       flex: 1;

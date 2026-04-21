@@ -4,6 +4,7 @@ import {
   type BoardItem,
   type BoardData,
   dropHandler,
+  dropColumnHandler,
 } from "react-kanban-kit";
 import { mockData } from "../../utils/_mock_";
 import { Calendar, User, Flag, ChevronLeft, Plus } from "lucide-react";
@@ -181,6 +182,10 @@ export const ClickUpExample: React.FC = () => {
               ),
               isDraggable: false,
             },
+          }}
+          allowColumnDrag
+          onColumnMove={(move) => {
+            setDataSource(dropColumnHandler(move, dataSource));
           }}
           columnClassName={() => "clickup-column"}
           renderColumnHeader={(column) => (

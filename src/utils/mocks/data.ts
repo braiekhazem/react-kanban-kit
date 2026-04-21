@@ -12,6 +12,7 @@ export const mockData: BoardData = {
     id: "1",
     title: "To Do",
     parentId: "root",
+    isDraggable: false,
     children: [
       "11",
       "adembc",
